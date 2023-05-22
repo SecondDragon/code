@@ -1,0 +1,22 @@
+.book-enter {
+  transform: translateX(150px);
+  opacity: 0;
+}
+
+.book-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 1s ease;
+}
+
+.book-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.book-exit-active {
+  transform: translateX(150px);
+  opacity: 0;
+  transition: all 1s ease;
+}
+

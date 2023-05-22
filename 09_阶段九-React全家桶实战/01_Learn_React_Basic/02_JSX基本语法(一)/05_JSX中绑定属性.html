@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计数器</title>
+</head>
+<body>
+  
+  <div id="root"></div>
+
+  <script src="../lib/react.js"></script>
+  <script src="../lib/react-dom.js"></script>
+  <script src="../lib/babel.js"></script>
+
+  <script type="text/babel">
+    // 1.定义App根组件
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          title: "哈哈哈",
+          imgURL: "https://ts1.cn.mm.bing.net/th/id/R-C.95bc299c3f1f0e69b9eb1d0772b14a98?rik=W5QLhXiERW4nLQ&riu=http%3a%2f%2f20178405.s21i.faiusr.com%2f2%2fABUIABACGAAgoeLO-wUo4I3o2gEw8Qs4uAg.jpg&ehk=N7Bxe9nqM08w4evC2kK6yyC%2bxIWTjdd6HgXsQYPbMj0%3d&risl=&pid=ImgRaw&r=0",
+          href: "https://www.baidu.com",
+
+          isActive: true,
+          objStyle: {color: "red", fontSize: "30px"}
+        }
+      }
+
+      render() {
+        const { title, imgURL, href, isActive, objStyle } = this.state
+
+        // 需求: isActive: true -> active
+        // 1.class绑定的写法一: 字符串的拼接
+        const className = `abc cba ${isActive ? 'active': ''}`
+        // 2.class绑定的写法二: 将所有的class放到数组中
+        const classList = ["abc", "cba"]
+        if (isActive) classList.push("active")
+        // 3.class绑定的写法三: 第三方库classnames -> npm install classnames
+
+        return (
+          <div>
+            { /* 1.基本属性绑定 */ }
+            <h2 title={title}>我是h2元素</h2>
+            {/*<img src={imgURL} alt=""/>*/}
+            <a href={href}>百度一下</a>
+
+            
+            { /* 2.绑定class属性: 最好使用className */ }
+            <h2 className={className}>哈哈哈哈</h2>
+            <h2 className={classList.join(" ")}>哈哈哈哈</h2>
+
+            
+            { /* 3.绑定style属性: 绑定对象类型 */ }
+            <h2 style={{color: "red", fontSize: "30px"}}>呵呵呵呵</h2>
+            <h2 style={objStyle}>呵呵呵呵</h2>
+          </div>
+        )
+      }
+    }
+
+    // 2.创建root并且渲染App组件
+    const root = ReactDOM.createRoot(document.querySelector("#root"))
+    root.render(<App/>)
+  </script>
+
+</body>
+</html>

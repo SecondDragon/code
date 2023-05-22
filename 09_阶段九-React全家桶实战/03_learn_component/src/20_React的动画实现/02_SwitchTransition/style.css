@@ -1,0 +1,22 @@
+.login-enter {
+  transform: translateX(100px);
+  opacity: 0;
+}
+
+.login-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 1s ease;
+}
+
+.login-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.login-exit-active {
+  transform: translateX(-100px);
+  opacity: 0;
+  transition: all 1s ease;
+}
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="root"></div>
+
+  <script src="../lib/react.js"></script>
+  <script src="../lib/react-dom.js"></script>
+  <script src="../lib/babel.js"></script>
+
+  <script type="text/babel">
+    // 1.创建root
+    const root = ReactDOM.createRoot(document.querySelector("#root"))
+
+    // 封装App组件
+    class App extends React.Component {
+      constructor() {
+        super()
+
+        this.state = {
+          movies: ["星际穿越", "流浪地球", "独行月球", "大话西游", "火星救援"]
+        }
+      }
+
+
+      render() {
+        // 1.对movies进行for循环
+        // const liEls = []
+        // for (let i = 0; i < this.state.movies.length; i++) {
+        //   const movie = this.state.movies[i]
+        //   const liEl = <li>{movie}</li>
+        //   liEls.push(liEl)
+        // }
+
+        // 2.movies数组 => liEls数组
+        // const liEls = this.state.movies.map(movie => <li>{movie}</li>)
+
+        return (
+          <div>
+            <h2>电影列表</h2>
+            <ul>
+              {this.state.movies.map(movie => <li>{movie}</li>)}
+            </ul>
+          </div>
+        )
+      }
+    }
+
+
+    // 2.渲染组件
+    root.render(<App/>)
+  </script>
+
+</body>
+</html>

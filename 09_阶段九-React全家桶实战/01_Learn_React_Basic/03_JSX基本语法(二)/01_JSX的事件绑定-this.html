@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计数器</title>
+</head>
+<body>
+  
+  <div id="root"></div>
+
+  <script src="../lib/react.js"></script>
+  <script src="../lib/react-dom.js"></script>
+  <script src="../lib/babel.js"></script>
+
+  <script type="text/babel">
+    // const obj = {
+    //   name: "obj",
+    //   foo: function() {
+    //     console.log("foo:", this)
+    //   }
+    // }
+
+    // // obj.foo()
+
+    // const config = {
+    //   onClick: obj.foo.bind(obj)
+    // }
+
+    // const click = config.onClick
+    // click()
+
+    /*
+      this的四种绑定规则:
+        1.默认绑定 独立执行 foo()
+        2.隐式绑定 被一个对象执行 obj.foo() -> obj
+        3.显式绑定: call/apply/bind foo.call("aaa") -> String("aaa")
+        4.new绑定: new Foo() -> 创建一个新对象, 并且赋值给this
+    */
+
+    // 1.定义App根组件
+    class App extends React.Component {
+      // class fields
+      name = "App"
+
+      constructor() {
+        super()
+        this.state = {
+          message: "Hello World",
+          counter: 100
+        }
+
+        this.btn1Click = this.btn1Click.bind(this)
+      }
+
+      btn1Click() {
+        console.log("btn1Click", this);
+        this.setState({ counter: this.state.counter + 1 })
+      }
+
+      btn2Click = () => {
+        console.log("btn2Click", this)
+        this.setState({ counter: 1000 })
+      }
+
+      btn3Click() {
+        console.log("btn3Click", this);
+        this.setState({ counter: 9999 })
+      }
+
+      render() {
+        const { message } = this.state
+
+        return (
+          <div>
+            {/* 1.this绑定方式一: bind绑定 */}
+            <button onClick={this.btn1Click}>按钮1</button>
+
+            
+            {/* 2.this绑定方式二: ES6 class fields */}
+            <button onClick={this.btn2Click}>按钮2</button>
+
+
+            {/* 3.this绑定方式三: 直接传入一个箭头函数(重要) */}
+            <button onClick={() => console.log("btn3Click")}>按钮3</button>
+
+            <button onClick={() => this.btn3Click()}>按钮3</button>
+
+
+            <h2>当前计数: {this.state.counter}</h2>
+          </div>
+        )
+      }
+    }
+
+    // 2.创建root并且渲染App组件
+    const root = ReactDOM.createRoot(document.querySelector("#root"))
+    root.render(<App/>)
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="root"></div>
+  
+  <script src="../lib/react.js"></script>
+  <script src="../lib/react-dom.js"></script>
+  <script src="../lib/babel.js"></script>
+
+  <script type="text/babel">
+    // let message = "Hello World"
+
+    // function btnClick() {
+    //   message = "Hello React"
+    //   rootRender()
+    // }
+
+    // const root = ReactDOM.createRoot(document.querySelector("#root"))
+    
+    // function rootRender() {
+    //   root.render((
+    //     <div>
+    //       <h2>{message}</h2>
+    //       <button onClick={btnClick}>修改文本</button>
+    //     </div>
+    //   ))
+    // }
+    // rootRender()
+
+    // 使用组件进行重构代码
+    // 类组件和函数式组件
+    class App extends React.Component {
+      // 组件数据
+      constructor() {
+        super()
+        this.state = {
+          message: "Hello World",
+
+          name: "why",
+          age: 18
+        }
+
+        // 对需要绑定的方法, 提前绑定好this
+        this.btnClick = this.btnClick.bind(this)
+      }
+
+      // 组件方法(实例方法)
+      btnClick() {
+        // 内部完成了两件事情: 
+        // 1.将state中message值修改掉 2.自动重新执行render函数函数
+        this.setState({
+          message: "Hello React"
+        })
+      }
+
+      // 渲染内容 render方法
+      render() {
+        return (
+          <div>
+            <h2>{this.state.message}</h2>
+            <button onClick={this.btnClick}>修改文本</button>
+          </div>
+        )
+      }
+    }
+
+    // this绑定的问题
+    // const app = new App()
+    // const foo = app.btnClick
+    // foo(); // 默认绑定 => window => 严格模式下 => undefined
+
+    // function bar() {
+    //   console.log("bar:", this);
+    // }
+    // bar()
+
+
+    // 将组件渲染到界面上
+    const root = ReactDOM.createRoot(document.querySelector("#root"))
+    // App根组件
+    root.render(<App/>)
+
+
+  </script>
+
+</body>
+</html>

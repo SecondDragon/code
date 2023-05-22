@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="root"></div>
+  
+  <!-- 引入依赖 -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> 
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <!-- 编写React代码 -->
+  <script type="text/babel">
+    const root = ReactDOM.createRoot(document.querySelector("#root"))
+
+    // 1.将文本定义成变量
+    let message = "Hello World"
+
+    // 2.监听按钮的点击
+    function btnClick() {
+      // 1.1.修改数据
+      message = "Hello React"
+
+      // 2.重新渲染界面
+      rootRender()
+    }
+
+    // 3.封装一个渲染函数
+    function rootRender() {
+      root.render((
+        <div>
+          <h2>{message}</h2>
+          <button onClick={btnClick}>修改文本</button>
+        </div>
+      ))
+    }
+    rootRender()
+
+  </script>
+
+</body>
+</html>

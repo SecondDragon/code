@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计数器</title>
+</head>
+<body>
+  
+  <div id="root"></div>
+
+  <script src="../lib/react.js"></script>
+  <script src="../lib/react-dom.js"></script>
+  <script src="../lib/babel.js"></script>
+
+  <script type="text/babel">
+
+    // function foo(name, age, height) {}
+    // const bar = foo.bind("aaa", "kobe", 30)
+    // bar("event")
+
+    // 1.定义App根组件
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          message: "Hello World"
+        }
+      }
+
+      btnClick(event, name, age) {
+        console.log("btnClick:", event, this)
+        console.log("name, age:", name, age)
+      }
+
+      render() {
+        const { message } = this.state
+
+        return (
+          <div>
+            {/* 1.event参数的传递 */}
+            <button onClick={this.btnClick.bind(this)}>按钮1</button>
+            <button onClick={(event) => this.btnClick(event)}>按钮2</button>
+
+            
+            {/* 2.额外的参数传递 */}
+            <button onClick={this.btnClick.bind(this, "kobe", 30)}>按钮3(不推荐)</button>
+
+            <button onClick={(event) => this.btnClick(event, "why", 18)}>按钮4</button>
+          </div>
+        )
+      }
+    }
+
+    // 2.创建root并且渲染App组件
+    const root = ReactDOM.createRoot(document.querySelector("#root"))
+    root.render(<App/>)
+  </script>
+
+</body>
+</html>

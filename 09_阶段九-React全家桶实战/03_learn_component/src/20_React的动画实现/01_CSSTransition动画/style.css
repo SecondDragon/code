@@ -1,0 +1,29 @@
+/* 进入动画 */
+/* .why-appear {
+  transform: translateX(-150px);
+}
+
+.why-appear-active {
+  transform: translateX(0);
+  transition: transform 2s ease;
+} */
+
+.why-appear, .why-enter {
+  opacity: 0;
+}
+
+.why-appear-active, .why-enter-active {
+  opacity: 1;
+  transition: opacity 2s ease;
+}
+
+/* 离开动画 */
+.why-exit {
+  opacity: 1;
+}
+
+.why-exit-active {
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+

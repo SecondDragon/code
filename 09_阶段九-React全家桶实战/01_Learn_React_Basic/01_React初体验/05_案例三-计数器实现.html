@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计数器</title>
+</head>
+<body>
+  
+  <div id="root"></div>
+
+  <script src="../lib/react.js"></script>
+  <script src="../lib/react-dom.js"></script>
+  <script src="../lib/babel.js"></script>
+
+  <script type="text/babel">
+    const root = ReactDOM.createRoot(document.querySelector("#root"))
+
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          message: "Hello World",
+          counter: 100
+        }
+
+        this.increment = this.increment.bind(this)
+        this.decrement = this.decrement.bind(this)
+      }
+
+      render() {
+        const { counter } = this.state
+
+        return (
+          <div>
+            <h2>当前计数: {counter}</h2>
+            <button onClick={this.increment}>+1</button>
+            <button onClick={this.decrement}>-1</button>
+          </div>
+        )
+      }
+
+      // 组件的方法
+      increment() {
+        this.setState({
+          counter: this.state.counter + 1
+        })
+      }
+
+      decrement() {
+        this.setState({
+          counter: this.state.counter - 1
+        })
+      }
+    }
+
+    root.render(<App/>)
+  </script>
+
+</body>
+</html>

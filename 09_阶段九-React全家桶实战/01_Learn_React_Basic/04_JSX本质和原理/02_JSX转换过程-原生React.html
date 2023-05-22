@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计数器</title>
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+  <script src="../lib/react.js"></script>
+  <script src="../lib/react-dom.js"></script>
+
+  <script>
+    // 1.定义App根组件
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          message: "Hello World"
+        }
+      }
+
+      render() {
+        const { message } = this.state
+
+        const element = React.createElement(
+          "div",
+          null,
+  /*#__PURE__*/ React.createElement(
+            "div",
+            {
+              className: "header"
+            },
+            "Header"
+          ),
+  /*#__PURE__*/ React.createElement(
+            "div",
+            {
+              className: "Content"
+            },
+    /*#__PURE__*/ React.createElement("div", null, "Banner"),
+    /*#__PURE__*/ React.createElement(
+              "ul",
+              null,
+      /*#__PURE__*/ React.createElement(
+                "li",
+                null,
+                "\u5217\u8868\u6570\u636E1"
+              ),
+      /*#__PURE__*/ React.createElement(
+                "li",
+                null,
+                "\u5217\u8868\u6570\u636E2"
+              ),
+      /*#__PURE__*/ React.createElement(
+                "li",
+                null,
+                "\u5217\u8868\u6570\u636E3"
+              ),
+      /*#__PURE__*/ React.createElement(
+                "li",
+                null,
+                "\u5217\u8868\u6570\u636E4"
+              ),
+      /*#__PURE__*/ React.createElement("li", null, "\u5217\u8868\u6570\u636E5")
+            )
+          ),
+  /*#__PURE__*/ React.createElement(
+            "div",
+            {
+              className: "footer"
+            },
+            "Footer"
+          )
+        );
+        
+        console.log(element)
+
+        return element
+      }
+    }
+
+    // 2.创建root并且渲染App组件
+    const root = ReactDOM.createRoot(document.querySelector("#root"))
+    root.render(React.createElement(App, null))
+  </script>
+
+</body>
+
+</html>

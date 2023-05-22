@@ -1,0 +1,23 @@
+/* reset.css */
+h1, h2, body {
+  margin: 0;
+  padding: 0;
+}
+
+
+.nav-bar {
+  display: flex;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+
+.left, .right {
+  width: 80px;
+  background-color: #f00;
+}
+
+.center {
+  flex: 1;
+  background-color: #f80;
+}

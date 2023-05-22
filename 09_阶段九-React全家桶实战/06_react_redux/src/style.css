@@ -1,0 +1,9 @@
+.pages {
+  display: flex;
+}
+
+.pages > div {
+  flex: 1;
+  border: 1px solid red;
+  padding: 10px;
+}

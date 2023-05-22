@@ -1,0 +1,25 @@
+{
+  "name": "zhufeng2019typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^12.12.5",
+    "@types/react": "^16.9.11",
+    "jquery": "^3.4.1",
+    "query": "^0.2.0",
+    "react": "^16.11.0",
+    "redux": "^4.0.4"
+  },
+  "devDependencies": {
+    "@types/typescript": "^2.0.0",
+    "typescript": "^3.6.4"
+  }
+}

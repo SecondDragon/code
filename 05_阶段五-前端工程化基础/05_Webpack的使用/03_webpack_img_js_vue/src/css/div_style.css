@@ -1,0 +1,8 @@
+.content {
+  font-size: 20px;
+  color: red;
+
+  user-select: none;
+  background-color: #66666666;
+}
+

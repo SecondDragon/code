@@ -1,0 +1,13 @@
+{
+  "name": "04_yarn_demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./src/main.js"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dayjs": "^1.11.3"
+  }
+}

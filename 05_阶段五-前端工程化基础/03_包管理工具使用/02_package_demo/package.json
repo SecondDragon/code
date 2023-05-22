@@ -1,0 +1,23 @@
+{
+  "name": "02_package_demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/main.js",
+    "build": "webpack xxx.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dayjs": "^1.11.3",
+    "element-plus": "^2.2.6",
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "webpack": "^5.73.0"
+  }
+}

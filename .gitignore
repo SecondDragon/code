@@ -8,7 +8,7 @@ server/admin/node_modules
 server/web/node_modules
 /admin/node_modules
 /web/node_modules
-
+/掘金小册（前端小册+后端小册）/
 # Other files and folders
 .settings/
 **/.git

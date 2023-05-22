@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .active {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <ul>
+      <!-- <h2 :class="{title: false}"></h2> -->
+
+      <!-- 对active的class进行动态绑定 -->
+      <!-- 需求一: 将索引值为1的li添加上active -->
+      <!-- 需求二：用一个变量（属性）记录当前点击的位置 -->
+      <li :class="{active: index === currentIndex}"
+          @click="liClick(index)"
+          v-for="(item, index) in movies">
+        {{item}}
+      </li>
+    </ul>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          movies: ["星际穿越", "阿凡达", "大话西游", "黑客帝国"],
+          currentIndex: -1
+        }
+      },
+      methods: {
+        liClick(index) {
+          console.log("liClick:", index)
+          this.currentIndex = index
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>

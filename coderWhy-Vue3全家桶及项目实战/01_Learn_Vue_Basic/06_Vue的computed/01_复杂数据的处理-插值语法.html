@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 插值语法表达式直接进行拼接 -->
+    <!-- 1.拼接名字 -->
+    <h2>{{ firstName + " " + lastName }}</h2>
+    <h2>{{ firstName + " " + lastName }}</h2>
+    <h2>{{ firstName + " " + lastName }}</h2>
+
+    <!-- 2.显示分数等级 -->
+    <h2>{{ score >= 60 ? '及格': '不及格' }}</h2>
+
+    <!-- 3.反转单词显示文本 -->
+    <h2>{{ message.split(" ").reverse().join(" ") }}</h2>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          // 1.姓名
+          firstName: "kobe",
+          lastName: "bryant",
+
+          // 2.分数: 及格/不及格
+          score: 80,
+
+          // 3.一串文本: 对文本中的单词进行反转显示
+          message: "my name is why"
+        }
+      },
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 1.select的值绑定 -->
+    <select multiple size="3" v-model="fruits">
+      <option v-for="item in allFruits" 
+              :key="item.value" 
+              :value="item.value">
+        {{item.text}}
+      </option>
+    </select>
+    <h2>多选: {{fruits}}</h2>
+
+    <hr>
+
+    <!-- 2.checkbox的值绑定 -->
+    <div class="hobbies">
+      <h2>请选择你的爱好:</h2>
+      <template v-for="item in allHobbies" :key="item.value">
+        <label :for="item.value">
+          <input :id="item.value" type="checkbox" v-model="hobbies" :value="item.value"> {{item.text}}
+        </label>
+      </template>
+      <h2>爱好: {{hobbies}}</h2>
+    </div>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          // 水果
+          allFruits: [
+            { value: "apple", text: "苹果" },
+            { value: "orange", text: "橘子" },
+            { value: "banana", text: "香蕉" },
+          ],
+          fruits: [],
+
+          // 爱好
+          allHobbies: [
+            { value: "sing", text: "唱" },
+            { value: "jump", text: "跳" },
+            { value: "rap", text: "rap" },
+            { value: "basketball", text: "篮球" }
+          ],
+          hobbies: []
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>

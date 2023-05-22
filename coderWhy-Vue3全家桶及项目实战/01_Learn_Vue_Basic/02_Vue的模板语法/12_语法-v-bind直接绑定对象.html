@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <h2 :name="name" :age="age" :height="height">Hello World</h2>
+
+    <!-- v-bind绑定对象: 给组件传递参数 -->
+    <h2 v-bind="infos">Hello Bind</h2>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data: function() {
+        return {
+          infos: { name: "why", age: 18, height: 1.88, address: "广州市" },
+
+          name: "why",
+          age: 18,
+          height: 1.88
+        }
+      },
+    })
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>

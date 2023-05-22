@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- 指令: v-once -->
+    <h2 v-once>
+      {{ message }}
+      <span>数字: {{counter}}</span>
+    </h2>
+
+    <h1>{{message}}</h1>
+
+    <button @click="changeMessage">改变message</button>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data: function() {
+        return {
+          message: "Hello Vue",
+          counter: 100
+        }
+      },
+
+      methods: {
+        changeMessage: function() {
+          this.message = "你好啊, 李银河"
+          this.counter += 100
+          console.log(this.message, this.counter)
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>

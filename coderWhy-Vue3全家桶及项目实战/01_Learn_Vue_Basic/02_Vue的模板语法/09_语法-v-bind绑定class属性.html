@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .active {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 1.基本绑定class -->
+    <h2 :class="classes">Hello World</h2>
+
+    <!-- 2.动态class可以写对象语法 -->
+    <button :class=" isActive ? 'active': '' " @click="btnClick">我是按钮</button>
+
+    <!-- 2.1.对象语法的基本使用(掌握) -->
+    <button :class="{ active: isActive }" @click="btnClick">我是按钮</button>
+
+    <!-- 2.2.对象语法的多个键值对 -->
+    <button :class="{ active: isActive, why: true, kobe: false }" @click="btnClick">我是按钮</button>
+    
+    <!-- 2.3.动态绑定的class是可以和普通的class同时的使用 -->
+    <button class="abc cba" :class="{ active: isActive, why: true, kobe: false }" @click="btnClick">我是按钮</button>
+    
+    <!-- 2.4.动态绑定的class是可以和普通的class同时的使用 -->
+    <button class="abc cba" :class="getDynamicClasses()" @click="btnClick">我是按钮</button>
+
+    <!-- 3.动态class可以写数组语法(了解) -->
+    <h2 :class="['abc', 'cba']">Hello Array</h2>
+    <h2 :class="['abc', className]">Hello Array</h2>
+    <h2 :class="['abc', className, isActive? 'active': '']">Hello Array</h2>
+    <h2 :class="['abc', className, { active: isActive }]">Hello Array</h2>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data: function() {
+        return {
+          classes: "abc cba nba",
+          isActive: false,
+          className: "why"
+        }
+      },
+
+      methods: {
+        btnClick: function() {
+          this.isActive = !this.isActive
+        },
+
+        getDynamicClasses: function() {
+          return { active: this.isActive, why: true, kobe: false }
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>

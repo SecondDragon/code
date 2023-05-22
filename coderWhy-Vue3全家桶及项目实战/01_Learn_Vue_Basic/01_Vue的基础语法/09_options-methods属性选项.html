@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <h2>当前计数: {{counter}}</h2>
+    <button @click="increment">+1</button>
+  </div>
+
+  <script src="./lib/vue.js"></script>
+  <script>
+
+    console.log(this)
+
+    const app = Vue.createApp({
+      data: function() {
+        return {
+          counter: 0
+        }
+      },
+
+      // methods: option api
+      methods: {
+        increment: function() {
+          this.counter++
+        },
+        // 强调: methods中函数不能写成箭头函数
+        // increment: () => {
+        //   console.log(this)
+        // }
+      }
+    })
+
+    app.mount("#app")
+  </script>
+</body>
+</html>

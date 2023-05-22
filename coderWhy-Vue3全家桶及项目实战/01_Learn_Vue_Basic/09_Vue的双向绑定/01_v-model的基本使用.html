@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 1.手动的实现了双向绑定 -->
+    <!-- <input type="text" :value="message" @input="inputChange"> -->
+
+    <!-- 2.v-model实现双向绑定 -->
+    <!-- <input type="text" v-model="message"> -->
+
+    <!-- 3.登录功能 -->
+    <label for="account">
+      账号:<input id="account" type="text" v-model="account">
+    </label>
+    <label for="password">
+      密码:<input id="password" type="password" v-model="password">
+    </label>
+
+    <button @click="loginClick">登录</button>
+
+    <h2>{{message}}</h2>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          message: "Hello Model",
+          account: "",
+          password: ""
+        }
+      },
+      methods: {
+        inputChange(event) {
+          this.message = event.target.value
+        },
+        loginClick() {
+          const account = this.account
+          const password = this.password
+
+          // url发送网络请求
+          console.log(account, password)
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>

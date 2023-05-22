@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .item {
+      margin-top: 5px;
+      background-color: orange;
+    }
+
+    .item .title {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 1.电影列表进行渲染 -->
+    <h2>电影列表</h2>
+    <ul>
+      <li v-for="movie in movies">{{ movie }}</li>
+    </ul>
+
+    <!-- 2.电影列表同时有索引 -->
+    <ul>
+      <li v-for="(movie, index) in movies">{{index + 1}} - {{ movie }}</li>
+    </ul>
+
+    <!-- 3.遍历数组复杂数据 -->
+    <h2>商品列表</h2>
+    <div class="item" v-for="item in products">
+      <h3 class="title">商品: {{item.name}}</h3>
+      <span>价格: {{item.price}}</span>
+      <p>秒杀: {{item.desc}}</p>
+    </div>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          // 1.movies
+          movies: ["星际穿越", "少年派", "大话西游", "哆啦A梦"],
+
+          // 2.数组: 存放的是对象
+          products: [
+            { id: 110, name: "Macbook", price: 9.9, desc: "9.9秒杀, 快来抢购!" },
+            { id: 111, name: "iPhone", price: 8.8, desc: "9.9秒杀, 快来抢购!" },
+            { id: 112, name: "小米电脑", price: 9.9, desc: "9.9秒杀, 快来抢购!" },
+          ]
+        }
+      },
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>

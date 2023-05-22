@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <h2>{{message}}</h2>
+    <button @click="changeMessage">修改message</button>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // Proxy -> Reflect
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          message: "Hello Vue",
+          info: { name: "why", age: 18 }
+        }
+      },
+      methods: {
+        changeMessage() {
+          this.message = "你好啊, 李银河!"
+          this.info = { name: "kobe" }
+        }
+      },
+      watch: {
+        // 1.默认有两个参数: newValue/oldValue
+        message(newValue, oldValue) {
+          console.log("message数据发生了变化:", newValue, oldValue)
+        },
+        info(newValue, oldValue) {
+          // 2.如果是对象类型, 那么拿到的是代理对象
+          // console.log("info数据发生了变化:", newValue, oldValue)
+          // console.log(newValue.name, oldValue.name)
+
+          // 3.获取原生对象
+          // console.log({ ...newValue })
+          console.log(Vue.toRaw(newValue))
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>

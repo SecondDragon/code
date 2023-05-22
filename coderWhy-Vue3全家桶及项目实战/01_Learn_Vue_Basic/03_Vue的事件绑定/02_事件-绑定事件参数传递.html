@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 1.默认传递event对象 -->
+    <button @click="btn1Click">按钮1</button>
+
+    <!-- 2.只有自己的参数 -->
+    <button @click="btn2Click('why', age)">按钮2</button>
+
+    <!-- 3.自己的参数和event对象 -->
+    <!-- 在模板中想要明确的获取event对象: $event -->
+    <button @click="btn3Click('why', age, $event)">按钮3</button>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data: function() {
+        return {
+          message: "Hello Vue",
+          age: 18
+        }
+      },
+      methods: {
+        // 1.默认参数: event对象
+        // 总结: 如果在绑定事件的时候, 没有传递任何的参数, 那么event对象会被默认传递进来
+        btn1Click(event) {
+          console.log("btn1Click:", event)
+        },
+
+        // 2.明确参数:
+        btn2Click(name, age) {
+          console.log("btn2Click:", name, age)
+        },
+
+        // 3.明确参数+event对象
+        btn3Click(name, age, event) {
+          console.log("btn3Click:", name, age, event)
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+1.关于JSX底层处理机制
+  第一步：把我们编写的JSX语法，编译为虚拟DOM对象「virtualDOM」
+    虚拟DOM对象：框架自己内部构建的一套对象体系（对象的相关成员都是React内部规定的），基于这些属性描述出，我们所构建视图中的，DOM节点的相关特征！！
+    @1 基于 babel-preset-react-app 把JSX编译为 React.createElement(...) 这种格式！！
+       只要是元素节点，必然会基于createElement进行处理！
+       React.createElement(ele,props,...children)
+        + ele：元素标签名「或组件」
+        + props：元素的属性集合(对象)「如果没有设置过任何的属性，则此值是null」
+        + children：第三个及以后的参数，都是当前元素的子节点
+
+    @2 再把 createElement 方法执行，创建出virtualDOM虚拟DOM对象「也有称之为：JSX元素、JSX对象、ReactChild对象...」！！
+      virtualDOM = {
+        $$typeof: Symbol(react.element),
+        ref: null,
+        key: null,
+        type: 标签名「或组件」,
+        // 存储了元素的相关属性 && 子节点信息
+        props: {
+            元素的相关属性,
+            children:子节点信息「没有子节点则没有这个属性、属性值可能是一个值、也可能是一个数组」
+        }
+      }
+
+  第二步：把构建的virtualDOM渲染为真实DOM
+    真实DOM：浏览器页面中，最后渲染出来，让用户看见的DOM元素！！
+    基于ReactDOM中的render方法处理的！！
+      v16
+      ReactDOM.render(
+        <>...</>,
+        document.getElementById('root')
+      );
+
+      v18
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <>...</>
+      );
+
+  补充说明：第一次渲染页面是直接从virtualDOM->真实DOM；但是后期视图更新的时候，需要经过一个DOM-DIFF的对比，计算出补丁包PATCH（两次视图差异的部分），把PATCH补丁包进行渲染！！
+
+==========================================
+1. 函数组件
+  创建：在SRC目录中，创建一个 xxx.jsx 的文件，就是要创建一个组件；我们在此文件中，创建一个函数，让函数返回JSX视图「或者JSX元素、virtualDOM虚拟DOM对象」；这就是创建了一个“函数组件”！！
+  调用：基于ES6Module规范，导入创建的组件「可以忽略.jsx后缀名」，然后像写标签一样调用这个组件即可！！
+     <Component/> 单闭合调用
+     <Component> ... </Component> 双闭合调用
+  命名：组件的名字，我们一般都采用PascalCase「大驼峰命名法」这种方式命名
+  --------
+  调用组件的时候，我们可以给调用的组件设置(传递)各种各样的属性
+    <DemoOne title="我是标题" x={10} data={[100, 200]} className="box" style={{ fontSize: '20px' }} />
+    + 如果设置的属性值不是字符串格式，需要基于“{}胡子语法”进行嵌套
+    + 调用组件的时候，我们可以把一些数据/信息基于属性props的方式，传递给组件！！
+  --------
+  渲染机制
+    @1 基于babel-preset-react-app把调用的组件转换为createElement格式
+        React.createElement(DemoOne, {
+            title: "\u6211\u662F\u6807\u9898",
+            x: 10,
+            data: [100, 200],
+            className: "box",
+            style: {
+                fontSize: '20px'
+            }
+        })
+    @2 把createElement方法执行，创建出一个virtualDOM对象！！
+        {
+            $$typeof: Symbol(react.element),
+            key: null,
+            props: {title: '我是标题', x: 10, data: 数组, className: 'box', style: {fontSize: '20px'}}, //如果有子节点「双闭合调用」，则也包含children！！
+            ref: null,
+            type: DemoOne
+        }
+    @3 基于root.render把virtualDOM变为真实的DOM
+        type值不再是一个字符串，而是一个函数了，此时：
+        + 把函数执行 -> DemoOne()
+        + 把virtualDOM中的props，作为实参传递给函数 -> DemoOne(props)
+        + 接收函数执行的返回结果「也就是当前组件的virtualDOM对象」
+        + 最后基于render把组件返回的虚拟DOM变为真实DOM，插入到#root容器中！！
+
+2. 属性props的处理
+  + 调用组件，传递进来的属性是“只读”的「原理：props对象被冻结了」
+    Object.isFrozen(props) -> true
+    获取：props.xxx
+    修改：props.xxx=xxx  =>报错
+  + 作用：父组件(index.jsx)调用子组件(DemoOne.jsx)的时候，可以基于属性，把不同的信息传递给子组件；子组件接收相应的属性值，呈现出不同的效果，让组件的复用性更强！！
+  + 虽然对于传递进来的属性，我们不能直接修改，但是可以做一些规则校验
+    + 设置默认值
+      函数组件.defaultProps = {
+        x: 0,
+        ......
+      };
+    + 设置其它规则，例如：数据值格式、是否必传... 「依赖于官方的一个插件：prop-types」
+      https://github.com/facebook/prop-types
+      import PropTypes from 'prop-types';
+      函数组件.propTypes = {
+        // 类型是字符串、必传
+        title: PropTypes.string.isRequired,
+        // 类型是数字
+        x: PropTypes.number,
+        // 多种校验规则中的一个
+        y: PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.bool,
+        ])
+      };
+    传递进来的属性，首先会经历规则的校验，不管校验成功还是失败，最后都会把属性给形参props，只不过如果不符合设定的规则，控制台会抛出警告错误{不影响属性值的获取}！！
+  + 如果就想把传递的属性值进行修改，我们可以：
+    + 把props中的某个属性赋值给其他内容「例如：变量、状态...」
+    + 我们不直接操作props.xxx=xxx，但是我们可以修改变量/状态值！！
+
+
+
+扫盲知识点：关于对象的规则设置
+  + 冻结
+    冻结对象：Object.freeze(obj)
+    检测是否被冻结：Object.isFrozen(obj) =>true/false
+    + 被冻结的对象：不能修改成员值、不能新增成员、不能删除现有成员、不能给成员做劫持「Object.defineProperty」
+  + 密封
+    密封对象：Object.seal(obj)
+    检测是否被密封：Object.isSealed(obj)
+    + 被密封的对象：可以修改成员的值，但也不能删、不能新增、不能劫持！！
+  + 扩展
+    把对象设置为不可扩展：Object.preventExtensions(obj)
+    检测是否可扩展：Object.isExtensible(obj)
+    + 被设置不可扩展的对象：除了不能新增成员、其余的操作都可以处理！！
+  被冻结的对象，即是不可扩展的，也是密封的！！同理，被密封的对象，也是不可扩展的！！

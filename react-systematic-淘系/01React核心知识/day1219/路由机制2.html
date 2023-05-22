@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前端路由机制实现</title>
+</head>
+
+<body>
+    <nav class="nav-box">
+        <a href="/">首页</a>
+        <a href="/product">产品中心</a>
+        <a href="/personal">个人中心</a>
+    </nav>
+    <div class="view-box"></div>
+
+    <!-- IMPORT JS -->
+    <script>
+        /*
+        History路由{浏览器路由} 
+          + 利用了H5中的HistoryAPI来实现页面地址的切换「可以不刷新页面」
+          + 根据不同的地址，到路由表中进行匹配，让容器中渲染不同的内容「组件」
+        问题：我们切换的地址，在页面不刷新的情况下是没有问题的，但是如果页面刷新，这个地址是不存在的，会报404错误！！此时我们需要服务器的配合：在地址不存在的情况下，也可以把主页面内容返回！！
+        */
+        const viewBox = document.querySelector('.view-box'),
+            navBox = document.querySelector('.nav-box');
+
+        // 点击A实现页面地址切换，但是不能刷新页面
+        navBox.onclick = function (ev) {
+            let target = ev.target;
+            if (target.tagName === 'A') {
+                ev.preventDefault(); //阻止A标签页面跳转&刷新的默认行为
+                history.pushState({}, "", target.href);
+                // 去路由匹配
+                routerMatch();
+            }
+        };
+
+        // 路由匹配的办法
+        const routes = [{
+            path: '/',
+            component: '首页的内容'
+        }, {
+            path: '/product',
+            component: '产品中心的内容'
+        }, {
+            path: '/personal',
+            component: '个人中心的内容'
+        }];
+        const routerMatch = function routerMatch() {
+            let path = location.pathname,
+                text = "";
+            routes.forEach(item => {
+                if (item.path === path) {
+                    text = item.component;
+                }
+            });
+            viewBox.innerHTML = text;
+        };
+
+        // 默认展示首页
+        history.pushState({}, "", "/");
+        routerMatch();
+
+        // 监听popstate地址变化事件；此事件：执行go/forward/back等方法（或者点击前进后退按钮）可以触发，但是执行pushState/replaceState等方法无法触发！！
+        window.onpopstate = routerMatch;
+    </script>
+</body>
+
+</html>

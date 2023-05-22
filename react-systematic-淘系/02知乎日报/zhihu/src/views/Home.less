@@ -1,0 +1,102 @@
+.home-box {
+
+    /* 轮播图 */
+    .swiper-box {
+        box-sizing: border-box;
+        width: 750px;
+        height: 750px;
+        background: #DDD;
+
+        .adm-swiper {
+            height: 100%;
+        }
+
+        a {
+            display: block;
+            height: 100%;
+        }
+
+        .adm-image,
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+
+            .adm-image-tip {
+                svg {
+                    width: 20%;
+                    height: 20%;
+                }
+            }
+        }
+
+        .desc {
+            position: absolute;
+            left: 0;
+            bottom: 40px;
+            box-sizing: border-box;
+            padding: 0 30px;
+            width: 100%;
+
+            .title {
+                font-size: 36px;
+                color: #FFF;
+            }
+
+            .author {
+                line-height: 60px;
+                font-size: 24px;
+                color: rgba(255, 255, 255, .7);
+            }
+        }
+
+        .adm-swiper-indicator {
+            bottom: 20px;
+            left: auto;
+            right: 0;
+            transform: translateX(-30px);
+        }
+
+        .adm-page-indicator-dot {
+            margin: 0 6px;
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, .7);
+            border-radius: 6px;
+
+            &.adm-page-indicator-dot-active {
+                width: 36px;
+                background: #FFF;
+            }
+        }
+    }
+
+    /* 加载更多 */
+    .loadmore-box {
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        background: #EEE;
+        font-size: 24px;
+        color: #999;
+
+        .adm-dot-loading {
+            position: static;
+            transform: none;
+            font-size: 32px;
+        }
+    }
+
+    /* 新闻列表 */
+    .news-box {
+        padding: 10px 30px;
+
+        .adm-divider-left {
+            &.adm-divider-horizontal {
+                &:before {
+                    max-width: 2%;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+footer{
+    position: fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:120px;
+    z-index: 1000;
+    background-color: #FFF;
+    border-top:1px solid #D5D5D5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a{
+        display: flex;
+        flex:1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color:#000;
+        span{
+            font-size:30px;
+            line-height: 30px;
+            &.anticon{
+                font-size:50px;
+            }
+        }
+        &.active{
+            color:orange;
+            font-weight: bold;
+        }
+    }
+}

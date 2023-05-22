@@ -1,0 +1,56 @@
+1. 在组件中基于dispatch派发的时候，派发的action对象中的type属性「派发的行为标识」，它的命名上需要注意一个细节！！
+   因为：每一次派发，一定会把reducer执行一遍，再去saga中间中，判断此任务是否被监听...
+   如果打算进行“同步派发”：
+      则我们派发的行为标识需要和reducer中做判断的行为标识保持一致！！
+      并且在saga中，不要再对这个标识进行监听了！！
+      这样的标识，我们可以在 store/action-types 中进行统一管理！！
+   如果打算进行“异步派发”：
+      我们派发的标识，“一定不能”和reducer中做判断的标识一样！！
+      需要saga中对这个标识进行监听！监听到派发后，进行异步的操作处理！！
+      我们可以在正常标识的后面加“@SAGA@”「规范：我自己定义的」
+      当异步操作结束，我们基于 yield put 进行派发的时候，设置的派发标识，要和reducer中做判断的标识一样！！
+
+2. yield take(异步标识)：创建监听器，监听派发指定标识的异步任务
+   + 单纯这样处理，只会被监听一次，我们特殊处理一下
+   while (true) {
+      let action = yield take(异步标识);
+      yield workingCount(action);
+   }
+
+3. yield takeEvery(异步标识,要执行的方法)
+   + 等价于上述基于while(true)的操作！！
+   + 本身就可以实现一直监听的操作！！被监到后，把传递进来的函数执行！！
+   yield takeEvery(异步标识, workingCount);
+
+   yield takeLatest(异步标识,working)
+   + 和takeEvery一样，每一次异步派发都会被监测到，都会把working执行
+   + 只不过，在执行working之前，会把正在运行的操作都结束掉，只保留当前最新的「也就是最后一次」
+   + 对异步派发任务的防抖处理「结束边界」
+
+   yield throttle(ms, 异步标识, working);
+   + 对异步派发进行节流处理：组件中频繁进行派发操作，我们控制一定的触发频率「依然会触发多次，只不过做了降频」
+   + 它不是对执行的方法做节流，而是对异步任务的监测做节流：第一次异步任务被监测到派发后，下一次监测到，需要过“ms”这么长时间！！
+
+   yield debounce(ms, 异步标识, working);
+   + 和takeLatest一样，也是做防抖处理「只识别一次」
+   + 但是原理和takeLatest是不一样的，和throttle类似：它是对异步任务的监测做防抖处理，在指定的“ms”时间内，我们触发多次，任务也只能被监测到一次「监测最后一次」，把working执行一次！！
+
+4. working工作区中使用的EffectsAPI
+   yield delay(ms) 设置延迟操作「和我们之前自己写的delay延迟函数类型」，只有延迟时间到达后，其下面的代码才会继续执行！！
+
+   yield put(action) 派发任务到reducer，等价于dispatch
+
+   let { ... } = yield select(mapState)
+     + 基于mapState函数，返回需要使用的公共状态
+     + yield处理后的结果，就是返回的公共状态，我们可以解构赋值
+     let { num } = yield select(state => state.demo);
+
+   let result = yield call(方法, 实参1, 实参2, ...)
+     + 基于call方法，可以把指定的函数执行，把实参一项项的传递给方法
+     + 真实项目中，我们一般基于call方法，实现从服务器获取数据
+     + result就是异步调取接口成功，从服务器获取的信息
+     + ...
+   let result = yield apply(this, 方法, [实参1, 实参2, ...]);
+
+   yield fork(方法, 实参1, 实参2, ...)
+     + 以 非阻塞调用 的形式执行方法

@@ -1,0 +1,270 @@
+新蜂商城CMS内容管理系统
+https://github.com/newbee-ltd
+http://vue3-admin.newbee.ltd/
+
+======整体概述======
+@1 请求接口的统一前缀：http://backend-api-02.newbee.ltd/manage-api/v1
+@2 除登录接口外，其余接口的访问，一律需要给服务器传递Token「基于请求头token字段传递」
+@3 最高管理员的账号和密码
+   账号：admin
+   密码：123456
+@4 POST系列请求是基于请求主体把信息传递给服务器，需要是：“JSON格式字符串”；
+   GET系列请求是基于“问号传参”把信息传递给服务器；
+
+======基本接口======
+@1 登录接口
+URL:/adminUser/login
+METHOD:POST
+PARAMS:
+   userName 用户名/账号
+   passwordMd5 密码「需要基于md5加密处理」
+RESPONSE:
+   {
+        "resultCode": 200,
+        "message": "SUCCESS",
+        "data": "8e20cf465cdc63ab5dd05471f00b96c-"  //服务器返回的Token值
+   }
+
+@2 获取登陆者基本信息
+URL:/adminUser/profile
+METHOD:GET
+PARAMS:
+RESPONSE:
+   {
+       "resultCode":200,  //状态描述  419代表未登录或者登录过期  200是成功
+       "message":"SUCCESS",
+       "data":{
+           "adminUserId":1,
+           "loginUserName":"admin",
+           "loginPassword":"******",
+           "nickName":"十三",
+           "locked":0
+        }
+    }
+
+@3 修改登录者信息「未开放」
+URL:/adminUser/name
+METHOD:PUT
+PARAMS:
+    loginUserName: "admin"
+    nickName: "十三"
+RESPONSE:
+    {
+       "resultCode":200,
+       "message":"SUCCESS",
+    }
+
+@4 修改登录者密码「未开放」
+URL:/adminUser/password
+METHOD:PUT
+PARAMS:
+    originalPassword 原始密码
+    newPassword 新密码
+RESPONSE:
+    {
+       "resultCode":200,
+       "message":"SUCCESS",
+    }
+
+@5 上传图片接口
+URL:/upload/file
+METHOD:POST
+PARAMS:要求是FORM-DATA格式
+    file 文件流对象
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS",
+        data: "http://backend-api-02.newbee.ltd/upload/20220326_16493555.jpg" //上传后图片地址
+    }
+
+======轮播图配置======
+@1 获取轮播图信息列表
+URL:/carousels
+METHOD:GET
+PARAMS:
+    pageNumber:1 当前第几页
+    pageSize:10 每页展示条数
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS",
+        "data":{
+            "totalCount":721,
+            "pageSize":10,
+            "totalPage":73,
+            "currPage":1,
+            "list":[{
+                "carouselId":512,  //编号
+                "carouselUrl":"http://backend-api-02.newbee.ltd/upload/20220314_14525195.jpg", //图片地址
+                "redirectUrl":"order", //跳转连接
+                "carouselRank":203, //排序号
+                "isDeleted":0, //是否删除
+                "createTime":"2021-11-17 16:47:16", //创建时间
+                "createUser":0, //创建人
+                "updateTime":"2022-03-26 09:16:44", //修改时间
+                "updateUser":0 //修改人
+            }...]
+        }
+    }
+
+@2 获取轮播图详细信息
+URL:/carousels/512
+METHOD:GET
+PARAMS:
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS",
+        "data":{
+            "carouselId":512,
+            "carouselUrl":"http://backend-api-02.newbee.ltd/upload/20220314_14525195.jpg",
+            "redirectUrl":"order",
+            "carouselRank":203,
+            "isDeleted":0,
+            "createTime":"2021-11-17 16:47:16",
+            "createUser":0,
+            "updateTime":"2022-03-26 09:16:44",
+            "updateUser":0
+        }
+    }
+
+@3 删除轮播图信息「未开放」
+URL:/carousels
+METHOD:DELETE
+PARAMS:(特殊:需要请求主体传值)
+    ids:[512,453,...]  数组中包含需要删除的轮播图ID
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS"
+    }
+
+@4 修改轮播图信息
+URL:/carousels
+METHOD:PUT
+PARAMS:
+    carouselId:512  编号
+    carouselUrl:"xxx" 图片的连接地址
+    redirectUrl:"order" 跳转的连接地址
+    carouselRank:203  排序号
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS"
+    }
+
+@5 新增轮播图信息
+URL:/carousels
+METHOD:POST
+PARAMS:
+    carouselUrl:"xxx" 图片的连接地址
+    redirectUrl:"order" 跳转的连接地址
+    carouselRank:203  排序号
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS"
+    }
+
+======热销商品配置======
+@1 获取热销商品配置列表
+URL:/indexConfigs
+METHOD:GET
+PARAMS:
+    pageNumber:1 
+    pageSize:10
+    configType:3
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS",
+        "data":{
+            "totalCount":71,
+            "pageSize":10,
+            "totalPage":8,
+            "currPage":1,
+            "list":[{
+                "configId":78,
+                "configName":"艺术画",
+                "configType":3,
+                "goodsId":15094,
+                "redirectUrl":"##",
+                "configRank":193,
+                "isDeleted":0,
+                "createTime":"2021-11-01 01:26:35",
+                "createUser":0,
+                "updateTime":"2022-03-09 12:08:16",
+                "updateUser":0
+            }]
+        }
+    }
+
+@2 获取热销商品详细信息
+URL:/indexConfigs/78
+METHOD:GET
+PARAMS:
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS",
+        "data":{
+            "configId":78,
+            "configName":"艺术画",
+            "configType":3,
+            "goodsId":15094,
+            "redirectUrl":"##",
+            "configRank":193,
+            "isDeleted":0,
+            "createTime":"2021-11-01 01:26:35",
+            "createUser":0,
+            "updateTime":"2022-03-09 12:08:16",
+            "updateUser":0
+        }
+    }
+
+@3 删除热销商品信息「未开放」
+URL:/indexConfigs
+METHOD:DELETE
+PARAMS:
+    ids:[512,453,...]
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS"
+    }
+
+@4 修改热销商品信息
+URL:/indexConfigs
+METHOD:PUT
+PARAMS:
+    configId:78,
+    configName:"艺术画",
+    configType:3,
+    goodsId:15094,
+    redirectUrl:"##",
+    configRank:193,
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS"
+    }
+
+@5 新增热销商品信息
+URL:/indexConfigs
+METHOD:POST
+PARAMS:
+    configName:"艺术画",
+    configType:3,
+    goodsId:15094,
+    redirectUrl:"##",
+    configRank:193,
+RESPONSE:
+    {
+        "resultCode":200,
+        "message":"SUCCESS"
+    }
+
+附加：
+新品上线配置的增删改是： configType=4
+为你推荐配置的增删改是： configType=5

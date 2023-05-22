@@ -1,0 +1,41 @@
+jsx或者说React的渲染机制：
+1. 把jsx语法编译为虚拟DOM「virtualDOM」
+   + 基于babel-preset-react-app把jsx视图编译为 React.createElement 格式
+      React.createElement(标签名/组件名，props，…children)
+   + createElement 执行就会创建出对应的 virtualDOM
+2. 基于ReactDOM 中的render 方法，把virtualDOM编译为真实DOM，最后把真实的DOM交给浏览器渲染！！
+3. 当组件更新的时候：
+   + 会根据最新的数据，重新把”整个jsx“编译为新的 virtualDOM 「不论有的地方的数据是否发生改变，virtualDOM都是从头编译到尾的」
+   + 但是不会把整个virtualDOM全部编译为真实的DOM，它需要经过一个 DOM-DIFF 的对比，把virtualDOM中差异的部分获取到，接下来只把差异的部分渲染为真实的DOM，交给浏览器渲染！！
+
+DOM-DIFF 主要就是在组件更新的时候，可以实现差异化的更新，而不是整体全部更新，以此来优化组件渲染的速度！提高性能！！
+
+React DOM-DIFF 算法
+  在ReactV16及以前：新老虚拟DOM对比
+  在ReactV17及以后：老的DOM会构建出Fiber链表，拿最新创建的虚拟DOM和Fiber链表做对比
+
+  优化原则 
+    + 深度优先原则
+    + 同级对比
+    + 不同类型的元素,会产出不同的结构:销毁老结构,创建新结构
+    + 可以通过key标识移动的元素:如果不设置key，则默认元素的“索引”就是key
+
+  1. 处理规则
+  key和“类型”都相同：
+    + 更新且复用老的节点 Update(4)
+  key和“类型”只要有一个不同：
+    + 删除老的 Deletion(8)
+    + 插入新的 Placement(2)
+    插入并更新，也就是挪动位置：PlacementAndUpdate(6) 
+
+  2. 详细的处理步骤
+    可能会经历二轮遍历
+      + 第一轮：主要是处理节点的更新
+      + 第二轮：主要处理节点的新增、删除和移动
+      + 移动时的原则是尽量少量的移动，如果必须有一个要动，新地位高的不动，新地位低的动  lastPlacedIndex=0
+      + key不同退出第一轮循环
+    例如：之前是A/B/C/D/E/F  现在是A/C/E/B/G/F
+      第二轮遍历之前，会拿老的节点创建map对象，拿新的节点去老的节点中找相同key值进行比较！！
+      最后渲染的时候，先执行标记为8的（也就是删除）、然后执行标记为4的（也就是更新）、然后是标记为6的（也就是移动）、最后是标记为2的（也就是新增）
+
+  3. 循环创建元素需要设置唯一的key，不建议使用索引作为key值！！！

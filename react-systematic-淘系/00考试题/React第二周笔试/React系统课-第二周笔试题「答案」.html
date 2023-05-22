@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>React系统课-第二周笔试题「答案」</title>
+    <meta charset='utf-8'>
+    <link href='https://cdn.maxiang.io/res-min/themes/marxico.css' rel='stylesheet'>
+    <style>
+        #preview-contents {
+            margin-top: -20px;
+            width: 900px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='preview-contents' class='note-content'>
+        <h4 id="react系统课-第二周笔试题答案">React系统课-第二周笔试题「答案」</h4>
+
+        <p><strong>1. 什么是React Hooks组件，解决了什么问题？</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">参考答案</span>
+</div><div class="hljs-line"><span class="hljs-comment">------</span>
+</div><div class="hljs-line"><span class="hljs-comment">函数组件：</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 不具备“状态、ref、周期函数”等内容，第一次渲染完毕后，无法基于组件内部的操作来控制其更新，因此称之为静态组件！</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 但是具备属性及插槽，父组件可以控制其重新渲染！</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 渲染流程简单，渲染速度较快！</span>
+</div><div class="hljs-line"><span class="hljs-comment"></span>
+</div><div class="hljs-line"><span class="hljs-comment">类组件：</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 具备“状态、ref、周期函数、属性、插槽”等内容，可以灵活的控制组件更新，基于钩子函数也可灵活掌控不同阶段处理不同的事情！</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 渲染流程繁琐，渲染速度相对较慢！</span>
+</div><div class="hljs-line"><span class="hljs-comment"></span>
+</div><div class="hljs-line"><span class="hljs-comment">React Hooks 组件，就是基于 React 中新提供的 Hook 函数，可以让函数组件动态化!</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div></code></pre>
+
+        <p><strong>2. 列举常见的React Hook函数，及作用「不少于5个」</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">参考答案</span>
+</div><div class="hljs-line"><span class="hljs-comment">------</span>
+</div><div class="hljs-line"><span class="hljs-comment">基础 Hook</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ useState 使用状态管理</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ useEffect 使用周期函数</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ useContext 使用上下文信息</span>
+</div><div class="hljs-line"><span class="hljs-comment"></span>
+</div><div class="hljs-line"><span class="hljs-comment">额外的 Hook</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ useReducer useState的替代方案，借鉴redux处理思想，管理更复杂的状态和逻辑</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ useCallback 构建缓存优化方案</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ useMemo 构建缓存优化方案</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ useRef 使用ref获取DOM</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ useImperativeHandle 配合forwardRef（ref转发）一起使用</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ useLayoutEffect 与useEffect相同，但会在所有的DOM变更之后同步调用effect</span>
+</div><div class="hljs-line"><span class="hljs-comment">......</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div></code></pre>
+
+        <p><strong>3. useEffect和useLayoutEffect的区别？</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">参考答案</span>
+</div><div class="hljs-line"><span class="hljs-comment">------</span>
+</div><div class="hljs-line"><span class="hljs-comment">useLayoutEffect</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 其函数签名与 useEffect 相同，但它会在所有的 DOM 变更之后同步调用 effect。</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 可以使用它来读取 DOM 布局并同步触发重渲染。</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 在浏览器执行绘制之前，useLayoutEffect 内部的更新计划将被同步刷新。</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 尽可能使用标准的 useEffect 以避免阻塞视觉更新。</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div></code></pre>
+
+        <p><strong>4.简述useMemo和useCallback的作用？</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">参考答案</span>
+</div><div class="hljs-line"><span class="hljs-comment">------</span>
+</div><div class="hljs-line"><span class="hljs-comment">在前端开发的过程中，我们需要缓存一些内容，以避免在需渲染过程中，因大量不必要的耗时计算而导致的性能问题。useMemo可以帮助我们去实现数据的计算缓存！</span>
+</div><div class="hljs-line"><span class="hljs-comment"></span>
+</div><div class="hljs-line"><span class="hljs-comment">在父组件调用子组件的时候，如果需要基于属性给子组件传递一个函数，为了让每一次传递给子组件的函数，都是相同的引用地址，我们可以把函数基于useCallback处理一下「useCallback 用于得到一个固定引用值的函数」！这样在子组件中，再基于PureComponent或者React.memo的配合，可以减少子组件非必要的更新操作！！</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div></code></pre>
+
+        <p><strong>5. 看代码，分别写出：组件第一次渲染 &amp; 一分钟后点击按钮 各自输出结果</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">参考答案</span>
+</div><div class="hljs-line"><span class="hljs-comment">------</span>
+</div><div class="hljs-line"><span class="hljs-comment">第一次渲染：</span>
+</div><div class="hljs-line"><span class="hljs-comment">  @7: 10 0</span>
+</div><div class="hljs-line"><span class="hljs-comment">  @1: 10 0</span>
+</div><div class="hljs-line"><span class="hljs-comment">  @3: 10 0</span>
+</div><div class="hljs-line"><span class="hljs-comment">  @5: 10 0</span>
+</div><div class="hljs-line"><span class="hljs-comment">  @6: 10 0</span>
+</div><div class="hljs-line"><span class="hljs-comment">  @4: 10 0</span>
+</div><div class="hljs-line"><span class="hljs-comment">点击按钮：</span>
+</div><div class="hljs-line"><span class="hljs-comment">  @7: 11 0</span>
+</div><div class="hljs-line"><span class="hljs-comment">  @2: 10 0</span>
+</div><div class="hljs-line"><span class="hljs-comment">  @1: 11 0</span>
+</div><div class="hljs-line"><span class="hljs-comment">  @5: 11 0</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div></code></pre>
+
+        <p><strong>6. 简述ref在React组件中的作用</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">参考答案</span>
+</div><div class="hljs-line"><span class="hljs-comment">------</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 给HTML标签设置ref，可以获取对应的DOM元素</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 给子组件（类组件）设置ref，可以获取子组件的实例「这样就可以获取子组件中的相关信息了」</span>
+</div><div class="hljs-line"><span class="hljs-comment">+ 给子组件（函数组件）设置ref，需要配合forwardRef和useImperativeHandle，获取子组件内部的元素或者数据/方法等！！</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div></code></pre>
+
+        <p><strong>7. 想在Demo「父组件」中，获取Child「子组件」中的：x状态和change方法，该如何编写代码？ </strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-keyword">import</span> React, { useState, useImperativeHandle, forwardRef, useRef, useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+</div><div class="hljs-line"><span class="hljs-keyword">const</span> Child = forwardRef(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Child</span>(<span class="hljs-params">props, ref</span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> [x, setX] = useState(<span class="hljs-number">0</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">const</span> change = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">        setX(x + <span class="hljs-number">1</span>);
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">    useImperativeHandle(ref, () =&gt; {
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> {
+</div><div class="hljs-line">            x,
+</div><div class="hljs-line">            change
+</div><div class="hljs-line">        };
+</div><div class="hljs-line">    });
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"child-box"</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">        ...</span>
+</div><div class="hljs-line"><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+</div><div class="hljs-line">});
+</div><div class="hljs-line"><span class="hljs-keyword">const</span> Demo = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Demo</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> child = useRef(<span class="hljs-literal">null</span>);
+</div><div class="hljs-line">    useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">        <span class="hljs-built_in">console</span>.log(child.current); <span class="hljs-comment">//包含需要的信息</span>
+</div><div class="hljs-line">    }, []);
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"demo-box"</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Child</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{child}</span> /&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>;</span>
+</div><div class="hljs-line"><span class="xml">};</span>
+</div><div class="hljs-line"><span class="xml">export default Demo;</span>
+</div></code></pre>
+
+        <p><strong>8. 简述什么是合成事件？以及React中为啥要使用合成事件？</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">参考答案</span>
+</div><div class="hljs-line"><span class="hljs-comment">------</span>
+</div><div class="hljs-line"><span class="hljs-comment">合成事件是围绕浏览器原生事件，充当跨浏览器包装器的对象；它们将不同浏览器的行为合并为一个API，这样做是为了确保事件在不同浏览器中显示一致的属性！</span>
+</div><div class="hljs-line"><span class="hljs-comment"></span>
+</div><div class="hljs-line"><span class="hljs-comment">React中的合成事件是基于事件委托实现的；React17及以后，是委托给#root元素；React17以前，是委托给document元素，并且没有实现捕获阶段的派发；</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div></code></pre>
+
+        <p><strong>9. 假如ev是合成事件对象，那么请说出：ev.stopPropagation &amp; ev.nativeEvent.stopPropagation &amp;
+                ev.nativeEvent.stopImmediatePropagation 三者的区别？</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">参考答案</span>
+</div><div class="hljs-line"><span class="hljs-comment">------</span>
+</div><div class="hljs-line"><span class="hljs-comment">ev.stopPropagation() </span>
+</div><div class="hljs-line"><span class="hljs-comment">//合成事件对象中的“阻止事件传播”:阻止原生的事件传播 &amp; 阻止合成事件中的事件传播</span>
+</div><div class="hljs-line"><span class="hljs-comment"></span>
+</div><div class="hljs-line"><span class="hljs-comment">ev.nativeEvent.stopPropagation(); </span>
+</div><div class="hljs-line"><span class="hljs-comment">//原生事件对象中的“阻止事件传播”:只能阻止原生事件的传播</span>
+</div><div class="hljs-line"><span class="hljs-comment"></span>
+</div><div class="hljs-line"><span class="hljs-comment">ev.nativeEvent.stopImmediatePropagation(); </span>
+</div><div class="hljs-line"><span class="hljs-comment">//原生事件对象的阻止事件传播，相比较于stopPropagation，只不过还可以阻止元素上其它绑定的方法执行</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div></code></pre>
+
+        <p><strong>10. 看代码，分析出在React16/18两个版本中，点击inner元素，分别会输出啥？</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">参考答案</span>
+</div><div class="hljs-line"><span class="hljs-comment">------</span>
+</div><div class="hljs-line"><span class="hljs-comment">React18版本中：</span>
+</div><div class="hljs-line"><span class="hljs-comment">  document 捕获</span>
+</div><div class="hljs-line"><span class="hljs-comment">  body 捕获</span>
+</div><div class="hljs-line"><span class="hljs-comment">  outer 捕获「合成」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  inner 捕获「合成」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  root 捕获</span>
+</div><div class="hljs-line"><span class="hljs-comment">  outer 捕获「原生」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  inner 捕获「原生」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  inner 冒泡「原生」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  outer 冒泡「原生」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  inner 冒泡「合成」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  outer 冒泡「合成」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  root 冒泡</span>
+</div><div class="hljs-line"><span class="hljs-comment">  body 冒泡</span>
+</div><div class="hljs-line"><span class="hljs-comment">  document 冒泡</span>
+</div><div class="hljs-line"><span class="hljs-comment"></span>
+</div><div class="hljs-line"><span class="hljs-comment">React16版本中：</span>
+</div><div class="hljs-line"><span class="hljs-comment">  document 捕获</span>
+</div><div class="hljs-line"><span class="hljs-comment">  body 捕获</span>
+</div><div class="hljs-line"><span class="hljs-comment">  root 捕获</span>
+</div><div class="hljs-line"><span class="hljs-comment">  outer 捕获「原生」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  inner 捕获「原生」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  inner 冒泡「原生」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  outer 冒泡「原生」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  root 冒泡</span>
+</div><div class="hljs-line"><span class="hljs-comment">  body 冒泡</span>
+</div><div class="hljs-line"><span class="hljs-comment">  outer 捕获「合成」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  inner 捕获「合成」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  inner 冒泡「合成」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  outer 冒泡「合成」</span>
+</div><div class="hljs-line"><span class="hljs-comment">  document 冒泡</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div></code></pre>
+    </div>
+</body>
+
+</html>

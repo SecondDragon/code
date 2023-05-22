@@ -1,0 +1,19 @@
+{
+  "name": "18.redis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.redis.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jwt-simple": "^0.5.6",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^10.0.0",
+    "redis": "^3.1.2"
+  }
+}

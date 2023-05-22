@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="username">
+    <input type="file" id="avatar">
+    <button id="btn">点击</button>
+
+    <!-- h5 的formdata 就是表单的multipart/form-data 变体-->
+    <!-- <form action="http://localhost:3000/login" method="POST" enctype="multipart/form-data">
+        <input type="text" name="username">
+        <input type="file" name="avatar">
+        <button>提交</button>
+    </form> -->
+
+    <script>
+        let file;
+        avatar.addEventListener('change', (e) => {
+            // File  是 Blob的子集 二进制对象
+            file = e.target.files[0];
+        })
+        btn.addEventListener('click', () => {
+            let name = username.value;
+            avatar.value = '';
+            let fd = new FormData();
+            fd.append('username',name);
+            fd.append('avatar',file)
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = 'json';
+            xhr.open('POST', 'http://localhost:3000/login', true);
+              xhr.onload = function() {
+                // 浏览器会根据服务器返回的类型进行解析
+                let img = new Image();
+                // 表示的是当前服务器的根路径
+                img.src = '/upload/' + xhr.response.avatar.filename;
+                document.body.appendChild(img)
+            }
+            // 传递的数据格式是字符串类型
+            xhr.send(fd);
+        })
+        // btn.addEventListener('click', () => {
+        //     const xhr = new XMLHttpRequest();
+        //     // 服务器本身不支持../../路径
+        //     xhr.open('POST', 'http://localhost:3000/login', true);
+        //     xhr.setRequestHeader('token', '123')
+        //     //xhr.setRequestHeader('Content-Type','text/plain'); // 传输文本
+        //     xhr.setRequestHeader('Content-Type', "application/json"); // 客户端和服务器说我传递的数据类型的格式
+        //     xhr.responseType = 'json'; // 要求返回的是json
+        //     xhr.withCredentials = true;
+        //     xhr.onload = function() {
+        //         // 浏览器会根据服务器返回的类型进行解析
+        //         console.log(xhr.response)
+        //     }
+        //     // 传递的数据格式是字符串类型
+        //     xhr.send('{"name":"zf"}');
+        // })
+
+        // ajax 默认是同源策略 浏览器的限制 发送的 域名 协议 接口都得是同一个服务器 
+    </script>
+
+</body>
+
+</html>

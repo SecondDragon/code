@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "asyncpool": "^0.1.1",
+    "axios": "^0.21.0",
+    "jquery": "^3.5.1",
+    "qs": "^6.9.4"
+  },
+  "scripts": {
+    "build": "webpack"
+  }
+}

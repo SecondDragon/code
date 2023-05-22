@@ -1,0 +1,45 @@
+@import './assets/reset.min.css';
+
+html,
+body {
+    height: 100%;
+    background: #EEE;
+}
+
+#root {
+    min-height: 100%;
+    background: #FFF;
+    margin: 0 auto;
+}
+
+/* Loading的样式 */
+.adm-dot-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+}
+
+.adm-button-loading-wrapper {
+    .adm-dot-loading {
+        position: static;
+        transform: none;
+        font-size: 30px;
+    }
+}
+
+/* Toast提示的样式 */
+.adm-toast-main {
+    max-width: 240px !important;
+    font-size: 28px !important;
+
+    .adm-toast-icon {
+        font-size: 40px !important;
+    }
+}
+
+/* Button按钮的样式 */
+.adm-button {
+    border-radius: 0 !important;
+}

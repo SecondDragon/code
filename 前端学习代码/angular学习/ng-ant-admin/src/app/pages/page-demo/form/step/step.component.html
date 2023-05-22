@@ -1,0 +1,32 @@
+<!--头部版块-->
+<app-page-header [pageHeaderInfo]="pageHeaderInfo"></app-page-header>
+
+<div class="normal-table-wrap">
+  <nz-card>
+    <section class="page-wrap" [class.p-0]="stepDirection === 'vertical'">
+      <app-water-mark></app-water-mark>
+      <section class="step-wrap">
+        <nz-steps [nzDirection]="stepDirection" [nzCurrent]="currentStep - 1">
+          <nz-step nzTitle="填写转账信息"></nz-step>
+          <nz-step nzTitle="确认转账信息"></nz-step>
+          <nz-step nzTitle="完成"></nz-step>
+        </nz-steps>
+      </section>
+
+      <section>
+        <ng-template (attached)="initComponent($event)" [cdkPortalOutlet]="selectedPortal"></ng-template>
+        <!--  <ng-container *ngIf="currentStep===1">
+            <app-step-one (next)="currentStep=currentStep+1" [stepDirection]="stepDirection"></app-step-one>
+          </ng-container>
+
+          <ng-container *ngIf="currentStep===2">
+            <app-step-two (previous)="currentStep=currentStep-1" (next)="currentStep=currentStep+1"></app-step-two>
+          </ng-container>
+
+          <ng-container *ngIf="currentStep===3">
+            <app-step-three (next)="currentStep=1" [stepDirection]="stepDirection"></app-step-three>
+          </ng-container>-->
+      </section>
+    </section>
+  </nz-card>
+</div>

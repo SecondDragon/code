@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>React系统课-第一周笔试题</title>
+  <meta charset='utf-8'>
+  <link href='https://cdn.maxiang.io/res-min/themes/marxico.css' rel='stylesheet'>
+  <style>
+    #preview-contents {
+      margin-top: -20px;
+      width: 800px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='preview-contents' class='note-content'>
+
+
+
+
+
+    <h4 id="react系统课-第一周笔试题">React系统课-第一周笔试题</h4>
+
+    <p><strong>1. 请描述出webpack核心的几个部分，及作用</strong></p>
+
+    <p><strong>2.介绍一下，webpack中你知道的加载器、插件及其作用</strong></p>
+
+    <p><strong>3.create-react-app是如何处理IE兼容的</strong></p>
+
+    <blockquote>
+      <p>提示，需要处理兼容的部分包含：</p>
+
+      <ul>
+        <li>
+          <p>CSS3样式属性</p>
+        </li>
+        <li>
+          <p>ES6+语法</p>
+        </li>
+        <li>
+          <p>ES6+内置API</p>
+        </li>
+      </ul>
+    </blockquote>
+
+    <p><strong>4.根据需求，实现相应的代码</strong></p>
+
+    <blockquote>
+      <p>React项目的“开发环境”下「基于create-react-app创建的项目」，我们需要基于proxy实现跨域代理；目前已知需要代理的服务器地址是：</p>
+
+      <ul>
+        <li>
+          <p>公司测试服务器：<a href="http://192.168.1.123:9889/" target="_blank">http://192.168.1.123:9889/</a></p>
+        </li>
+        <li>
+          <p>开源平台服务器地址：<a href="https://open.weixin.com/v2/applet/"
+              target="_blank">https://open.weixin.com/v2/applet/</a></p>
+        </li>
+      </ul>
+
+      <p>请写跨域代理配置的代码！</p>
+    </blockquote>
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/* src/setupProxy.js */</span>
+</div><div class="hljs-line"><span class="hljs-keyword">const</span> { createProxyMiddleware } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http-proxy-middleware'</span>);
+</div><div class="hljs-line"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">app</span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-comment">// 编写代码</span>
+</div><div class="hljs-line">};
+</div></code></pre>
+
+    <p><strong>5. 有A/B两个模块，A模块中需要调用B模块提供的方法，请你基于ES6Module模块规范，实现模块的导出和导入「至少两种方案」</strong></p>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/* B模块 */</span>
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> listeners = [];
+</div><div class="hljs-line"><span class="hljs-keyword">const</span> sum=<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sum</span>(<span class="hljs-params">...params</span>)</span>{
+</div><div class="hljs-line">    ...
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-keyword">const</span> query=<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">query</span>(<span class="hljs-params">...params</span>)</span>{
+</div><div class="hljs-line">    ...
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-comment">// 编写导出的方式</span>
+</div><div class="hljs-line"><wbr>
+</div></code></pre>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/* A模块：需要使用B模块中的 listeners/sum/query 等变量方法 */</span>
+</div><div class="hljs-line"><span class="hljs-comment">// 编写导入的方式</span>
+</div><div class="hljs-line"><wbr>
+</div></code></pre>
+
+    <p><strong>6. 简单描述：MVC和MVVM两种框架模式的区别</strong></p>
+
+    <p><strong>7. 简单描述：JSX语法渲染的步骤</strong></p>
+
+    <p><strong>8. 根据需求，实现相关的代码</strong></p>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/* </span>
+</div><div class="hljs-line"><span class="hljs-comment">根据arr数组，循环动态创建出对应的li元素；</span>
+</div><div class="hljs-line"><span class="hljs-comment">li元素的样式是：字体14px，文字黑色；</span>
+</div><div class="hljs-line"><span class="hljs-comment">em元素的样式是：前三行，字体16px，文字红色；后面和li保持一致；</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> arr = [{
+</div><div class="hljs-line">    <span class="hljs-attr">id</span>:<span class="hljs-number">1</span>,
+</div><div class="hljs-line">    <span class="hljs-attr">title</span>:<span class="hljs-string">'全国各地沉痛哀悼江泽民同志'</span>
+</div><div class="hljs-line">},{
+</div><div class="hljs-line">    <span class="hljs-attr">id</span>:<span class="hljs-number">2</span>,
+</div><div class="hljs-line">    <span class="hljs-attr">title</span>:<span class="hljs-string">'日本队出线导致德国队被淘汰后，元首的愤怒'</span>
+</div><div class="hljs-line">},...];
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-keyword">const</span> NewsList=<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">NewsList</span>(<span class="hljs-params"></span>)</span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"news-box"</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">            全国各地沉痛哀悼江泽民同志</span>
+</div><div class="hljs-line"><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>;
+</div><div class="hljs-line">};
+</div></code></pre>
+
+    <p><strong>9. 简单描述：函数组件和类组件的区别</strong></p>
+
+    <p><strong>10. state 和 props 区别是啥？</strong></p>
+
+    <p><strong>11. 如何实现props的规则校验</strong></p>
+
+    <p><strong>12. 简述：如果让你封装一个公共的组件，你会从哪些角度去提高组件的复用性</strong></p>
+
+    <p><strong>13. React 类组件中，常用的生命周期函数有哪些？及意义！</strong></p>
+
+    <p><strong>14. React.Component 和 React.PureComponent 的区别</strong></p>
+
+    <p><strong>15. 阐述一下，setState方法是同步还是异步？为哈要这样设计？forceUpdate和setState的区别是什么？</strong></p>
+  </div>
+</body>
+
+</html>

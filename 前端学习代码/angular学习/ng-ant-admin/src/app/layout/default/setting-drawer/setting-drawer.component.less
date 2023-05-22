@@ -1,0 +1,81 @@
+@import "mixin";
+
+.themeMixin({
+  :host {
+    .drawer-handle {
+      position: fixed;
+      z-index: 1000;
+      top: 240px;
+      right: 0;
+      background: @primary-color;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: right 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+      i {
+        color: #ffffff;
+        font-size: 20px;
+      }
+
+      &.open {
+        right: 300px;
+        z-index: 9999;
+      }
+    }
+  }
+});
+.block-checkbox {
+  display: flex;
+
+  .item {
+    margin-right: 16px;
+    position: relative; // box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    cursor: pointer;
+
+    img {
+      width: 48px;
+    }
+  }
+
+  .select-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding-top: 15px;
+    padding-left: 24px;
+    height: 100%;
+    color: #1890ff;
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+.title {
+  font-size: 14px;
+  line-height: 22px;
+  margin-bottom: 12px;
+}
+
+
+
+.theme-color {
+  overflow: hidden;
+
+  .color-block {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    float: left;
+    cursor: pointer;
+    margin-right: 8px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+  }
+}

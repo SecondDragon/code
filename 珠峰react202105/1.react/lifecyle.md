@@ -1,0 +1,35 @@
+Counter 1.constructor
+Counter 2.componentWillMount
+Counter 3.render
+ChildCounter 1.componentWillMount
+ChildCounter 2.render
+ChildCounter 3.componentDidMount
+4.componentDidMount
+5.shouldComponentUpdate
+5.shouldComponentUpdate
+6.componentWillUpdate
+3.render
+4.componentWillReceiveProps
+5.componentWillReceiveProps
+7.componentDidUpdate
+5.shouldComponentUpdate
+5.shouldComponentUpdate
+6.componentWillUpdate
+3.render
+6.componentWillUnmount
+7.componentDidUpdate
+5.shouldComponentUpdate
+5.shouldComponentUpdate
+6.componentWillUpdate
+3.render
+ChildCounter 1.componentWillMount
+ChildCounter 2.render
+ChildCounter 3.componentDidMount
+Counter 7.componentDidUpdate
+Counter 5.shouldComponentUpdate
+Counter 5.shouldComponentUpdate
+Counter 6.componentWillUpdate
+Counter 3.render
+ChildCounter 4.componentWillReceiveProps
+ChildCounter 5.componentWillReceiveProps
+Counter 7.componentDidUpdate

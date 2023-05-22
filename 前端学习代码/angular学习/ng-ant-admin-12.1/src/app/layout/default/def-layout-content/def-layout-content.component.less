@@ -1,0 +1,59 @@
+.menu-sidebar {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+}
+
+:host ::ng-deep {
+  .dark-top-nav-bg {
+    background: #001529;
+    color: #ffffff !important;
+
+    .ant-badge {
+      color: #ffffff !important;
+    }
+  }
+}
+
+nz-footer {
+  text-align: center;
+}
+
+.color-weak {
+  filter: invert(80%) !important;
+}
+.animate{
+  transition: all 0.2s;
+}
+
+.mixi-left-nav-fixed{
+  position: fixed;
+  left: 0;
+  top: 48px;
+}
+
+
+
+.fixed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  width: calc(100% - 200px);
+  flex: auto;
+}
+
+.fixed-collapsed {
+  width: calc(100% - 80px);
+}
+
+.fixed-over-mode {
+  width: 100%;
+}
+
+.mix-layout{
+  height: calc(100% - 48px)!important;
+  min-height: calc(100vh - 48px)!important;
+}
+

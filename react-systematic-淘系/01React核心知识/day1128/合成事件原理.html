@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合成事件的原理</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #root {
+            width: 300px;
+            height: 300px;
+            background: lightblue;
+        }
+
+        #outer {
+            width: 200px;
+            height: 200px;
+            background: lightgreen;
+        }
+
+        #inner {
+            width: 100px;
+            height: 100px;
+            background: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" class="center">
+        <div id="outer" class="center">
+            <div id="inner" class="center"></div>
+        </div>
+    </div>
+
+    <!-- IMPORT JS -->
+    <script>
+        const root = document.querySelector('#root'),
+            outer = document.querySelector('#outer'),
+            inner = document.querySelector('#inner');
+        // 经过视图渲染解析，outer/inner上都有onXxx/onXxxCapture这样的属性
+        /* <div className="outer"
+            onClick={() => { console.log('outer 冒泡「合成」'); }}
+            onClickCapture={() => { console.log('outer 捕获「合成」'); }}>
+            <div className="inner"
+                onClick={() => { console.log('inner 冒泡「合成」'); }}
+                onClickCapture={() => { console.log('inner 捕获「合成」'); }}
+            ></div>
+        </div>; */
+        outer.onClick = () => { console.log('outer 冒泡「合成」'); }
+        outer.onClickCapture = () => { console.log('outer 捕获「合成」'); }
+        inner.onClick = () => { console.log('inner 冒泡「合成」'); }
+        inner.onClickCapture = () => { console.log('inner 捕获「合成」'); }
+
+        // 给#root做事件绑定
+        root.addEventListener('click', (ev) => {
+            let path = ev.path; // path:[事件源->....->window] 所有祖先元素
+            [...path].reverse().forEach(ele => {
+                let handle = ele.onClickCapture;
+                if (handle) handle();
+            });
+        }, true);
+        root.addEventListener('click', (ev) => {
+            let path = ev.path;
+            path.forEach(ele => {
+                let handle = ele.onClick;
+                if (handle) handle();
+            });
+        }, false);
+    </script>
+</body>
+
+</html>

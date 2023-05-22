@@ -1,0 +1,7 @@
+.box {
+    background: lightpink;
+}
+
+.box .list {
+    font-size: 14px;
+}

@@ -1,0 +1,51 @@
+React工程化开发：
+  1. create-react-app
+    + 脚手架的配置
+      $ yarn eject 暴露配置项
+      直接在源码中或者package.json中进行修改
+    + 路由管理
+      想用哪个版本就用哪个版本
+      但是约定式路由的模式、统一处理、权限校验等，都需要自己去实现！！
+    + 数据管理
+      自己基于redux/react-redux/redux-saga 或者 mobx实现状态管理
+      操作起来很复杂
+
+  2. dva-cli
+    + 脚手架的配置
+      基于roadhog进行webpack的配置
+      在.webpackrc.js文件中，基于roadhog指定的方式去修改
+    + 路由管理
+      用的是v4版本「比较老」，react用的也是16
+      默认就是约定式路由，但是统一处理及权限校验等，还是需要自己的去封装！！
+    + 数据管理
+      dva的灵魂所在就是对redux/redux-saga的封装
+      创建并且注册Model层，操作起来非常的简单、方便！！
+
+  3. create-umi@latest 或者 @ant-design/pro-cli「用的是@umi/max」
+    + 脚手架的配置
+      在config/config.ts中（或者.umirc.ts中），按照umi提供的配置方式去修改配置项
+      有启动和打包时候的配置：webpack配置修改、路由、页面模板的配置...
+      也存在运行时的配置「app.ts」：配置dva、和路由的检测及动态管理、以及Layout页面的布局调整！！
+    + 路由管理
+      umi3是v5，umi4是v6（而且在v6的基础上，封账了和v5中类似的操作语法）
+      路由全套机制，基本上都已经处理好了，我们只需要按照相关的说明去更改即可！！
+    + 数据管理
+      继承了dva的Model机制！！
+
+  4. vite
+    前三个脚手架，不论咋变，核心都是webpack处理！！
+    vite是基于rollup实现打包的「和webpack不是同一个东西」！！
+    特点：比webpack快很多很多！！尤其是开发环境下！！
+
+
+脚手架的配置需要我们考虑的事情：
+  + 基础配置：入口、出口相关的操作
+  + less等预编译语言的处理
+  + 浏览器兼容处理
+    + ES6语法、CSS3语法
+    + ES6内置API
+  + 响应式适配
+    + 修改babel-plugin：babel-plugin-styled-components-px2rem
+    + 修改postcss-plugin：postcss-px2rem
+  + 跨域代理
+  + ...

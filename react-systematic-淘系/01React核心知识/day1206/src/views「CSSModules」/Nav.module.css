@@ -1,0 +1,29 @@
+.box {
+    background: lightblue;
+}
+
+.box .title {
+    font-size: 20px;
+    color: lightcoral;
+}
+
+.list {
+    font-size: 14px;
+}
+
+.list a {
+    color: #000;
+}
+
+.list a:hover {
+    color: red;
+}
+
+.link {
+    composes: list;
+    color: lightcoral;
+}
+
+:global(.clearfix) {
+    clear: both;
+}

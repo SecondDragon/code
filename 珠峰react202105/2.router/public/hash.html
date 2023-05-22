@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li><a href="#/a">/a</a></li>
+        <li><a href="#/b">/b</a></li>
+    </ul>
+    <div id="root"></div>
+   <script>
+       window.addEventListener('hashchange',()=>{
+           // http://localhost/api/user?id=1#top
+           console.log(window.location.hash);//获取路径中的hash址
+           root.innerHTML= window.location.hash.slice(1);
+       });
+   </script>
+</body>
+</html>

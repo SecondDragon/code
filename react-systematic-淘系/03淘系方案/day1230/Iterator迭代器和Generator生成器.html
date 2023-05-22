@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Iterator迭代器和Generator生成器</title>
+  <meta charset='utf-8'>
+  <link href='https://cdn.maxiang.io/res-min/themes/marxico.css' rel='stylesheet'>
+  <style>
+    #preview-contents {
+      margin-top: -20px;
+      width: 900px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='preview-contents' class='note-content'>
+    <h4 id="generator生成器-iterator迭代器-手撕asyncawait源码">Generator生成器 &amp; Iterator迭代器</h4>
+
+    <p><strong>Iterator</strong></p>
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment"> * 遍历器（Iterator）是一种机制(接口)：为各种不同的数据结构提供统一的访问机制，任何数据结构只要部署Iterator接口，就可以完成遍历操作「for of循环」，依次处理该数据结构的所有成员</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   + 拥有next方法用于依次遍历数据结构的成员</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   + 每一次遍历返回的结果是一个对象 {done:false,value:xxx}</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *     + done:记录是否遍历完成</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *     + value:当前遍历的结果</span>
+</div><div class="hljs-line"><span class="hljs-comment"> * </span>
+</div><div class="hljs-line"><span class="hljs-comment"> * 拥有Symbol.iterator属性的数据结构(值)，被称为可被遍历的，可以基于for of循环处理</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   + 数组</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   + 部分类数组：arguments/NodeList/HTMLCollection...</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   + String</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   + Set</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   + Map</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   + generator object</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   + ...</span>
+</div><div class="hljs-line"><span class="hljs-comment"> * </span>
+</div><div class="hljs-line"><span class="hljs-comment"> * 对象默认不具备Symbol.iterator，属于不可被遍历的数据结构</span>
+</div><div class="hljs-line"><span class="hljs-comment"> */</span>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Iterator</span> </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">constructor</span>(assemble) {
+</div><div class="hljs-line">        <span class="hljs-keyword">let</span> self = <span class="hljs-keyword">this</span>;
+</div><div class="hljs-line">        self.assemble = assemble;
+</div><div class="hljs-line">        self.index = <span class="hljs-number">0</span>;
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">    next() {
+</div><div class="hljs-line">        <span class="hljs-keyword">let</span> self = <span class="hljs-keyword">this</span>,
+</div><div class="hljs-line">            assemble = self.assemble;
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (self.index &gt; assemble.length - <span class="hljs-number">1</span>) {
+</div><div class="hljs-line">            <span class="hljs-keyword">return</span> {
+</div><div class="hljs-line">                <span class="hljs-attr">done</span>: <span class="hljs-literal">true</span>,
+</div><div class="hljs-line">                <span class="hljs-attr">value</span>: <span class="hljs-literal">undefined</span>
+</div><div class="hljs-line">            };
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> {
+</div><div class="hljs-line">            <span class="hljs-attr">done</span>: <span class="hljs-literal">false</span>,
+</div><div class="hljs-line">            <span class="hljs-attr">value</span>: assemble[self.index++]
+</div><div class="hljs-line">        };
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> itor = <span class="hljs-keyword">new</span> Iterator([<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>]);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:10,done:false}</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:20,done:false}</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:30,done:false}</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:40,done:false}</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:undefined,done:true}</span>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-comment">// 让对象也具备迭代器规范</span>
+</div><div class="hljs-line"><span class="hljs-built_in">Object</span>.prototype[<span class="hljs-built_in">Symbol</span>.iterator] = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> assemble = <span class="hljs-keyword">this</span>,
+</div><div class="hljs-line">        keys = <span class="hljs-built_in">Object</span>.keys(assemble)
+</div><div class="hljs-line">            .concat(<span class="hljs-built_in">Object</span>.getOwnPropertySymbols(assemble)),
+</div><div class="hljs-line">        index = <span class="hljs-number">0</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> {
+</div><div class="hljs-line">        next() {
+</div><div class="hljs-line">            <span class="hljs-keyword">if</span> (index &gt; keys.length - <span class="hljs-number">1</span>) {
+</div><div class="hljs-line">                <span class="hljs-keyword">return</span> {
+</div><div class="hljs-line">                    <span class="hljs-attr">done</span>: <span class="hljs-literal">true</span>,
+</div><div class="hljs-line">                    <span class="hljs-attr">value</span>: <span class="hljs-literal">undefined</span>
+</div><div class="hljs-line">                };
+</div><div class="hljs-line">            }
+</div><div class="hljs-line">            <span class="hljs-keyword">return</span> {
+</div><div class="hljs-line">                <span class="hljs-attr">done</span>: <span class="hljs-literal">false</span>,
+</div><div class="hljs-line">                <span class="hljs-attr">value</span>: assemble[keys[index++]]
+</div><div class="hljs-line">            };
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> obj = {
+</div><div class="hljs-line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'zhufeng'</span>,
+</div><div class="hljs-line">    <span class="hljs-attr">age</span>: <span class="hljs-number">12</span>,
+</div><div class="hljs-line">    <span class="hljs-attr">teacher</span>: <span class="hljs-string">'team'</span>
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> value <span class="hljs-keyword">of</span> obj) {
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(value);
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-comment">// 如果是类数组对象，可直接继承数组的Symbol.iterator「JQ也是如此」</span>
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> obj = {
+</div><div class="hljs-line">    <span class="hljs-number">0</span>: <span class="hljs-number">10</span>,
+</div><div class="hljs-line">    <span class="hljs-number">1</span>: <span class="hljs-number">20</span>,
+</div><div class="hljs-line">    <span class="hljs-number">2</span>: <span class="hljs-number">30</span>,
+</div><div class="hljs-line">    <span class="hljs-attr">length</span>: <span class="hljs-number">3</span>
+</div><div class="hljs-line">};
+</div><div class="hljs-line">obj[<span class="hljs-built_in">Symbol</span>.iterator] = <span class="hljs-built_in">Array</span>.prototype[<span class="hljs-built_in">Symbol</span>.iterator];
+</div><div class="hljs-line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> value <span class="hljs-keyword">of</span> obj) {
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(value);
+</div><div class="hljs-line">}
+</div></code></pre>
+
+    <p><strong>Generator</strong></p>
+    <blockquote>
+      <p>生成器对象是由一个generator function返回的,并且它符合可迭代协议和迭代器协议 <br>
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Generator"
+          target="_blank">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Generator</a>
+      </p>
+    </blockquote>
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment"> * 普通函数 VS 生成器函数</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *    生成器函数 [[IsGenerator]]:true</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *    </span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   「把它当做一个实例 __proto__」</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *       普通函数是 Function 的实例，普通函数.__proto__===Function.prototype</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *       生成器函数是 GeneratorFunction 的实例</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *           生成器函数.__proto__===GeneratorFunction.prototype</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *           GeneratorFunction.prototype.__proto__===Function.prototype</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *      ({}).toString.call(生成器函数) =&gt; "[object GeneratorFunction]"</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *    </span>
+</div><div class="hljs-line"><span class="hljs-comment"> *   「把它作为一个构造函数 prototype」</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *      生成器函数不能被new执行  Uncaught TypeError: func is not a constructor</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *      当做普通函数执行，返回的结果就是生成器函数的一个实例</span>
+</div><div class="hljs-line"><span class="hljs-comment"> *      itor.__proto__ -&gt; func.prototype「空对象，没有constructor」 -&gt; Generator.prototype「constructor:GeneratorFunction」{next/return/throw/Symbol(Symbol.toStringTag): "Generator"} -&gt; 一个具备迭代器规范的对象「Symbol(Symbol.iterator)」 -&gt; Object.prototype</span>
+</div><div class="hljs-line"><span class="hljs-comment"> */</span>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-comment">// generator函数：function后面加一个*</span>
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="hljs-number">10</span>;
+</div><div class="hljs-line">}
+</div><div class="hljs-line">fn.prototype.query = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{};
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> gen = fn();
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(gen);
+</div><div class="hljs-line"><span class="hljs-comment">// gen.__proto__ -&gt; fn.prototype「query」 -&gt; GeneratorFunction.prototype「next/return/throw/Symbol.toStringTag」-&gt; xxx.prototype「Symbol.iterator」 -&gt; Object.prototype</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> fn); <span class="hljs-comment">//-&gt;"function"</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(fn <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Function</span>); <span class="hljs-comment">//-&gt;true </span>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">generator</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'A'</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">yield</span> <span class="hljs-number">10</span>;
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'B'</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">yield</span> <span class="hljs-number">20</span>;
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'C'</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">yield</span> <span class="hljs-number">30</span>;
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'D'</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="hljs-number">100</span>;
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> itor = generator();
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:10,done:false}</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:20,done:false}</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:30,done:false}</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:100,done:true}</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:undefined,done:true} </span>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">generator</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'A'</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">yield</span> <span class="hljs-number">10</span>;
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'B'</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">yield</span> <span class="hljs-number">20</span>;
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'C'</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="hljs-number">30</span>;
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> itor = generator();
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:10,done:false}</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.return(<span class="hljs-string">'@return'</span>)); <span class="hljs-comment">//-&gt;{value:"@return",done:true}</span>
+</div><div class="hljs-line"><span class="hljs-comment">// console.log(itor.throw('@throw'));</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//-&gt;{value:undefined,done:true}</span>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-comment">// 每一次执行next的传递的值，是作为上一次yeild的返回值处理的</span>
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">generator</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> x1 = <span class="hljs-keyword">yield</span> <span class="hljs-number">10</span>;
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(x1);
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> x2 = <span class="hljs-keyword">yield</span> <span class="hljs-number">20</span>;
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(x2);
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="hljs-number">30</span>;
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> itor = generator();
+</div><div class="hljs-line">itor.next(<span class="hljs-string">'@1'</span>);
+</div><div class="hljs-line">itor.next(<span class="hljs-string">'@2'</span>);
+</div><div class="hljs-line">itor.next(<span class="hljs-string">'@3'</span>);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-comment">// yeild* 后面跟着一个新的itor，后期执行到这的时候，会进入到新的generator中执行</span>
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">generator1</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">yield</span> <span class="hljs-number">10</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">yield</span> <span class="hljs-number">20</span>;
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">generator2</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">yield</span> <span class="hljs-number">10</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">yield</span>* generator1();
+</div><div class="hljs-line">    <span class="hljs-keyword">yield</span> <span class="hljs-number">20</span>;
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> itor = generator2();
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//value:10  done:false</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//value:10 done:false</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//value:20  done:false</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//value:20 done:false</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(itor.next()); <span class="hljs-comment">//value:undefined done:true </span>
+</div></code></pre>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+@BG:#2A2A2A;
+.home-header{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index: 999;
+    .logo-header{
+        height:100px;
+        background-color: @BG;
+        color:#FFF;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        img{
+            width:200px;
+            margin-left:20px;
+        }
+        span.anticon.anticon-bars{
+            font-size:60px;
+            margin-right:20px;
+        }
+    }
+    .category{
+        position: absolute;
+        width:100%;
+        top:100px;
+        left:0;
+        background-color: @BG;
+        li{
+            line-height: 60px;
+            text-align: center;
+            color:#FFF;
+            font-size:30px;
+            border-top:1px solid lighten(@BG,20%);
+            &.active{
+                color:red;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>React系统课-第二周笔试题</title>
+    <meta charset='utf-8'>
+    <link href='https://cdn.maxiang.io/res-min/themes/marxico.css' rel='stylesheet'>
+    <style>
+        #preview-contents {
+            margin-top: -20px;
+            width: 900px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='preview-contents' class='note-content'>
+        <h4 id="react系统课-第二周笔试题">React系统课-第二周笔试题</h4>
+
+        <p><strong>1. 什么是React Hooks组件，解决了什么问题？</strong></p>
+
+        <p><strong>2. 列举常见的React Hook函数，及作用「不少于5个」</strong></p>
+
+        <p><strong>3. useEffect和useLayoutEffect的区别？</strong></p>
+
+        <p><strong>4.简述useMemo和useCallback的作用？</strong></p>
+
+        <p><strong>5. 看代码，分别写出：组件第一次渲染 &amp; 一分钟后点击按钮 各自输出结果</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-keyword">import</span> React, { useState, useEffect, useLayoutEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+</div><div class="hljs-line"><span class="hljs-keyword">const</span> Demo = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Demo</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> [x, setX] = useState(<span class="hljs-number">10</span>),
+</div><div class="hljs-line">        [y, setY] = useState(<span class="hljs-number">0</span>);
+</div><div class="hljs-line">    useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'@1:'</span>, x, y);
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'@2:'</span>, x, y);
+</div><div class="hljs-line">        };
+</div><div class="hljs-line">    });
+</div><div class="hljs-line">    useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'@3:'</span>, x, y);
+</div><div class="hljs-line">        setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'@4:'</span>, x, y);
+</div><div class="hljs-line">        }, <span class="hljs-number">10</span>);
+</div><div class="hljs-line">    }, []);
+</div><div class="hljs-line">    useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'@5:'</span>, x, y);
+</div><div class="hljs-line">    }, [x]);
+</div><div class="hljs-line">    useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'@6:'</span>, x, y);
+</div><div class="hljs-line">    }, [y]);
+</div><div class="hljs-line">    useLayoutEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'@7:'</span>, x, y);
+</div><div class="hljs-line">    }, [x]);
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"demo-box"</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setX(x + 1)}&gt;按钮<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Demo;
+</div></code></pre>
+
+        <p><strong>6. 简述ref在React组件中的作用</strong></p>
+
+        <p><strong>7. 想在Demo「父组件」中，获取Child「子组件」中的：x状态和change方法，该如何编写代码？ </strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-keyword">import</span> React, { useState } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+</div><div class="hljs-line"><span class="hljs-keyword">const</span> Child = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Child</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> [x, setX] = useState(<span class="hljs-number">0</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">const</span> change = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">        setX(x + <span class="hljs-number">1</span>);
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"child-box"</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">        ...</span>
+</div><div class="hljs-line"><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-keyword">const</span> Demo = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Demo</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"demo-box"</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Child</span> /&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Demo;
+</div></code></pre>
+
+        <p><strong>8. 简述什么是合成事件？以及React中为啥要使用合成事件？</strong></p>
+
+        <p><strong>9. 假如ev是合成事件对象，那么请说出：ev.stopPropagation &amp; ev.nativeEvent.stopPropagation &amp;
+                ev.nativeEvent.stopImmediatePropagation 三者的区别？</strong></p>
+
+        <p><strong>10. 看代码，分析出在React16/18两个版本中，点击inner元素，分别会输出啥？</strong></p>
+        <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+</div><div class="hljs-line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+</div><div class="hljs-line">    render() {
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"outer"</span></span></span>
+</div><div class="hljs-line"><span class="xml">            <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt; { console.log('outer 冒泡「合成」'); }}</span>
+</div><div class="hljs-line"><span class="xml">            onClickCapture={() =&gt; { console.log('outer 捕获「合成」'); }}&gt;</span>
+</div><div class="hljs-line"><span class="xml"></span>
+</div><div class="hljs-line"><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"inner"</span></span></span>
+</div><div class="hljs-line"><span class="xml">                <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt; { console.log('inner 冒泡「合成」'); }}</span>
+</div><div class="hljs-line"><span class="xml">                onClickCapture={() =&gt; { console.log('inner 捕获「合成」'); }}</span>
+</div><div class="hljs-line"><span class="xml">            &gt;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+</div><div class="hljs-line"><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">    componentDidMount() {
+</div><div class="hljs-line">        <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">'click'</span>, () =&gt; { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'document 捕获'</span>); }, <span class="hljs-literal">true</span>);
+</div><div class="hljs-line">        <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">'click'</span>, () =&gt; { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'document 冒泡'</span>); }, <span class="hljs-literal">false</span>);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-built_in">document</span>.body.addEventListener(<span class="hljs-string">'click'</span>, () =&gt; { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'body 捕获'</span>); }, <span class="hljs-literal">true</span>);
+</div><div class="hljs-line">        <span class="hljs-built_in">document</span>.body.addEventListener(<span class="hljs-string">'click'</span>, () =&gt; { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'body 冒泡'</span>); }, <span class="hljs-literal">false</span>);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-keyword">let</span> root = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#root'</span>);
+</div><div class="hljs-line">        root.addEventListener(<span class="hljs-string">'click'</span>, () =&gt; { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'root 捕获'</span>); }, <span class="hljs-literal">true</span>);
+</div><div class="hljs-line">        root.addEventListener(<span class="hljs-string">'click'</span>, () =&gt; { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'root 冒泡'</span>); }, <span class="hljs-literal">false</span>);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-keyword">let</span> outer = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.outer'</span>);
+</div><div class="hljs-line">        outer.addEventListener(<span class="hljs-string">'click'</span>, () =&gt; { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'outer 捕获「原生」'</span>); }, <span class="hljs-literal">true</span>);
+</div><div class="hljs-line">        outer.addEventListener(<span class="hljs-string">'click'</span>, () =&gt; { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'outer 冒泡「原生」'</span>); }, <span class="hljs-literal">false</span>);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-keyword">let</span> inner = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.inner'</span>);
+</div><div class="hljs-line">        inner.addEventListener(<span class="hljs-string">'click'</span>, () =&gt; { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'inner 捕获「原生」'</span>); }, <span class="hljs-literal">true</span>);
+</div><div class="hljs-line">        inner.addEventListener(<span class="hljs-string">'click'</span>, () =&gt; { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'inner 冒泡「原生」'</span>); }, <span class="hljs-literal">false</span>);
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Demo;
+</div></code></pre>
+    </div>
+</body>
+
+</html>

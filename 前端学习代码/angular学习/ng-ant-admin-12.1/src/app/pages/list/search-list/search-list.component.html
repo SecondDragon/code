@@ -1,0 +1,26 @@
+<!--头部版块-->
+<app-page-header [pageHeaderInfo]="pageHeaderInfo"></app-page-header>
+<ng-template #headerContent>
+  <div class="center">
+    <app-water-mark></app-water-mark>
+    <div style="width: 455px">
+      <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+        <input type="text" nz-input placeholder="请输入" />
+      </nz-input-group>
+      <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSize="large" nzSearch>搜索</button>
+      </ng-template>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #headerFooter>
+  <nz-tabset [(nzSelectedIndex)]="currentSelTab" >
+    <nz-tab [nzTitle]="item.label" (nzClick)="to(item)" *ngFor="let item of tabData;"></nz-tab>
+  </nz-tabset>
+</ng-template>
+<div class="normal-table-wrap">
+  <router-outlet></router-outlet>
+</div>
+
+

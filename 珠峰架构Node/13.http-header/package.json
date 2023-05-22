@@ -1,0 +1,15 @@
+{
+  "name": "13.http-header",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.cache.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mime": "^2.5.2"
+  }
+}

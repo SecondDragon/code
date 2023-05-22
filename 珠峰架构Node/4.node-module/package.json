@@ -1,0 +1,24 @@
+{
+  "name": "4.node-module",
+  "version": "3.1.0",
+  "description": "",
+  "main": "1.module.js",
+  "scripts": {
+    "mime": "mime a.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mime": "^2.5.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "jquery": "^2.2.4"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": [
+    "bootstrap"
+  ]
+}

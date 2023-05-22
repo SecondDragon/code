@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>「面向对象」在线Web高级正式课</title>
+  <meta charset='utf-8'>
+  <link href='https://cdn.maxiang.io/res-min/themes/marxico.css' rel='stylesheet'>
+  <style>
+    .note-content {
+      font-family: "Helvetica Neue", Arial, "Hiragino Sans GB", STHeiti, "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, Song, sans-serif;
+    }
+
+    .toc ul {
+      padding-left: 0;
+    }
+
+    #preview-contents {
+      margin-top: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='preview-contents' class='note-content'>
+
+
+
+    <div>
+      <div class="toc">
+        <div class="toc">
+          <ul>
+            <li>
+              <ul>
+                <li>
+                  <ul>
+                    <li>
+                      <ul>
+                        <li><a href="#面向对象基础">面向对象基础</a></li>
+                        <li><a href="#prototype和proto">prototype和__proto__</a></li>
+                        <li><a href="#基于内置类原型扩展方法">基于内置类原型扩展方法</a></li>
+                        <li><a href="#私有和公有属性的检测">私有和公有属性的检测</a></li>
+                        <li><a href="#基于es6中的class重构下面的代码">基于ES6中的CLASS重构下面的代码</a></li>
+                        <li><a href="#进阶函数的三种角色">进阶：函数的三种角色</a></li>
+                        <li><a href="#进阶重写内置new">进阶：重写内置NEW</a></li>
+                        <li><a href="#随堂练习题">随堂练习题</a></li>
+                        <li><a href="#专题js中this的五种情况梳理">专题：JS中THIS的五种情况梳理</a></li>
+                        <li><a href="#专题jq源码阅读">专题：JQ源码阅读</a></li>
+                        <li><a href="#专题js中数据类型检测汇总">专题：JS中数据类型检测汇总</a></li>
+                        <li><a href="#专题数组和对象的深浅克隆-深浅合并">专题：数组和对象的深浅克隆 &amp; 深浅合并</a></li>
+                        <li><a href="#专题类的多种继承方案">专题：类的多种继承方案</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h4 id="面向对象基础">面向对象基础</h4>
+
+    <ul>
+      <li>
+        <p>OOP思想：对象、类、实例</p>
+      </li>
+      <li>
+        <p>JS语言本身就是基于类和实例构建和组成的</p>
+      </li>
+      <li>
+        <p>普通函数执行 VS 构造函数执行</p>
+      </li>
+    </ul>
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Fn</span>(<span class="hljs-params">x, y</span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> sum = <span class="hljs-number">10</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.total = x + y;
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.say = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`我计算的和是:<span class="hljs-subst">${<span class="hljs-keyword">this</span>.total}</span>`</span>);
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> res = Fn(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>); <span class="hljs-comment">//普通函数执行</span>
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> f1 = <span class="hljs-keyword">new</span> Fn(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>); <span class="hljs-comment">//构造函数执行</span>
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> f2 = <span class="hljs-keyword">new</span> Fn;
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.sum);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.total);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.say === f2.say);
+</div></code></pre>
+
+    <h4 id="prototype和proto">prototype和__proto__</h4>
+
+    <blockquote>
+      <p>
+        大部分“函数数据类型”的值都具备“prototype（原型/显式原型）”属性，属性值本身是一个对象「浏览器会默认为其开辟一个堆内存，用来存储实例可调用的公共的属性和方法」，在浏览器默认开辟的这个堆内存中「原型对象」有一个默认的属性“constructor（构造函数/构造器）”，属性值是当前函数/类本身！！
+      </p>
+    </blockquote>
+
+    <ul>
+      <li>
+        <p>函数数据类型</p>
+
+        <ul>
+          <li>
+            <p>普通函数（实名或者匿名函数）</p>
+          </li>
+          <li>
+            <p>箭头函数</p>
+          </li>
+          <li>
+            <p>构造函数/类「内置类/自定义类」</p>
+          </li>
+          <li>
+            <p>生成器函数 Generator</p>
+          </li>
+          <li>
+            <p>…</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>不具备prototype的函数</p>
+
+        <ul>
+          <li>
+            <p>箭头函数</p>
+          </li>
+          <li>
+            <p>基于ES6给对象某个成员赋值函数值的快捷操作</p>
+          </li>
+          <li>
+            <p>…</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <blockquote>
+      <p>每一个“对象数据类型”的值都具备一个属性“__proto__（原型链/隐式原型）”，属性值指向“自己所属类的原型prototype”</p>
+    </blockquote>
+
+    <ul>
+      <li>
+        <p>对象数据类型值</p>
+
+        <ul>
+          <li>
+            <p>普通对象</p>
+          </li>
+          <li>
+            <p>特殊对象：数组、正则、日期、Math、Error…</p>
+          </li>
+          <li>
+            <p>函数对象</p>
+          </li>
+          <li>
+            <p>实例对象</p>
+          </li>
+          <li>
+            <p>构造函数.prototype</p>
+          </li>
+          <li>
+            <p>…</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Fn</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.x = <span class="hljs-number">100</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.y = <span class="hljs-number">200</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.getX = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.x);
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">}
+</div><div class="hljs-line">Fn.prototype.getX = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.x);
+</div><div class="hljs-line">};
+</div><div class="hljs-line">Fn.prototype.getY = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.y);
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> f1 = <span class="hljs-keyword">new</span> Fn;
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> f2 = <span class="hljs-keyword">new</span> Fn;
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.getX === f2.getX);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.getY === f2.getY);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.__proto__.getY === Fn.prototype.getY);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.__proto__.getX === f2.getX);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.getX === Fn.prototype.getX);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.constructor);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(Fn.prototype.__proto__.constructor);
+</div><div class="hljs-line">f1.getX();
+</div><div class="hljs-line">f1.__proto__.getX();
+</div><div class="hljs-line">f2.getY();
+</div><div class="hljs-line">Fn.prototype.getY();
+</div></code></pre>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">C1</span>(<span class="hljs-params">name</span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">if</span> (name) {
+</div><div class="hljs-line">        <span class="hljs-keyword">this</span>.name = name;
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">C2</span>(<span class="hljs-params">name</span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.name = name;
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">C3</span>(<span class="hljs-params">name</span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.name = name || <span class="hljs-string">'join'</span>;
+</div><div class="hljs-line">}
+</div><div class="hljs-line">C1.prototype.name = <span class="hljs-string">'Tom'</span>;
+</div><div class="hljs-line">C2.prototype.name = <span class="hljs-string">'Tom'</span>;
+</div><div class="hljs-line">C3.prototype.name = <span class="hljs-string">'Tom'</span>;
+</div><div class="hljs-line">alert((<span class="hljs-keyword">new</span> C1().name) + (<span class="hljs-keyword">new</span> C2().name) + (<span class="hljs-keyword">new</span> C3().name));
+</div></code></pre>
+
+    <h4 id="基于内置类原型扩展方法">基于内置类原型扩展方法</h4>
+
+    <p>内置类原型指向图：arr -&gt; Array.prototype -&gt; Object.prototype</p>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-keyword">let</span> n = <span class="hljs-number">10</span>;
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> m = n.plus(<span class="hljs-number">10</span>).minus(<span class="hljs-number">5</span>);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(m);<span class="hljs-comment">//=&gt;15（10+10-5）</span>
+</div></code></pre>
+
+    <h4 id="私有和公有属性的检测">私有和公有属性的检测</h4>
+
+    <ul>
+      <li>
+        <p>Object.prototype.hasOwnProperty</p>
+      </li>
+      <li>
+        <p>in操作符</p>
+      </li>
+      <li>
+        <p>自己重构:Object.prototype.hasPubProperty</p>
+      </li>
+    </ul>
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-built_in">Object</span>.prototype.hasPubProperty = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hasPubProperty</span>(<span class="hljs-params">attr</span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> self = <span class="hljs-keyword">this</span>,
+</div><div class="hljs-line">        prototype = <span class="hljs-built_in">Object</span>.getPrototypeOf(self);
+</div><div class="hljs-line">    <span class="hljs-keyword">while</span> (prototype) {
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (prototype.hasOwnProperty(attr)) {
+</div><div class="hljs-line">            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">        prototype = <span class="hljs-built_in">Object</span>.getPrototypeOf(prototype);
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">    let self = this,</span>
+</div><div class="hljs-line"><span class="hljs-comment">        prototype = Object.getPrototypeOf(self);</span>
+</div><div class="hljs-line"><span class="hljs-comment">    return attr in prototype; </span>
+</div><div class="hljs-line"><span class="hljs-comment">    */</span>
+</div><div class="hljs-line">};
+</div></code></pre>
+
+    <h4 id="基于es6中的class重构下面的代码">基于ES6中的CLASS重构下面的代码</h4>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Modal</span>(<span class="hljs-params">x,y</span>)</span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.x=x;
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.y=y;
+</div><div class="hljs-line">}
+</div><div class="hljs-line">Modal.prototype.z=<span class="hljs-number">10</span>;
+</div><div class="hljs-line">Modal.prototype.getX=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.x);
+</div><div class="hljs-line">}
+</div><div class="hljs-line">Modal.prototype.getY=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.y);
+</div><div class="hljs-line">}
+</div><div class="hljs-line">Modal.n=<span class="hljs-number">200</span>;
+</div><div class="hljs-line">Modal.setNumber=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">n</span>)</span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.n=n;
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> m = <span class="hljs-keyword">new</span> Model(<span class="hljs-number">10</span>,<span class="hljs-number">20</span>);
+</div></code></pre>
+
+
+
+    <h4 id="进阶函数的三种角色">进阶：函数的三种角色</h4>
+
+    <p>Function &amp; Object 之间的爱恨情仇</p>
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line">functionFoo(){
+</div><div class="hljs-line">    getName = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">       <span class="hljs-built_in">console</span>.log(<span class="hljs-number">1</span>);
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+</div><div class="hljs-line">}
+</div><div class="hljs-line">Foo.getName = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">2</span>);
+</div><div class="hljs-line">};
+</div><div class="hljs-line">Foo.prototype.getName = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">3</span>);
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-keyword">var</span> getName = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">4</span>);
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getName</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">5</span>);
+</div><div class="hljs-line">}
+</div><div class="hljs-line">Foo.getName();
+</div><div class="hljs-line">getName();
+</div><div class="hljs-line">Foo().getName();
+</div><div class="hljs-line">getName();
+</div><div class="hljs-line"><span class="hljs-keyword">new</span> Foo.getName();
+</div><div class="hljs-line"><span class="hljs-keyword">new</span> Foo().getName();
+</div><div class="hljs-line"><span class="hljs-keyword">new</span> <span class="hljs-keyword">new</span> Foo().getName();
+</div></code></pre>
+
+
+
+    <h4 id="进阶重写内置new">进阶：重写内置NEW</h4>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Dog</span>(<span class="hljs-params">name</span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.name = name;
+</div><div class="hljs-line">}
+</div><div class="hljs-line">Dog.prototype.bark = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'wangwang'</span>);
+</div><div class="hljs-line">}
+</div><div class="hljs-line">Dog.prototype.sayName = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'my name is '</span> + <span class="hljs-keyword">this</span>.name);
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">let sanmao = new Dog('三毛');</span>
+</div><div class="hljs-line"><span class="hljs-comment">sanmao.sayName();</span>
+</div><div class="hljs-line"><span class="hljs-comment">sanmao.bark();</span>
+</div><div class="hljs-line"><span class="hljs-comment">*/</span>
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_new</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-comment">//=&gt;完成你的代码   </span>
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> sanmao = _new(Dog, <span class="hljs-string">'三毛'</span>);
+</div><div class="hljs-line">sanmao.bark(); <span class="hljs-comment">//=&gt;"wangwang"</span>
+</div><div class="hljs-line">sanmao.sayName(); <span class="hljs-comment">//=&gt;"my name is 三毛"</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(sanmao <span class="hljs-keyword">instanceof</span> Dog); <span class="hljs-comment">//=&gt;true</span>
+</div></code></pre>
+
+    <h4 id="随堂练习题">随堂练习题</h4>
+
+    <p><strong>1.下面代码输出结果是什么？为啥？</strong> <br>
+      鸭子数据类型的几种常规处理：属性赋值 &amp; 基于CALL方法借用</p>
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-keyword">let</span> obj = {
+</div><div class="hljs-line">    <span class="hljs-number">2</span>: <span class="hljs-number">3</span>,
+</div><div class="hljs-line">    <span class="hljs-number">3</span>: <span class="hljs-number">4</span>,
+</div><div class="hljs-line">    <span class="hljs-attr">length</span>: <span class="hljs-number">2</span>,
+</div><div class="hljs-line">    <span class="hljs-attr">push</span>: <span class="hljs-built_in">Array</span>.prototype.push
+</div><div class="hljs-line">}
+</div><div class="hljs-line">obj.push(<span class="hljs-number">1</span>);
+</div><div class="hljs-line">obj.push(<span class="hljs-number">2</span>);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(obj);
+</div></code></pre>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-keyword">let</span> utils = (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+</div><div class="hljs-line">    <span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment">     * toArray：转换为数组的方法</span>
+</div><div class="hljs-line"><span class="hljs-comment">     *   @params</span>
+</div><div class="hljs-line"><span class="hljs-comment">     *      不固定数量，不固定类型</span>
+</div><div class="hljs-line"><span class="hljs-comment">     *   @return</span>
+</div><div class="hljs-line"><span class="hljs-comment">     *      [Array] 返回的处理后的新数组</span>
+</div><div class="hljs-line"><span class="hljs-comment">     * by zhufengpeixun on 2020</span>
+</div><div class="hljs-line"><span class="hljs-comment">     */</span>
+</div><div class="hljs-line">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toArray</span>(<span class="hljs-params"></span>)</span>{
+</div><div class="hljs-line">        <span class="hljs-comment">//=&gt;实现你的代码（多种办法实现）   </span>
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> {
+</div><div class="hljs-line">        toArray
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">})();
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> ary = utils.toArray(<span class="hljs-number">10</span>,<span class="hljs-number">20</span>,<span class="hljs-number">30</span>); <span class="hljs-comment">//=&gt;[10,20,30]</span>
+</div><div class="hljs-line">ary = utils.toArray(<span class="hljs-string">'A'</span>,<span class="hljs-number">10</span>,<span class="hljs-number">20</span>,<span class="hljs-number">30</span>); <span class="hljs-comment">//=&gt;['A',10,20,30]</span>
+</div></code></pre>
+
+    <p><strong>2.a等于什么值会让下面条件成立</strong></p>
+
+    <ul>
+      <li>
+        <p>数据类型转换</p>
+      </li>
+      <li>
+        <p>数据劫持</p>
+      </li>
+    </ul>
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-keyword">var</span> a = ?;
+</div><div class="hljs-line"><span class="hljs-keyword">if</span> (a == <span class="hljs-number">1</span> &amp;&amp; a == <span class="hljs-number">2</span> &amp;&amp; a == <span class="hljs-number">3</span>) {
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'OK'</span>);
+</div><div class="hljs-line">}
+</div></code></pre>
+
+    <p><strong>3.下面代码运行的结果</strong></p>
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Fn</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.a = a;
+</div><div class="hljs-line">}
+</div><div class="hljs-line">Fn.prototype.say = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.a = <span class="hljs-number">2</span>;
+</div><div class="hljs-line">}
+</div><div class="hljs-line">Fn.prototype = <span class="hljs-keyword">new</span> Fn;
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> f1 = <span class="hljs-keyword">new</span> Fn;
+</div><div class="hljs-line">​
+</div><div class="hljs-line">Fn.prototype.b = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.a = <span class="hljs-number">3</span>;
+</div><div class="hljs-line">};
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.a);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.prototype);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.b);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.hasOwnProperty(<span class="hljs-string">'b'</span>));
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'b'</span> <span class="hljs-keyword">in</span> f1);
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(f1.constructor == Fn);
+</div></code></pre>
+
+    <p><strong>4.下面代码运行的结果</strong></p>
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fun</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.a = <span class="hljs-number">0</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">this</span>.b = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">        alert(<span class="hljs-keyword">this</span>.a);
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">}
+</div><div class="hljs-line">fun.prototype = {
+</div><div class="hljs-line">    <span class="hljs-attr">b</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">this</span>.a = <span class="hljs-number">20</span>;
+</div><div class="hljs-line">        alert(<span class="hljs-keyword">this</span>.a);
+</div><div class="hljs-line">    },
+</div><div class="hljs-line">    <span class="hljs-attr">c</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">this</span>.a = <span class="hljs-number">30</span>;
+</div><div class="hljs-line">        alert(<span class="hljs-keyword">this</span>.a)
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-keyword">var</span> my_fun = <span class="hljs-keyword">new</span> fun();
+</div><div class="hljs-line">my_fun.b();
+</div><div class="hljs-line">my_fun.c();
+</div></code></pre>
+
+    <p><strong>5.实现如下需求</strong></p>
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-comment">/*</span>
+</div><div class="hljs-line"><span class="hljs-comment"> * 编写queryURLParams方法实现如下的效果（至少两种方案）</span>
+</div><div class="hljs-line"><span class="hljs-comment"> */</span>
+</div><div class="hljs-line"><span class="hljs-keyword">let</span> url=<span class="hljs-string">"http://www.zhufengpeixun.cn/?lx=1&amp;from=wx#video"</span>;
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(url.queryURLParams(<span class="hljs-string">"from"</span>)); <span class="hljs-comment">//=&gt;"wx"</span>
+</div><div class="hljs-line"><span class="hljs-built_in">console</span>.log(url.queryURLParams(<span class="hljs-string">"_HASH"</span>)); <span class="hljs-comment">//=&gt;"video"</span>
+</div></code></pre>
+
+    <hr>
+
+    <h4 id="专题js中this的五种情况梳理">专题：JS中THIS的五种情况梳理</h4>
+
+    <ul>
+      <li>
+        <p>事件绑定</p>
+      </li>
+      <li>
+        <p>函数执行（包括自执行函数 &amp; 回调函数）</p>
+      </li>
+      <li>
+        <p>new构造函数</p>
+      </li>
+      <li>
+        <p>箭头函数</p>
+      </li>
+      <li>
+        <p>call/apply/bind</p>
+      </li>
+    </ul>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line">~ <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">const</span> createRandom = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+</div><div class="hljs-line">        <span class="hljs-keyword">let</span> ran = <span class="hljs-built_in">Math</span>.random() * <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> ran.toString(<span class="hljs-number">16</span>).replace(<span class="hljs-string">'.'</span>, <span class="hljs-string">''</span>);
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">/* 内置CALL实现原理 */</span>
+</div><div class="hljs-line">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">change</span>(<span class="hljs-params">context, ...params</span>) </span>{
+</div><div class="hljs-line">        context == <span class="hljs-literal">null</span> ? context = <span class="hljs-built_in">window</span> : <span class="hljs-literal">null</span>;
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (!<span class="hljs-regexp">/^(object|function)$/</span>.test(<span class="hljs-keyword">typeof</span> context)) context = <span class="hljs-built_in">Object</span>(context);
+</div><div class="hljs-line">        <span class="hljs-keyword">let</span> self = <span class="hljs-keyword">this</span>,
+</div><div class="hljs-line">            key = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'KEY'</span>),
+</div><div class="hljs-line">            result;
+</div><div class="hljs-line">        context[key] = self;
+</div><div class="hljs-line">        result = context[key](...params);
+</div><div class="hljs-line">        <span class="hljs-keyword">delete</span> context[key];
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> result;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">/* 内置BIND的实现原理 */</span>
+</div><div class="hljs-line">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bind</span>(<span class="hljs-params">context, ...params</span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">let</span> self = <span class="hljs-keyword">this</span>;
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">proxy</span>(<span class="hljs-params">...args</span>) </span>{
+</div><div class="hljs-line">            params = params.concat(args);
+</div><div class="hljs-line">            <span class="hljs-keyword">return</span> self.call(context, ...params);
+</div><div class="hljs-line">        };
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-built_in">Function</span>.prototype.bind = bind;
+</div><div class="hljs-line">    <span class="hljs-built_in">Function</span>.prototype.change = change;
+</div><div class="hljs-line">}();
+</div></code></pre>
+
+    <p><strong>练习题</strong></p>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn1</span>(<span class="hljs-params"></span>)</span>{<span class="hljs-built_in">console</span>.log(<span class="hljs-number">1</span>);}
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn2</span>(<span class="hljs-params"></span>)</span>{<span class="hljs-built_in">console</span>.log(<span class="hljs-number">2</span>);}
+</div><div class="hljs-line">fn1.call(fn2);
+</div><div class="hljs-line">fn1.call.call(fn2);
+</div><div class="hljs-line"><span class="hljs-built_in">Function</span>.prototype.call(fn1);
+</div><div class="hljs-line"><span class="hljs-built_in">Function</span>.prototype.call.call(fn1);
+</div></code></pre>
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">'珠峰培训'</span>;
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">A</span>(<span class="hljs-params">x,y</span>)</span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> res=x+y;
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(res,<span class="hljs-keyword">this</span>.name);
+</div><div class="hljs-line">}
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">B</span>(<span class="hljs-params">x,y</span>)</span>{
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> res=x-y;
+</div><div class="hljs-line">    <span class="hljs-built_in">console</span>.log(res,<span class="hljs-keyword">this</span>.name);
+</div><div class="hljs-line">}
+</div><div class="hljs-line">B.call(A,<span class="hljs-number">40</span>,<span class="hljs-number">30</span>);
+</div><div class="hljs-line">B.call.call.call(A,<span class="hljs-number">20</span>,<span class="hljs-number">10</span>);
+</div><div class="hljs-line"><span class="hljs-built_in">Function</span>.prototype.call(A,<span class="hljs-number">60</span>,<span class="hljs-number">50</span>);
+</div><div class="hljs-line"><span class="hljs-built_in">Function</span>.prototype.call.call.call(A,<span class="hljs-number">80</span>,<span class="hljs-number">70</span>);
+</div></code></pre>
+
+
+
+    <h4 id="专题jq源码阅读">专题：JQ源码阅读</h4>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line">(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line"><span class="hljs-meta">    "use strict"</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> arr = [];
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> slice = arr.slice;
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> push = arr.push;
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> indexOf = arr.indexOf;
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// =======</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> version = <span class="hljs-string">"3.5.1"</span>,
+</div><div class="hljs-line">        jQuery = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">jQuery</span>(<span class="hljs-params">selector, context</span>) </span>{
+</div><div class="hljs-line">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> jQuery.fn.init(selector, context);
+</div><div class="hljs-line">        };
+</div><div class="hljs-line">    jQuery.fn = jQuery.prototype = {
+</div><div class="hljs-line">        <span class="hljs-attr">constructor</span>: jQuery,
+</div><div class="hljs-line">        <span class="hljs-attr">jquery</span>: version,
+</div><div class="hljs-line">        <span class="hljs-attr">length</span>: <span class="hljs-number">0</span>,
+</div><div class="hljs-line">        <span class="hljs-attr">push</span>: push,
+</div><div class="hljs-line">        <span class="hljs-attr">sort</span>: arr.sort,
+</div><div class="hljs-line">        <span class="hljs-attr">splice</span>: arr.splice,
+</div><div class="hljs-line">        <span class="hljs-attr">get</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">num</span>) </span>{
+</div><div class="hljs-line">            <span class="hljs-keyword">if</span> (num == <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> slice.call(<span class="hljs-keyword">this</span>);
+</div><div class="hljs-line">            <span class="hljs-keyword">return</span> num &lt; <span class="hljs-number">0</span> ? <span class="hljs-keyword">this</span>[num + <span class="hljs-keyword">this</span>.length] : <span class="hljs-keyword">this</span>[num];
+</div><div class="hljs-line">        },
+</div><div class="hljs-line">        <span class="hljs-attr">eq</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">i</span>) </span>{
+</div><div class="hljs-line">            <span class="hljs-keyword">var</span> len = <span class="hljs-keyword">this</span>.length,
+</div><div class="hljs-line">                j = +i + (i &lt; <span class="hljs-number">0</span> ? len : <span class="hljs-number">0</span>);
+</div><div class="hljs-line">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.pushStack(j &gt;= <span class="hljs-number">0</span> &amp;&amp; j &lt; len ? [<span class="hljs-keyword">this</span>[j]] : []);
+</div><div class="hljs-line">        },
+</div><div class="hljs-line">        <span class="hljs-attr">pushStack</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">elems</span>) </span>{
+</div><div class="hljs-line">            <span class="hljs-keyword">var</span> ret = jQuery.merge(<span class="hljs-keyword">this</span>.constructor(), elems);
+</div><div class="hljs-line">            ret.prevObject = <span class="hljs-keyword">this</span>;
+</div><div class="hljs-line">            <span class="hljs-keyword">return</span> ret;
+</div><div class="hljs-line">        },
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    jQuery.merge = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">merge</span>(<span class="hljs-params">first, second</span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">var</span> len = +second.length,
+</div><div class="hljs-line">            j = <span class="hljs-number">0</span>,
+</div><div class="hljs-line">            i = first.length;
+</div><div class="hljs-line">        <span class="hljs-keyword">for</span> (; j &lt; len; j++) {
+</div><div class="hljs-line">            first[i++] = second[j];
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">        first.length = i;
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> first;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// =======</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> rootjQuery = jQuery(<span class="hljs-built_in">document</span>),
+</div><div class="hljs-line">        rquickExpr = <span class="hljs-regexp">/^(?:\s*(&lt;[\w\W]+&gt;)[^&gt;]*|#([\w-]+))$/</span>,
+</div><div class="hljs-line">        init = jQuery.fn.init = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params">selector, context, root</span>) </span>{
+</div><div class="hljs-line">            <span class="hljs-keyword">var</span> match, elem;
+</div><div class="hljs-line">            <span class="hljs-keyword">if</span> (!selector) <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+</div><div class="hljs-line">            root = root || rootjQuery;
+</div><div class="hljs-line">            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> selector === <span class="hljs-string">"string"</span>) {
+</div><div class="hljs-line">                <span class="hljs-keyword">if</span> (selector[<span class="hljs-number">0</span>] === <span class="hljs-string">"&lt;"</span> &amp;&amp;
+</div><div class="hljs-line">                    selector[selector.length - <span class="hljs-number">1</span>] === <span class="hljs-string">"&gt;"</span> &amp;&amp;
+</div><div class="hljs-line">                    selector.length &gt;= <span class="hljs-number">3</span>) {
+</div><div class="hljs-line">                    match = [<span class="hljs-literal">null</span>, selector, <span class="hljs-literal">null</span>];
+</div><div class="hljs-line">                } <span class="hljs-keyword">else</span> {
+</div><div class="hljs-line">                    match = rquickExpr.exec(selector);
+</div><div class="hljs-line">                }
+</div><div class="hljs-line">                <span class="hljs-keyword">if</span> (match &amp;&amp; (match[<span class="hljs-number">1</span>] || !context)) {
+</div><div class="hljs-line">                    <span class="hljs-keyword">if</span> (match[<span class="hljs-number">1</span>]) {
+</div><div class="hljs-line">                        context = context <span class="hljs-keyword">instanceof</span> jQuery ? context[<span class="hljs-number">0</span>] : context;
+</div><div class="hljs-line">                        jQuery.merge(<span class="hljs-keyword">this</span>, jQuery.parseHTML(
+</div><div class="hljs-line">                            match[<span class="hljs-number">1</span>],
+</div><div class="hljs-line">                            context &amp;&amp; context.nodeType ? context.ownerDocument || context : <span class="hljs-built_in">document</span>,
+</div><div class="hljs-line">                            <span class="hljs-literal">true</span>
+</div><div class="hljs-line">                        ));
+</div><div class="hljs-line">                        <span class="hljs-keyword">if</span> (rsingleTag.test(match[<span class="hljs-number">1</span>]) &amp;&amp; jQuery.isPlainObject(context)) {
+</div><div class="hljs-line">                            <span class="hljs-keyword">for</span> (match <span class="hljs-keyword">in</span> context) {
+</div><div class="hljs-line">                                <span class="hljs-keyword">if</span> (isFunction(<span class="hljs-keyword">this</span>[match])) {
+</div><div class="hljs-line">                                    <span class="hljs-keyword">this</span>[match](context[match]);
+</div><div class="hljs-line">                                } <span class="hljs-keyword">else</span> {
+</div><div class="hljs-line">                                    <span class="hljs-keyword">this</span>.attr(match, context[match]);
+</div><div class="hljs-line">                                }
+</div><div class="hljs-line">                            }
+</div><div class="hljs-line">                        }
+</div><div class="hljs-line">                        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+</div><div class="hljs-line">                    } <span class="hljs-keyword">else</span> {
+</div><div class="hljs-line">                        elem = <span class="hljs-built_in">document</span>.getElementById(match[<span class="hljs-number">2</span>]);
+</div><div class="hljs-line">                        <span class="hljs-keyword">if</span> (elem) {
+</div><div class="hljs-line">                            <span class="hljs-keyword">this</span>[<span class="hljs-number">0</span>] = elem;
+</div><div class="hljs-line">                            <span class="hljs-keyword">this</span>.length = <span class="hljs-number">1</span>;
+</div><div class="hljs-line">                        }
+</div><div class="hljs-line">                        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+</div><div class="hljs-line">                    }
+</div><div class="hljs-line">                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!context || context.jquery) {
+</div><div class="hljs-line">                    <span class="hljs-keyword">return</span> (context || root).find(selector);
+</div><div class="hljs-line">                } <span class="hljs-keyword">else</span> {
+</div><div class="hljs-line">                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.constructor(context).find(selector);
+</div><div class="hljs-line">                }
+</div><div class="hljs-line">            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (selector.nodeType) {
+</div><div class="hljs-line">                <span class="hljs-keyword">this</span>[<span class="hljs-number">0</span>] = selector;
+</div><div class="hljs-line">                <span class="hljs-keyword">this</span>.length = <span class="hljs-number">1</span>;
+</div><div class="hljs-line">                <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+</div><div class="hljs-line">            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isFunction(selector)) {
+</div><div class="hljs-line">                <span class="hljs-keyword">return</span> root.ready !== <span class="hljs-literal">undefined</span> ?
+</div><div class="hljs-line">                    root.ready(selector) :
+</div><div class="hljs-line">                    selector(jQuery);
+</div><div class="hljs-line">            }
+</div><div class="hljs-line">            <span class="hljs-keyword">return</span> jQuery.makeArray(selector, <span class="hljs-keyword">this</span>);
+</div><div class="hljs-line">        };
+</div><div class="hljs-line">    init.prototype = jQuery.fn;
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// =======</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> readyList = jQuery.Deferred();
+</div><div class="hljs-line">    jQuery.fn.ready = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">fn</span>) </span>{
+</div><div class="hljs-line">        readyList
+</div><div class="hljs-line">            .then(fn)
+</div><div class="hljs-line">            .catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">error</span>) </span>{
+</div><div class="hljs-line">                jQuery.readyException(error);
+</div><div class="hljs-line">            });
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// =======</span>
+</div><div class="hljs-line">    jQuery.makeArray = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeArray</span>(<span class="hljs-params">arr, results</span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">var</span> ret = results || [];
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (arr != <span class="hljs-literal">null</span>) {
+</div><div class="hljs-line">            <span class="hljs-keyword">if</span> (isArrayLike(<span class="hljs-built_in">Object</span>(arr))) {
+</div><div class="hljs-line">                jQuery.merge(ret,
+</div><div class="hljs-line">                    <span class="hljs-keyword">typeof</span> arr === <span class="hljs-string">"string"</span> ? [arr] : arr
+</div><div class="hljs-line">                );
+</div><div class="hljs-line">            } <span class="hljs-keyword">else</span> {
+</div><div class="hljs-line">                push.call(ret, arr);
+</div><div class="hljs-line">            }
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> ret;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// =======</span>
+</div><div class="hljs-line">    <span class="hljs-built_in">window</span>.jQuery = <span class="hljs-built_in">window</span>.$ = jQuery;
+</div><div class="hljs-line">})();
+</div></code></pre>
+
+    <h4 id="专题js中数据类型检测汇总">专题：JS中数据类型检测汇总</h4>
+
+    <ul>
+      <li>
+        <p>typeof</p>
+
+        <ul>
+          <li>
+            <p>底层原理</p>
+          </li>
+          <li>
+            <p>扩展 0.1+0.2!==0.3</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>instanceof </p>
+
+        <ul>
+          <li>
+            <p>底层原理及相关问题</p>
+          </li>
+          <li>
+            <p>Symbol.hasInstance</p>
+          </li>
+          <li>
+            <p>重写instanceof</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>constructor</p>
+      </li>
+      <li>
+        <p>Object.prototype.toString.call(value)</p>
+
+        <ul>
+          <li>
+            <p>value[Symbol.toStringTag]</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <p><strong>重写instanceof</strong></p>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">instance_of</span>(<span class="hljs-params">obj, Ctor</span>) </span>{
+</div><div class="hljs-line">    <span class="hljs-comment">// 数据格式准确性校验</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">if</span> (Ctor == <span class="hljs-literal">null</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">"Right-hand side of 'instanceof' is not an object"</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">if</span> (!Ctor.prototype) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">"Function has non-object prototype 'undefined' in instanceof check"</span>);
+</div><div class="hljs-line">    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> Ctor !== <span class="hljs-string">"function"</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">"Right-hand side of 'instanceof' is not callable"</span>);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 原始类型直接忽略</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">if</span> (obj == <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">if</span> (!<span class="hljs-regexp">/^(object|function)$/</span>.test(<span class="hljs-keyword">typeof</span> obj)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 先检测是否有 Symbol.hasInstance 这个属性</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> Ctor[<span class="hljs-built_in">Symbol</span>.hasInstance] === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> Ctor[<span class="hljs-built_in">Symbol</span>.hasInstance](obj);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 最后才会按照原型链进行处理</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> prototype = <span class="hljs-built_in">Object</span>.getPrototypeOf(obj);
+</div><div class="hljs-line">    <span class="hljs-keyword">while</span> (prototype) {
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (prototype === Ctor.prototype) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+</div><div class="hljs-line">        prototype = <span class="hljs-built_in">Object</span>.getPrototypeOf(prototype);
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+</div><div class="hljs-line">}
+</div></code></pre>
+
+    <p><strong>JQ中数据类型检测方法</strong></p>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line">(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line"><span class="hljs-meta">    "use strict"</span>;
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> getProto = <span class="hljs-built_in">Object</span>.getPrototypeOf,
+</div><div class="hljs-line">        class2type = {},
+</div><div class="hljs-line">        toString = class2type.toString,
+</div><div class="hljs-line">        hasOwn = class2type.hasOwnProperty,
+</div><div class="hljs-line">        fnToString = hasOwn.toString,
+</div><div class="hljs-line">        ObjectFunctionString = fnToString.call(<span class="hljs-built_in">Object</span>);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 专门进行数据类型检测的办法 </span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> toType = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toType</span>(<span class="hljs-params">obj</span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (obj == <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> obj + <span class="hljs-string">""</span>;
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> obj !== <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> obj !== <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> obj;
+</div><div class="hljs-line">        <span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/^\[object ([0-9A-Za-z]+)\]$/</span>,
+</div><div class="hljs-line">            value = reg.exec(toString.call(obj))[<span class="hljs-number">1</span>] || <span class="hljs-string">"object"</span>;
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> value.toLowerCase();
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 检测是否为一个函数</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> isFunction = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isFunction</span>(<span class="hljs-params">obj</span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> obj === <span class="hljs-string">"function"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> obj.nodeType !== <span class="hljs-string">"number"</span>;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 检测是否为一个window对象</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> isWindow = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isWindow</span>(<span class="hljs-params">obj</span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> obj != <span class="hljs-literal">null</span> &amp;&amp; obj === obj.window;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 检测是否为数组或者类数组</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> isArrayLike = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isArrayLike</span>(<span class="hljs-params">obj</span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">var</span> length = !!obj &amp;&amp; <span class="hljs-string">"length"</span> <span class="hljs-keyword">in</span> obj &amp;&amp; obj.length,
+</div><div class="hljs-line">            type = toType(obj);
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (isFunction(obj) || isWindow(obj)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> type === <span class="hljs-string">"array"</span> || length === <span class="hljs-number">0</span> ||
+</div><div class="hljs-line">            <span class="hljs-keyword">typeof</span> length === <span class="hljs-string">"number"</span> &amp;&amp; length &gt; <span class="hljs-number">0</span> &amp;&amp; (length - <span class="hljs-number">1</span>) <span class="hljs-keyword">in</span> obj;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 检测是否为纯粹的对象</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> isPlainObject = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isPlainObject</span>(<span class="hljs-params">obj</span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">var</span> proto, Ctor;
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (!obj || toType(obj) !== <span class="hljs-string">"object"</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+</div><div class="hljs-line">        proto = getProto(obj);
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (!proto) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+</div><div class="hljs-line">        Ctor = hasOwn.call(proto, <span class="hljs-string">"constructor"</span>) &amp;&amp; proto.constructor;
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> Ctor === <span class="hljs-string">"function"</span> &amp;&amp; fnToString.call(Ctor) === ObjectFunctionString;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 检测是否为空对象</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> isEmptyObject = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isEmptyObject</span>(<span class="hljs-params">obj</span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (obj == <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+</div><div class="hljs-line">        <span class="hljs-keyword">var</span> keys = <span class="hljs-built_in">Object</span>.keys(obj);
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Symbol</span> !== <span class="hljs-string">"undefined"</span>) {
+</div><div class="hljs-line">            keys = keys.concat(<span class="hljs-built_in">Object</span>.getOwnPropertySymbols(obj));
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> keys.length === <span class="hljs-number">0</span>;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 检测是否为数字</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> isNumeric = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isNumeric</span>(<span class="hljs-params">obj</span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">var</span> type = toType(obj);
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> (type === <span class="hljs-string">"number"</span> || type === <span class="hljs-string">"string"</span>) &amp;&amp; !<span class="hljs-built_in">isNaN</span>(+obj);
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    ......
+</div><div class="hljs-line">})();
+</div></code></pre>
+
+
+
+    <h4 id="专题数组和对象的深浅克隆-深浅合并">专题：数组和对象的深浅克隆 &amp; 深浅合并</h4>
+
+    <blockquote>
+      <p>简单说下深拷贝&amp;浅拷贝，哪些对象不能用JSON深克隆？ </p>
+    </blockquote>
+
+    <ul>
+      <li>
+        <p>堆栈内存</p>
+      </li>
+      <li>
+        <p>深拷贝 VS 浅拷贝</p>
+      </li>
+      <li>
+        <p>哪些对象不能用JSON深克隆？</p>
+
+        <ul>
+          <li>
+            <p>不允许出现套娃操作</p>
+          </li>
+          <li>
+            <p>属性值不能是BigInt</p>
+          </li>
+          <li>
+            <p>丢失一些内容：只要属性值是 symbol/undefined/function 这些类型的</p>
+          </li>
+          <li>
+            <p>还有信息不准确的，例如：正则-&gt;空对象 Error对象-&gt;空对象 日期对象-&gt;字符串 …</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <blockquote>
+      <p>数组对象的浅合并「浅比较」 &amp; 深合并「深比较」</p>
+    </blockquote>
+
+    <ul>
+      <li>
+        <p>Object.assign</p>
+      </li>
+    </ul>
+
+
+
+    <pre class="prettyprint hljs-dark"><code class="language-javascript hljs"><div class="hljs-line">(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line"><span class="hljs-meta">    "use strict"</span>;
+</div><div class="hljs-line">    <span class="hljs-comment">// 实现数组和对象深/浅合并</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> merge = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">merge</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">var</span> options,
+</div><div class="hljs-line">            target = <span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>] || {},
+</div><div class="hljs-line">            i = <span class="hljs-number">1</span>,
+</div><div class="hljs-line">            length = <span class="hljs-built_in">arguments</span>.length,
+</div><div class="hljs-line">            treated = <span class="hljs-built_in">arguments</span>[length - <span class="hljs-number">1</span>],
+</div><div class="hljs-line">            deep = <span class="hljs-literal">false</span>;
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> target === <span class="hljs-string">"boolean"</span>) {
+</div><div class="hljs-line">            deep = target;
+</div><div class="hljs-line">            target = <span class="hljs-built_in">arguments</span>[i] || {};
+</div><div class="hljs-line">            i++;
+</div><div class="hljs-line">        }
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(treated) &amp;&amp; treated.treated) {
+</div><div class="hljs-line">            <span class="hljs-comment">// 传递了记录已经处理过的内容的集合</span>
+</div><div class="hljs-line">            <span class="hljs-comment">// 后期循环的时候少循环处理一项</span>
+</div><div class="hljs-line">            length--;
+</div><div class="hljs-line">        } <span class="hljs-keyword">else</span> {
+</div><div class="hljs-line">            <span class="hljs-comment">// 没传递，最后传递的这个值，不是用来存储处理过的内容，而是进行合并比较的</span>
+</div><div class="hljs-line">            treated = [];
+</div><div class="hljs-line">            treated.treated = <span class="hljs-literal">true</span>;
+</div><div class="hljs-line">        }
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> target !== <span class="hljs-string">"object"</span> &amp;&amp; !isFunction(target)) target = {};
+</div><div class="hljs-line">        <span class="hljs-keyword">for</span> (; i &lt; length; i++) {
+</div><div class="hljs-line">            options = <span class="hljs-built_in">arguments</span>[i];
+</div><div class="hljs-line">            <span class="hljs-keyword">if</span> (options == <span class="hljs-literal">null</span>) <span class="hljs-keyword">continue</span>;
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">            <span class="hljs-comment">// 放置死递归处理的操作</span>
+</div><div class="hljs-line">            <span class="hljs-keyword">if</span> (treated.indexOf(options) &gt; <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> options;
+</div><div class="hljs-line">            treated.push(options);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">            each(options, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">copy, name</span>) </span>{
+</div><div class="hljs-line">                <span class="hljs-keyword">var</span> copyIsArray = <span class="hljs-built_in">Array</span>.isArray(copy),
+</div><div class="hljs-line">                    copyIsObject = isPlainObject(copy),
+</div><div class="hljs-line">                    src = target[name],
+</div><div class="hljs-line">                    clone = src;
+</div><div class="hljs-line">                <span class="hljs-keyword">if</span> (deep &amp;&amp; copy &amp;&amp; (copyIsArray || copyIsObject)) {
+</div><div class="hljs-line">                    <span class="hljs-keyword">if</span> (copyIsArray &amp;&amp; !<span class="hljs-built_in">Array</span>.isArray(src)) clone = [];
+</div><div class="hljs-line">                    <span class="hljs-keyword">if</span> (copyIsObject &amp;&amp; !isPlainObject(src)) clone = {};
+</div><div class="hljs-line">                    target[name] = merge(deep, clone, copy, treated);
+</div><div class="hljs-line">                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (copy !== <span class="hljs-literal">undefined</span>) {
+</div><div class="hljs-line">                    target[name] = copy;
+</div><div class="hljs-line">                }
+</div><div class="hljs-line">            });
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> target;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// 实现数组和对象深/浅拷贝</span>
+</div><div class="hljs-line">    <span class="hljs-keyword">var</span> clone = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">clone</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">        <span class="hljs-keyword">var</span> target = <span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>],
+</div><div class="hljs-line">            deep = <span class="hljs-literal">false</span>,
+</div><div class="hljs-line">            type,
+</div><div class="hljs-line">            isArray,
+</div><div class="hljs-line">            isObject,
+</div><div class="hljs-line">            result,
+</div><div class="hljs-line">            Ctor,
+</div><div class="hljs-line">            treated = <span class="hljs-built_in">arguments</span>[<span class="hljs-built_in">arguments</span>.length - <span class="hljs-number">1</span>];
+</div><div class="hljs-line">        !<span class="hljs-built_in">Array</span>.isArray(treated) || !treated.treated ? (treated = [], treated.treated = <span class="hljs-literal">true</span>) : <span class="hljs-literal">null</span>;
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> target === <span class="hljs-string">"boolean"</span>) {
+</div><div class="hljs-line">            deep = target;
+</div><div class="hljs-line">            target = <span class="hljs-built_in">arguments</span>[<span class="hljs-number">1</span>];
+</div><div class="hljs-line">        }
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-comment">// 防止死递归的处理</span>
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (treated.indexOf(target) &gt; <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> target;
+</div><div class="hljs-line">        treated.push(target);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-comment">// 校验类型</span>
+</div><div class="hljs-line">        type = toType(target);
+</div><div class="hljs-line">        isArray = <span class="hljs-built_in">Array</span>.isArray(target);
+</div><div class="hljs-line">        isObject = isPlainObject(target);
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-comment">// 特殊值的拷贝</span>
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (target == <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> target;
+</div><div class="hljs-line">        Ctor = target.constructor;
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/^(regexp|date)$/i</span>.test(type)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Ctor(target);
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/^(error)$/i</span>.test(type)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Ctor(target.message);
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/^(function|generatorfunction)$/i</span>.test(type)) {
+</div><div class="hljs-line">            <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">proxy</span>(<span class="hljs-params"></span>) </span>{
+</div><div class="hljs-line">                <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">Array</span>.from(<span class="hljs-built_in">arguments</span>);
+</div><div class="hljs-line">                <span class="hljs-keyword">return</span> target.apply(<span class="hljs-keyword">this</span>, args);
+</div><div class="hljs-line">            };
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (!isArray &amp;&amp; !isObject) <span class="hljs-keyword">return</span> target;
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-comment">// 如果是数组/对象，我们依次迭代赋值给新的数组/对象</span>
+</div><div class="hljs-line">        result = <span class="hljs-keyword">new</span> Ctor();
+</div><div class="hljs-line">        each(target, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">copy, name</span>) </span>{
+</div><div class="hljs-line">            <span class="hljs-keyword">if</span> (deep) {
+</div><div class="hljs-line">                <span class="hljs-comment">// 深拷贝</span>
+</div><div class="hljs-line">                result[name] = clone(deep, copy, treated);
+</div><div class="hljs-line">                <span class="hljs-keyword">return</span>;
+</div><div class="hljs-line">            }
+</div><div class="hljs-line">            <span class="hljs-comment">// 浅拷贝</span>
+</div><div class="hljs-line">            result[name] = copy;
+</div><div class="hljs-line">        });
+</div><div class="hljs-line">        <span class="hljs-keyword">return</span> result;
+</div><div class="hljs-line">    };
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    ......
+</div><div class="hljs-line">})();
+</div></code></pre>
+
+    <h4 id="专题类的多种继承方案">专题：类的多种继承方案</h4>
+
+    <ul>
+      <li>
+        <p>call继承</p>
+      </li>
+      <li>
+        <p>原型继承</p>
+      </li>
+      <li>
+        <p>寄生混合式继承</p>
+      </li>
+      <li>
+        <p>ES6中的extend</p>
+      </li>
+    </ul>
+  </div>
+</body>
+
+</html>

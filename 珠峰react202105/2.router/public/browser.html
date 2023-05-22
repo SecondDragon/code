@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>history</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        let historyObj = window.history;
+        window.addEventListener('popstate',(event)=>{//push入栈 pop类似于出栈
+            console.log(event.type,event.state);
+            root.innerHTML = window.location.pathname;//真正浏览器路径
+        });
+        //当我们调用pushState方法的时候会触发这函数执行
+        window.onpushstate = function(event){
+            console.log(event,event.type,event.detail);
+            root.innerHTML = window.location.pathname;
+        }
+        
+        ;(function(historyObj){
+            let pushState = history.pushState;//暂存原始的pushState方法
+            history.pushState = function(state,title,pathname){
+                let result = pushState.apply(historyObj,arguments);
+                if(typeof window.onpushstate  === 'function'){
+                    window.onpushstate(new CustomEvent('pushstate',{detail:{state,pathname}}));
+                }
+                return result;    
+            }
+        })(historyObj);
+        
+        let historyLength = historyObj.length;//启动的时候条目的数量
+        setTimeout(()=>{
+            historyObj.pushState({page:1},null,'/page1');
+            console.log('after page1',historyObj.length-historyLength);
+        },1000);
+        setTimeout(()=>{
+            historyObj.pushState({page:2},null,'/page2');
+            console.log('after page2',historyObj.length-historyLength);
+        },2000);
+        setTimeout(()=>{
+            historyObj.pushState({page:3},null,'/page3');
+            console.log('after page3',historyObj.length-historyLength);
+        },3000);
+        setTimeout(()=>{
+            historyObj.back();
+            console.log('after page4',historyObj.length-historyLength);
+        },4000);
+        setTimeout(()=>{
+            historyObj.pushState({page:4},null,'/page4');
+            console.log('after page5',historyObj.length-historyLength);
+        },5000);
+        setTimeout(()=>{
+            historyObj.go(1)
+            console.log('after page6',historyObj.length-historyLength);
+        },6000);
+    </script>
+</body>
+</html>

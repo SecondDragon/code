@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* .box {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    transition: width 1s;
+  }
+  
+  .box:hover {
+    width: 200px;
+  } */
+
+    /* .box {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    background-color: red;
+    animation: rotate 10s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+      background-color: red;
+    }
+    to {
+      transform: rotate(360deg);
+      background-color: white;
+    }
+  } */
+
+    /* 定义一个名为 rotateAnimation 的动画序列 */
+    @keyframes rotateAnimation {
+
+      /* 第一帧，从初始状态到 30% 的状态 */
+      0% {
+        transform: rotate(0deg);
+      }
+
+      /* 第二帧，从 30% 到 60% 的状态 */
+      30% {
+        transform: rotate(180deg);
+      }
+
+      /* 第三帧，从 60% 到 90% 的状态 */
+      60% {
+        transform: rotate(360deg);
+      }
+
+      /* 第四帧，从 90% 到 100% 的状态 */
+      90% {
+        transform: rotate(720deg);
+      }
+
+      /* 最后一帧，完全变换的状态 */
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* 将动画序列应用到元素上 */
+    .box {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      background-color: red;
+      animation: rotateAnimation 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- transition 示例 -->
+  <div class="box"></div>
+
+
+</body>
+
+</html>

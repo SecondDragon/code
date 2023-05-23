@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        section {
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+        }
+
+        .section-1 {
+            background-color: #f7cac9;
+        }
+
+        .section-2 {
+            background-color: #a6e3e9;
+        }
+
+        .section-3 {
+            background-color: #f3ffb6;
+        }
+
+        .section-4 {
+            background-color: #ea907a;
+        }
+
+        button {
+            margin: 30px;
+            padding: 10px 30px;
+            font-size: 1.5rem;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+        #scroll-to-section-2{
+            position: fixed;
+            bottom: 200px;
+        }
+        #scroll-to-section-4{
+            position: fixed;
+            bottom: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="section-0">
+        <h1>Section 0</h1>
+    </section>
+    <section class="section-1">
+        <h1>Section 1</h1>
+    </section>
+    <section class="section-2">
+        <h1>Section 2</h1>
+    </section>
+    <section class="section-3">
+        <h1>Section 3</h1>
+    </section>
+    <section class="section-4">
+        <h1>Section 4</h1>
+    </section>
+    <section class="section-5">
+        <h1>Section 5</h1>
+    </section>
+    <section class="section-6">
+        <h1>Section 6</h1>
+    </section>
+    <button id="scroll-to-section-2">Scroll To Section 2</button>
+    <button id="scroll-to-section-4">Scroll To Section 4</button>
+
+    <script>
+        function smoothScroll(target, duration) {
+            // const targetPosition = target.getBoundingClientRect().top; // 目标元素距离视口顶部的距离
+            const topOffset = target.offsetTop;
+            // console.log("目标元素距离视口顶部的距离",targetPosition);
+            // const startPosition = window.pageYOffset; // 当前窗口的滚动条位置
+            // console.log("当前窗口的滚动条位置",startPosition);
+
+            const distance = topOffset - window.pageYOffset; // 目标元素需要滚动的距离
+            const start = window.pageYOffset;
+            console.log('目标元素需要滚动的距离',distance);
+            let startTime = null;
+
+            function animation(currentTime) {
+                if (startTime === null) { // 如果是第一次调用动画，则记录开始时间
+                    startTime = currentTime;
+                }
+
+                const timeElapsed = currentTime - startTime; // 经过的时间
+                const run = ease(timeElapsed, start, distance, duration); // 根据缓动函数计算当前的位置
+                window.scrollTo(0, run); // 设置滚动条位置
+
+                if (timeElapsed < duration) { // 如果动画未结束，则继续请求下一帧动画
+                    requestAnimationFrame(animation);
+                }
+            }
+
+            function ease(timeElapsed, startPosition, distance, duration) { // 缓动函数，这里使用了简单的线性缓动函数
+                return distance * timeElapsed / duration + startPosition;
+            }
+
+            requestAnimationFrame(animation);
+        }
+        document.getElementById('scroll-to-section-2').addEventListener('click', function () {
+            const section2 = document.querySelector('.section-2');
+            smoothScroll(section2, 1000); // 滚动到 section2 元素，持续时间为 1 秒
+        });
+
+        document.getElementById('scroll-to-section-4').addEventListener('click', function () {
+            const section4 = document.querySelector('.section-4');
+            smoothScroll(section4, 2000); // 滚动到 section4 元素，持续时间为 2 秒
+        });
+
+    </script>
+</body>
+
+</html>

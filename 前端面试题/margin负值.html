@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .putong {
+            margin-left: 50px;
+            margin-top: 50px;
+            width: 900px;
+            height: 100px;
+            background-color: aqua;
+        }
+
+        .flb {
+            float: left;
+            width: 300px;
+            height: 100px;
+            text-align: center;
+        }
+
+        .flbox1 {
+            margin-left: 50px;
+            background-color: rgba(160, 189, 224, 0.8);
+        }
+
+        .flbox2 {
+            background-color: rgba(151, 227, 136, 0.8);
+            margin-left: -50px;
+            /*margin-left为负值，影响自身元素，向左偏移，并且影响后面的元素*/
+        }
+
+        .flbox3 {
+            background-color: rgba(213, 127, 170, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="putong">普通文档流</div>
+    <div class="container">
+        <div class="flb flbox1">box1</div>
+        <div class="flb flbox2">box2</div>
+        <div class="flb flbox3">box3</div>
+    </div>
+</body>
+
+</html>
+<script>
+
+</script>
+</script>

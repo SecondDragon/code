@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .outer {
+            height: 100px;
+            /* position: relative; */
+        }
+
+        /* 浮动法 */
+        /* .left {
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: blue;
+        }
+
+        .right {
+            margin-left: 200px;
+            width: auto;
+            height: 100px;
+            background-color: red;
+        } */
+        .left {
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: blue;
+        }
+
+        .right {
+            overflow: hidden;
+            width: auto;
+            height: 100px;
+            background-color: red;
+        }
+
+        .change {
+            width: 50px;
+            height: 50px;
+        }
+
+        /* .left {
+            position: absolute;
+            width: 300px;
+            height: 900px;
+            background-color: red;
+        }
+
+        .right {
+            margin-left: 300px;
+            
+            height: 900px;
+            background-color: #0c2135;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="outer">
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+
+    <div class="change">
+        改变宽度
+    </div>
+
+    <script>
+
+        document.querySelector('.change').addEventListener('click', () => {
+            document.querySelector('.left').style.width = "100px"
+            element.style.width
+        })
+
+    </script>
+</body>
+
+</html>

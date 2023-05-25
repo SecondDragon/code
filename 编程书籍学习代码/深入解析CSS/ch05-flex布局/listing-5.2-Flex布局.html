@@ -1,0 +1,185 @@
+<!doctype html>
+
+<head>
+  <style>
+    :root {
+      box-sizing: border-box;
+    }
+
+    *,
+    ::before,
+    ::after {
+      box-sizing: inherit;
+    }
+
+    body {
+      background-color: #709b90;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    body *+* {
+      margin-top: 1.5em;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .site-nav {
+      display: flex;
+      padding: .5em;
+      border-radius: .2em;
+      list-style-type: none;
+      background-color: #5f4b44;
+    }
+
+    .site-nav>li {
+      margin-top: 0;
+    }
+
+    .site-nav>li>a {
+      background-color: #cc6b5a;
+      display: block;
+      color: white;
+      padding: .5em 1em;
+      text-decoration: none;
+    }
+
+    /*选中所有前面有列表项的列表项（也就是说除了第一项之外的所有列表项）  */
+    .site-nav>li+li {
+      margin-left: 1.5em;
+    }
+
+    /*  */
+    .site-nav>.nav-right {
+      /* 弹性盒子内的 auto 外边距会填充所有可用空间 */
+      margin-left: auto;
+    }
+
+    /* 给三个板块加上白色背景和内边距 */
+    .tile {
+      padding: 1.5em;
+      background-color: #fff;
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    .flex>*+* {
+      margin-left: 1.5em;
+      margin-top: 0;
+    }
+
+    /* flex: 2; 
+      flex: 2 等价于 flex: 2 1 0%
+      */
+
+
+    /* flex-basis 定义了元素大小的基准值 
+      flex-basis 属性可以设置为任意的 width 值，包括 px、em、百分比。
+      它的初始值是 auto，此时浏览器会检查元素是否设置了 width 属性值。
+      如果有，则使用 width 的值作为 flex-basis 的值；如果没有，则用元素内容自身的大小。
+      如果 flex-basis 的值不是 auto，width 属性会被忽略,也就是说，计算后续属性不会以你自己设置的width为基准。
+      
+      每个弹性子元素的初始主尺寸确定后，它们可能需要在主轴方向扩大或者缩小来适应（或者填充）弹性容器的大小。这时候就需要 flex-grow 和 flex-shrink 来决定缩放的规则。
+      
+      每个弹性子元素的 flex-basis 值计算出来后，它们（加上子元素之间的外边距）加起来会占据一定的宽度
+      加起来的宽度不一定正好填满弹性容器的宽度，可能会有留白
+      多出来的留白（或剩余宽度）会按照 flex-grow（增长因子）的值分配给每个弹性子元素
+
+      flex-grow 的值为非负整数。如果一个弹性子元素的 flex-grow 值为 0，那么它的宽度不会超过 flex-basis 的值；
+      如果某个弹性子元素的增长因子非 0，那么这些元素会增长到所有的剩余空间被分配完，也就意味着弹性子元素会填满容器的宽度
+
+      flex-grow 的值越大，元素的“权重”越高，也就会占据更大的剩余宽度。一个 flex-grow: 2 的子元素增长的宽度为 flex-grow: 1 的子元素的两倍
+
+       简写声明 flex: 2 和 flex: 1 设置了一个弹性基准值为 0% 
+       因此容器宽度的 100%都是剩余宽度（减去两列之间 1.5em 的外边距）
+      剩余宽度会分配给两列：第一列得到 2/3 的宽度，第二列得到 1/3 的宽度
+
+      */
+    /*
+       flex-shrink 属性与 flex-grow 遵循相似的原则
+       计算出弹性子元素的初始主尺寸后，它们的累加值可能会超出弹性容器的可用宽度。
+       如果不用 flex-shrink，就会导致溢出每个子元素的 flex-shrink 值代表了它是否应该收缩以防止溢出。如果某个子元素为
+
+       flex-shrink: 0，则不会收缩；如果值大于 0，则会收缩至不再溢出。按照 flex-shrink 值的比例，值越大的元素收缩得越多。
+       */
+    /* .column-main {
+      flex-grow: 2;
+      flex-shrink: 1;
+      flex-basis: 0%;
+    }
+
+    .column-sidebar {
+      flex: 1;
+    } */
+
+
+    /* 用 flex-shrink 也能实现上述页面中两列的宽度
+      首先将两列的 flex-basis 指定为理想的比例 它们的宽度之和加上 1.5em 的间隔就会比容器宽度多出 1.5em
+    */
+    .column-main {
+      flex: 66.7%;
+    }
+
+    .column-sidebar {
+      flex: 33.3%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Ink</h1>
+    </header>
+    <nav>
+      <ul class="site-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/features">Features</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="/support">Support</a></li>
+        <li class="nav-right">
+          <a href="/about">About</a>
+        </li>
+      </ul>
+    </nav>
+    <main class="flex">
+      <div class="column-main tile">
+        <h1>Team collaboration done right</h1>
+        <p>Thousands of teams from all over the
+          world turn to <b>Ink</b> to communicate
+          and get things done.</p>
+      </div>
+      <div class="column-sidebar">
+        <div class="tile">
+          <form class="login-form">
+            <h3>Login</h3>
+            <p>
+              <label for="username">Username</label>
+              <input id="username" type="text" name="username" />
+            </p>
+            <p>
+              <label for="password">Password</label>
+              <input id="password" type="password" name="password" />
+            </p>
+            <button type="submit">Login</button>
+          </form>
+        </div>
+        <div class="tile centered">
+          <small>Starting at</small>
+          <div class="cost">
+            <span class="cost-currency">$</span>
+            <span class="cost-dollars">20</span>
+            <span class="cost-cents">.00</span>
+          </div>
+          <a class="cta-button" href="/pricing">
+            Sign up
+          </a>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>

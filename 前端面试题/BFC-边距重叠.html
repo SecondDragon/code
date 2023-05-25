@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            height: 100px;
+            width: 100px;
+            margin: 20px;
+        }
+
+        .up {
+            overflow: hidden;
+            background-color: aqua;
+            display: inline-block;
+        }
+        /* 那么触发外边距折叠的条件是W3C文档里已作出了说明，需要符合下面条件：
+            都是普通流中的元素且属于同一个 BFC
+        */
+        .down {
+            background-color: blanchedalmond;
+            overflow: hidden;
+            /* display: inline-block */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="up">上</div>
+    <div class="down">下</div>
+</body>
+
+</html>

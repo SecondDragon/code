@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/reactivity.global.js"></script>
+    <div id="app"></div>
+    <script>
+        const { reactive, readonly, toRaw, markRaw, effect, ref } = VueReactivity;
+        // 1.已经是effect函数，再被effect
+        // let reactiveEffect = effect(() => {
+        //     console.log(1);
+        // });
+        // debugger;
+        // let reactiveEffect2 = effect(reactiveEffect);
+        // console.log(reactiveEffect === reactiveEffect2); // false
+
+        // 2.每次都需要重新收集
+        // const state = reactive({name:'zf',age:11})
+        // effect(()=>{
+        //     console.log('rerender')
+        //     if(state.name === 'zf'){
+        //         console.log(state.age);
+        //     }
+        // }) // renderer  renderer renderer
+        // state.age = 100;
+        // state.name = 'jw';
+        // state.age = 200;
+
+
+        // 3.track调试,trigger调试
+       const state = reactive({ name: 'zf', age: 11 });
+        // debugger;
+        effect(() => {
+            debugger
+            state.name + state.age;
+        });
+        // debugger;
+        // state.name = 'zs'
+
+        // 4.带有scheduler的effect
+        // const state = reactive({ name: 'zf', age: 11 });
+        // effect(()=>{ state.name },{
+        //     scheduler:(effect)=>{ // 如果提供scheduler 重新执行的时候 不会调用effect 而是调用scheduler
+        //         console.log('更新')
+        //     }
+        // })
+        // state.name = 'jw';
+
+        // watchApi   组件 基于effect
+    </script>
+</body>
+
+</html>

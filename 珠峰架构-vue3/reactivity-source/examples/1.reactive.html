@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/reactivity.global.js"></script>
+    <div id="app"></div>
+    <script>
+        const { reactive, readonly, toRaw, markRaw, effect, ref } = VueReactivity;
+        // 1. 同一个对象多次调用reactive方法，返回值一样。
+        // let obj = { name: 'zf' };
+        // let proxy1 = readonly(obj);
+        // debugger
+        // let proxy2 = reactive(proxy1);
+        // console.log(proxy1 === proxy2)
+
+        // 2. 调试reactive函数;
+        // let obj = { name: 'zf' };
+        // debugger
+        // let proxy1 = reactive(obj);
+        // let proxy2 = reactive(proxy1);
+        // let proxy3 = reactive(obj);
+
+        // 3. toRaw 方法的使用 markRaw 标记不被代理
+        // let obj = { name: 'zf' };
+        // let proxy = reactive(obj); // target -> proxy
+        // debugger
+        // console.log(obj === toRaw(proxy)); 
+        // let obj2 = { name: 'zf' };
+
+        // let proxy2 = reactive(markRaw(obj2)); // 有些写好的库 并不支持操作proxy
+        // console.log(proxy2); 
+
+        // 4. arr调用特定的方法需要特殊处理
+        // let proxyArr = reactive([1, 2, 3]);
+        // // 访问数组的方法时会访问数组的长度
+        // proxyArr.push(5); // 调用数组方法时 有暂停收集的功能和增加收集项的功能, 会访问length 自动访问的
+        // proxyArr[Symbol.hasInstance]; // 访问内置属性不会依赖收集
+
+        // let r = reactive({
+        //    name: ref('zf')
+        // });
+        // console.log(r.name); // reactive 会判断里面是否包含ref，自动拆包  r.name.value
+        // let r1 = reactive([ref(1), 2, 3, 4]); // 这种情况下不会拆包
+        // debugger
+        // console.log(r1[0].value)
+        // 5. 设置值是响应式的或者ref的
+        let proxy1 = reactive({ name: 'zf', age: ref([1,2,3]) });
+        proxy1.name = reactive({ str: 'jw' });
+        proxy1.age = 11;
+        console.log(proxy1); // 存的是ref 但是取的时候会解包
+
+
+        let obj = {};
+        let proto = {a:1}
+        let proxyProto = new Proxy(proto, {
+            get(target,key,receiver) {
+                return Reflect.get(target,key,receiver)
+            },
+            set(target,key,value,receiver){
+                console.log(proxyProto , receiver == myProxy)
+                return Reflect.set(target,key,value,receiver)// 不要考虑原型链的set
+            }
+        })
+        Object.setPrototypeOf(obj,proxyProto); // obj.__proto__ = proxyProto
+        let myProxy = new Proxy(obj,{  // proxy(obj)
+            get(target,key,receiver) {
+                return Reflect.get(target,key,receiver)
+            },
+            set(target,key,value,receiver){
+                console.log(receiver === myProxy)
+                return Reflect.set(target,key,value,receiver); // 调用reflect.set 会触发原型链的set
+            }
+        })
+        myProxy.a = 100; // 内部的特点
+
+
+        // 面试题：
+        // 1.梳理流程 reactive （1）判断对象 （2） 重复代理的情况 （3） 对不同类型进行proxy  （4） 做缓存
+        
+        // 2.get baseHandler 取值的时候 会对数组类型单独处理 对ref进行处理
+        // 3.set baseHandler 设置值的时候 会对ref单独处理 ， 对新增和 修改做不同的处理
+        // 4.track 就是维护 属性和 effect之间的关系  name = effect  age = effect
+        // {target:{name:[effect,effect],age:[effect,effect]}}
+        // 5.trigger就是找到 target中对应的属性的 effect列表  【[effect,effect】全部重新执行
+
+        // 响应式原理是身么， 属性会收集effect， 属性更新会让收集的effect重新执行
+
+
+    </script>
+</body>
+
+</html>

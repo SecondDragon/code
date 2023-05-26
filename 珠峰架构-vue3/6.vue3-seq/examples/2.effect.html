@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../node_modules/@vue/reactivity/dist/reactivity.global.js"></script>
+    <script>
+        let { effect, reactive } = VueReactivity;
+        let state = reactive({ name: 'zf', age: 12, arr:[1,2,3] })
+        effect(() => {
+            console.log('render')
+            app.innerHTML = state.arr // 会取长度
+        })
+        setTimeout(() => {
+           state.arr[100] = 1; // 更改namne属性需要重新执行
+        }, 1000);
+
+
+
+        // 1. effect中的所有属性 都会收集effect  track 
+        // 2. 当这个属性值发生变化 会重新执行effect trigger
+
+    </script>
+</body>
+
+</html>

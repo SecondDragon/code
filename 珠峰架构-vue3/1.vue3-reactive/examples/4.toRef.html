@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../node_modules/@vue/reactivity/dist/reactivity.global.js"></script>
+    <div id="app"></div>
+    <script>
+        let { effect, reactive ,ref ,shallowRef,toRef,toRefs } = VueReactivity;
+        let proxy = reactive({name:'zf',age:11}); // 将普通的类型 转化成一个对象，这个对象中有value属性 指向原来的值
+
+        // let r1 = toRef(proxy,'name')
+        // let r2 = toRef(proxy,'age')
+        let {name,age} = toRefs(proxy); // 有的时候就想转化一个特定的属性， toRefs 就浪费性能了
+        // r.value = 'xxx' // proxy.name 
+        // let {name} = proxy
+        effect(()=>{
+            app.innerHTML = name.value + age.value; // {value:'zf'}
+        })
+        setTimeout(() => {
+            proxy.name = 'jw'
+        }, 1000);
+
+        // watchEffect -> runtime-core -> watch -> watch flush post
+
+        // reactive 就是响应式api
+        // ref 普通值只能用ref
+        // 想解构 reactive  -> toRefs  解构某一个 toRef
+        // effect track  trigger
+    </script>
+</body>
+
+</html>

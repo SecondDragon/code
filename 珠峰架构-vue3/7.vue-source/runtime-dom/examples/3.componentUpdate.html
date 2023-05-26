@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/runtime-dom.global.js"></script>
+    <div id="app"></div>
+    <script>
+        const { createApp, h, createVNode, render,reactive } = VueRuntimeDOM;
+
+        // 组件如何更新呢？ 自身的数据变化  外界属性变化也要更新
+
+        // 父给儿子传入属性 儿子是否要更新 ？  更新了一次   内部会将儿子自身的更新移除掉
+        // 儿子使用了属性 属性变化了要不要更新？ 更新一次
+
+        const My = {
+            props:{
+                name:String
+            },
+            render() {
+                return h('p',this.name) // 本事会触发一次update
+            }
+        }
+        const App = {
+            setup(){
+                const state = reactive({name:'zf'});
+                setTimeout(() => {
+                    state.name = 'jw'
+                }, 1000);
+                return ()=>{
+                    return h('div', {}, h(My,{name:state.name}))
+                }
+            }
+        };
+        // = createApp().mount();
+        const vnode = createVNode(App);
+        debugger
+        render(vnode, document.getElementById('app'))
+
+        // 父组件先更新状态 -> 产生一个新的虚拟节点 -> 开始走diff流程
+        // 如果遇到的是组件， 属性是动态的 会比较两个组件，如果属性不一样要更新组件，
+        // 组件需要更新自己身上的属性，并且重新生成字数
+
+        // h('div', {}, h(My,{name:zf}))
+        // h('div', {}, h(My,{name:jw}))
+
+        // 
+    </script>
+</body>
+
+</html>

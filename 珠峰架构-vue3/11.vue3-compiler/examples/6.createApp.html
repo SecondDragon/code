@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../node_modules/@vue/runtime-dom/dist/runtime-dom.global.js"></script>
+    <div id="app"></div>
+    <script>
+        let { createApp, h ,reactive} = VueRuntimeDOM;
+        let App = { // getCurrentInstance = > instance
+            setup(props, context) { // instance 里面包含的内容 会提取一些传递给context
+                let state = reactive({name:'zf'});
+                let fn = function(){
+                    state.name = 'jw';
+                    state.name = 'zf';
+                    state.name = 'jw';
+                    state.name = 'zf';
+                }
+                return () => {
+                    // h('div',{a:1});
+                    // h('div',{},'helloworld');
+                    // h('div',{},h('span'));
+                    // h('div',h('span'));
+                    // h('div',[h('span'),h('span')]);
+                    // h('div',null,h('span'),h('span'));
+                    // h('div',null,'a','b','c');
+                    return h('div',{onClick:fn},state.name);
+                }
+            },
+        }
+        let app = createApp(App, { name: 'zf', age: 12 })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

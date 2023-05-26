@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../dist/runtime-dom.global.js"></script>
+    <div id="app">
+    
+    </div>
+    <script>
+        const {createApp,h} = VueRuntimeDOM
+        const App = { // vnode ->  subtree
+            render(){
+                return h('div','hello world')
+            }
+        };
+        debugger;
+        let app = createApp(App,{}); // createApp中调用 createRenderer().createApp()方法
+
+        // 1.createRenderer 接受节点操作一系列的方法
+        // 2.将用户的两个参数传递给 createApp()方法中
+        debugger;
+        const proxy = app.mount('#app'); // 调用重写的mount方法
+        console.log(proxy)
+
+
+        // 组件的初始化 1） 把组件创造一个虚拟节点  2）将虚拟节点挂载到容器上
+
+
+        // createApp(参数必须是组件)
+
+
+    </script>
+</body>
+</html>

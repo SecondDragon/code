@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/runtime-dom.global.js"></script>
+    <div id="app"></div>
+    <script>
+        const { createApp, h ,createVNode,render} = VueRuntimeDOM;
+        const App = {
+            render() {
+                return h('div', 'hello world')
+            }
+        };
+        debugger;
+        const vnode = createVNode(App); // 少了一个传递 节点操作和属性操作的api
+        debugger
+        // 内部将 render方法进行了包装 -》 增加传入操作  -》 render方法
+        render(vnode,document.getElementById('app'))
+
+        // createApp().mount()
+    </script>
+</body>
+
+</html>

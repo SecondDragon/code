@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../node_modules/@vue/compiler-dom/dist/compiler-dom.global.js"></script>
+    <div id="app"></div>
+    <script>
+        // vue3 可以直接写render函数 h('div') 并不好  如果dom元素太多 会写起来很恶心
+        // jsx语法 -> h('div') 并没有优化
+        // vue3 template -> render函数 具备优化特点的 patchFlag blockTree
+
+        // vue3 template -> render函数 3个步骤   把html解析成抽象语法树（ast） 描述语法本身  2.转化ast树 加标记和进行优化 (transform)  3.生成render函数（字符串拼接）
+        
+        let {baseCompile} = VueCompilerDOM
+        let ast = baseCompile(`
+        123123
+        <a href=""></a>
+        <b></b>`)
+        console.log(ast);
+
+    </script>
+</body>
+
+</html>

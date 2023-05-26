@@ -1,0 +1,21 @@
+@import "./common/var.scss";
+@import "./mixins//mixin.scss";
+
+
+@include b(transfer){
+    @include e(panel){
+        display: inline-block;
+        width: 200px;
+        vertical-align: middle;
+        margin:0 20px;
+        border:1px solid #6e6464;
+        border-radius: 5px;
+    }
+    @include e(body){
+        height:200px;
+        overflow-y: scroll;
+    }
+    @include e(buttons){
+        display: inline-block;
+    }
+}

@@ -1,0 +1,50 @@
+@import "./common/var.scss";
+@import "./mixins//mixin.scss";
+
+@include b(button){ // z-button 
+    display: inline-block;
+    min-height: 40px;
+
+    outline: none;
+    border: #817272;
+    user-select: none;
+    padding: 0 15px;
+    border-radius: 5px;
+    vertical-align: middle;
+
+    & [class*="z-icon-"]{
+        vertical-align: middle;
+        & + span{
+            margin-left:5px;
+        }
+    }
+
+    @include when(disabled){
+        cursor: not-allowed;
+    }
+
+    @include when(loading){
+        pointer-events: none;
+    }
+
+    @include when(round){
+        border-radius: 20px;
+    }
+
+    @include m(primary){
+        @include button-type($--color-white,$--color-primary,$--color-primary)
+    }
+    @include m(success){
+        @include button-type($--color-white,$--color-success,$--color-success)
+    }
+    @include m(info){
+        @include button-type($--color-white,$--color-info,$--color-info)
+    }
+    @include m(danger){
+        @include button-type($--color-white,$--color-danger,$--color-danger)
+    }
+    @include m(warning){
+        @include button-type($--color-white,$--color-warning,$--color-warning)
+    }
+
+}

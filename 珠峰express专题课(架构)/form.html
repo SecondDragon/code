@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div style="width:100px;height:100px;background:red" id="drag">
+
+
+        
+    </div>
+    <div style="width:600px;height:30px;border:1px solid red">
+        <div id="progress" style="height:30px;background:green;width:0">
+
+        </div>
+    </div>
+    <button id="upload">提交</button>
+    <script>
+        let file = '';
+        drag.addEventListener('dragover',function (e) {
+            e.preventDefault();
+        })
+        drag.addEventListener('drop',function (e) {
+             e.preventDefault();
+             file = e.dataTransfer.files[0];
+        })
+
+        upload.addEventListener('click',()=>{
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST','upload',true);
+            let fd = new FormData();
+            fd.append('avatar',file)
+            xhr.onload = function () {
+                alert('ok');
+            }
+            xhr.upload.onprogress = function (e) {
+                progress.style.width = e.loaded /  e.total * 100  + '%';
+                console.log(e.total,e.loaded)
+            }
+            xhr.send(fd);
+        })
+    
+    </script>
+</body>
+</html>

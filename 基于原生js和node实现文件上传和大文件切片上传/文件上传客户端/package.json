@@ -1,0 +1,14 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "spark-md5": "^3.0.1",
+    "qs": "^6.9.6"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

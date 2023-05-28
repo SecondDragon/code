@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>珠峰在线Web高级课</title>
+
+    <!-- IMPORT CSS -->
+    <link rel="stylesheet" href="css/reset.min.css">
+    <link rel="stylesheet" href="css/upload.css">
+    <style>
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        .container {
+            padding: 20px 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .container .item h3 {
+            line-height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item">
+            <h3>单一文件上传「FORM-DATA」</h3>
+            <section class="upload_box" id="upload1">
+                <!-- accept=".png" 限定上传文件的格式 -->
+                <input type="file" class="upload_inp" accept=".png,.jpg,.jpeg">
+                <div class="upload_button_box">
+                    <button class="upload_button select">选择文件</button>
+                    <button class="upload_button upload">上传到服务器</button>
+                </div>
+                <div class="upload_tip">只能上传 PNG/JPG/JPEG 格式图片，且大小不能超过2MB</div>
+                <ul class="upload_list">
+                    <!-- <li>
+                        <span>文件：...</span>
+                        <span><em>移除</em></span>
+                    </li> -->
+                </ul>
+            </section>
+        </div>
+
+        <div class="item">
+            <h3>单一文件上传「BASE64」，只适合图片</h3>
+            <section class="upload_box" id="upload2">
+                <input type="file" class="upload_inp" accept=".jpg,.jpeg,.png">
+                <div class="upload_button_box">
+                    <button class="upload_button select">上传图片</button>
+                </div>
+                <div class="upload_tip">只能上传jpg/png格式图片，且大小不能超过2mb</div>
+            </section>
+        </div>
+
+        <div class="item">
+            <h3>单一文件上传「缩略图处理」</h3>
+            <section class="upload_box" id="upload3">
+                <input type="file" class="upload_inp" accept=".jpg,.jpeg,.png">
+                <div class="upload_button_box">
+                    <button class="upload_button select">选择文件</button>
+                    <button class="upload_button upload">上传到服务器</button>
+                </div>
+                <div class="upload_abbre">
+                    <img src="" alt="">
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="item">
+            <h3>单一文件上传「进度管控」</h3>
+            <section class="upload_box" id="upload4">
+                <input type="file" class="upload_inp">
+                <div class="upload_button_box">
+                    <button class="upload_button select">上传文件</button>
+                </div>
+                <div class="upload_progress">
+                    <div class="value"></div>
+                </div>
+            </section>
+        </div>
+
+        <div class="item">
+            <h3>多文件上传</h3>
+            <section class="upload_box" id="upload5">
+                <input type="file" class="upload_inp" multiple>
+                <div class="upload_button_box">
+                    <button class="upload_button select">选择文件</button>
+                    <button class="upload_button upload">上传到服务器</button>
+                </div>
+                <ul class="upload_list">
+                    <!-- <li key='xx'>
+                        <span>文件：xxxxx</span>
+                        <span><em>移除</em></span>
+                    </li> -->
+                </ul>
+            </section>
+        </div>
+
+        <div class="item">
+            <h3>拖拽上传</h3>
+            <section class="upload_box" id="upload6">
+                <input type="file" class="upload_inp">
+                <div class="upload_drag">
+                    <i class="icon"></i>
+                    <span class="text">将文件拖到此处，或<a href="javascript:;" class="upload_submit">点击上传</a></span>
+                </div>
+                <div class="upload_mark">正在上传中，请稍等...</div>
+            </section>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="item">
+            <h3>大文件上传</h3>
+            <section class="upload_box" id="upload7">
+                <input type="file" class="upload_inp">
+                <div class="upload_button_box">
+                    <button class="upload_button select">上传图片</button>
+                </div>
+                <div class="upload_progress">
+                    <div class="value"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- IMPORT JS -->
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+    <script src="node_modules/qs/dist/qs.js"></script>
+    <script src="node_modules/spark-md5/spark-md5.min.js"></script>
+    <script src="js/utils.min.js"></script>
+    <script src="js/instance.js"></script>
+    <script src="js/upload.js"></script>
+</body>
+
+</html>

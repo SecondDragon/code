@@ -1,0 +1,105 @@
+<mxfile host="65bd71144e">
+    <diagram id="5_3ll1UzWZyMuuqgKiFE" name="第 1 页">
+        <mxGraphModel dx="1096" dy="486" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="2336" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/png,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;sketch=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="10" width="232" height="133" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="以上代码的内存表现" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;sketch=1;" parent="1" vertex="1">
+                    <mxGeometry x="150" y="160" width="120" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="&lt;span style=&quot;font-weight: normal ; font-size: 14px&quot;&gt;在堆内存中，既然有函数定义，那么就一定会有函数对象，这个函数对象被GO里的Person引用，所以他不会销毁，&lt;br style=&quot;font-size: 14px&quot;&gt;因为是函数的函数对象，所以他还会有一个显式的原型对象&lt;/span&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;i&gt;&lt;font style=&quot;font-size: 17px&quot;&gt;prototype&lt;/font&gt;&lt;/i&gt;,&amp;nbsp;&lt;span style=&quot;font-weight: 400&quot;&gt;&lt;br&gt;&lt;/span&gt;当进行&amp;nbsp;var p1=new Person()时，产生了一个p1对象 ，p1对象在GO中被引用，使用new&amp;nbsp;执行构造函数的方法创建&lt;br&gt;的对象其内部的__proto__都是指向构造函数的显式原型对象的&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;sketch=1;horizontal=1;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="10" width="770" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="" style="rounded=0;whiteSpace=wrap;html=1;sketch=1;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="180" width="280" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Person函数对象" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;sketch=1;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="130" width="100" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="parentScope" style="whiteSpace=wrap;html=1;sketch=1;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="213" width="230" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" style="edgeStyle=none;sketch=1;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=15;startArrow=none;" parent="1" source="26" target="19" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" style="edgeStyle=none;sketch=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;fontSize=15;" parent="1" source="10" target="28" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="函数的执行体" style="whiteSpace=wrap;html=1;sketch=1;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="330" width="230" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;sketch=1;" parent="1" source="12" target="13" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="prototype" style="whiteSpace=wrap;html=1;sketch=1;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="260" width="230" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="whiteSpace=wrap;html=1;sketch=1;" parent="1" vertex="1">
+                    <mxGeometry x="790" y="190" width="200" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="Person函数的显式原型对象" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;sketch=1;" parent="1" vertex="1">
+                    <mxGeometry x="810" y="150" width="160" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="" style="endArrow=classic;html=1;sketch=1;fontSize=17;entryX=0.56;entryY=0.444;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="14" target="4" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="620" y="330" as="sourcePoint"/>
+                        <mxPoint x="670" y="280" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="19" value="" style="whiteSpace=wrap;html=1;sketch=1;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="790" y="460" width="200" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=none;sketch=1;html=1;entryX=0.6;entryY=1.053;entryDx=0;entryDy=0;fontSize=15;entryPerimeter=0;" parent="1" source="21" target="13" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="__proto__" style="whiteSpace=wrap;html=1;sketch=1;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="545" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="p1对象" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="430" width="60" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" style="edgeStyle=none;sketch=1;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;fontSize=15;" parent="1" source="28" target="13" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="760" y="490"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="28" value="" style="whiteSpace=wrap;html=1;sketch=1;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="470" y="520" width="200" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="__proto__" style="whiteSpace=wrap;html=1;sketch=1;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="605" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="p2对象" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="490" width="60" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="创建，&lt;br&gt;即p2对象是根据执行体创建的" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="450" width="210" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" style="edgeStyle=none;sketch=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.004;entryY=0.217;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=15;" parent="1" source="34" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="constructor" style="whiteSpace=wrap;html=1;sketch=1;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="830" y="213" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="function Person() {}" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="150" width="140" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="创建，&lt;br&gt;即p1对象是根据执行体创建的" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="420" width="210" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="" style="edgeStyle=none;sketch=1;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=15;endArrow=none;" edge="1" parent="1" source="10" target="26">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="670" y="360" as="sourcePoint"/>
+                        <mxPoint x="790" y="570" as="targetPoint"/>
+                        <Array as="points"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

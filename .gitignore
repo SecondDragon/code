@@ -8,7 +8,7 @@ server/admin/node_modules
 server/web/node_modules
 /admin/node_modules
 /web/node_modules
-
+sync.ffs_db
 # Other files and folders
 .settings/
 **/.git

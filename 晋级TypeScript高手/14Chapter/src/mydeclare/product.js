@@ -1,0 +1,1 @@
+export let price = 3;

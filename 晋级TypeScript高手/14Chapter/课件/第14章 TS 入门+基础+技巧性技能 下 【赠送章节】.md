@@ -1,0 +1,242 @@
+## 慕课网 TS 高级课程
+
+### 	  第14 章 TS 入门+基础+技巧性技能 下 【赠送章节】
+
+**技能大纲**
+
+**14-1  接口定义，实现，应用场景**
+
+**14-2 接口可选属性，可索引类型，函数类型**
+
+**14-3  图文——接口继承实现**
+
+**14-4  联合类型（Union Type)**
+
+**14-5  使用 type  定义类型,  接口 和 type 区别**
+
+**14-6  一种用接口定义的特殊写法的类型 【加量赠送】**
+
+**14-7  一个联合类型技巧性使用的场景** **【加量赠送】**
+
+**14-8  为什么要用声明文件？ 【加量赠送】**
+
+**14-9  声明文件实现 【加量赠送】**
+
+**14-10  正确理解 declare 【加量赠送】**
+
+##### 14-11  命名空间在声明文件中的使用 【加量赠送】
+
+**14-12 模块声明 【加量赠送】**
+
+**14-13 如何在 TS 中引入 js 文件 【加量赠送】**
+
+
+
+**14-1  接口 ( interface ）定义，实现，应用场景**
+
+ **定义** 
+
+是为一系列同类对象或同类别的类提供属性定义和方法声明但没有任何赋值和实现的数据类型。
+
+**接口实现**
+
+**应用场景**
+
+1  提供方法的对象类型的参数时使用 【10月20号上线的第14章会详细讲】
+
+2 为多个同类别的类提供统一的方法和属性声明【参见第7章泛型接口】
+
+
+
+**慕课网 TS 高级课程**
+
+**14-2 接口可选属性，可索引类型，函数类型**
+
+**14-3  图文——接口继承实现**
+
+**接口继承的使用场景：**
+
+新的接口只是在原来接口继承之上增加了一些属性或方法，这时就用接口继承
+
+```js
+// 例子1：
+// 开始定义了一个接口
+interface  Point{
+    x:number;
+    y:number;
+}
+
+// 需求发生了变化，但是是在原来 Point 接口的基础之上增加了一个新的 z:number 属性。
+interface  Point3d extends Point{
+    z:number;
+}
+
+
+// 例子2：Vue3源码中 稍复杂一点的接口继承
+interface Error {
+  name: string;
+  message: string
+}
+
+interface CompilerError extends Error {
+  code: number
+}
+
+const enum ErrorCodes {
+  // parse errors
+  ABRUPT_CLOSING_OF_EMPTY_COMMENT,
+  CDATA_IN_HTML_CONTENT,
+  DUPLICATE_ATTRIBUTE,
+  END_TAG_WITH_ATTRIBUTES,
+  END_TAG_WITH_TRAILING_SOLIDUS,
+  EOF_BEFORE_TAG_NAME,
+  EOF_IN_CDATA,
+  EOF_IN_COMMENT,
+  EOF_IN_SCRIPT_HTML_COMMENT_LIKE_TEXT,
+  EOF_IN_TAG,
+  INCORRECTLY_CLOSED_COMMENT
+   ......
+}
+ 
+ interface CoreCompilerError extends CompilerError {
+  code: ErrorCodes
+}
+
+//  其他应用比较少的场景:
+//  1 接口也可以继承多个接口  2 接口可以继承类  3 类可以继承一个或多个接口
+//  同学们可以
+```
+
+**慕课网 TS 高级课程**
+
+**14-4  联合类型**
+
+**14-5  使用 type  定义类型**
+
+type 和接口类似，都用来定义类型，但 type 和 interface 区别如下：
+
+ **区别1： 定义类型范围不同**
+
+interface 只能定义对象类型或接口当名字的函数类型。
+
+type 可以定义任何类型，包括基础类型、联合类型 ，交叉类型，元组。
+
+```js
+// type 定义基础类型
+type num=number 
+
+//  type 定义联合类型例子1：
+type baseType=string |number | symbol
+
+//  type 定义联合类型例子2：
+interface Car { brandNo: string}
+interface Plane { No: string; brandNo: string}
+type TypVechile = Car| Plane 
+
+//  元组
+interface Car { brandNo: string}
+interface Plane { No: string; brandNo: string}
+type TypVechile = [Car, Plane]
+```
+
+**区别2 ：接口可以extends 一个或者多个 接口或类， 也可以继承type，但type 类型没有继承功能**
+
+**但一般 接口继承 类 和 type 的应用场景很少见，同学们记住有这样的语法即可。**
+
+**区别3：用 type 交叉类型 & 可让类型中的成员合并成一个新的 type 类型，但接口不能交叉合并**
+
+```js
+
+type Group = { groupName: string, memberNum: number }
+type GroupInfoLog = { info: string, happen: string }
+type GroupMemeber = Group & GroupInfoLog// type 交叉类型合并
+
+let data: GroupMemeber = {
+  groupName: "001", memberNum: 10,
+  info: "集体爬山", happen: "中途有组员差点滑落,有惊无险",
+}
+
+export { }
+```
+
+**区别4：接口可以合并声明**
+
+定义两个相同名称的接口会合并声明，定义两个同名的type会出现编译错误。
+
+```js
+interface Error {
+  name: string;
+}
+
+interface Error {
+  message: string;
+  stack?: string;
+}
+// 接口合并
+let error: Error = {
+  message: "空指针",
+  name: "NullPointException"
+}
+```
+
+
+
+**慕课网 TS 高级课程**
+
+**14-6   一个联合类型技巧性使用的场景** **【加量赠送】**
+
+**14-7 为什么要用声明文件？**
+
+如果文件使用 TS 编写，在编译时可以自动生成声明文件，并在发布的时候将 .d.ts  文件一起发布，我们无需编写声明文件。
+
+当我们在 TS 文件中引入使用第三方库的类型或使用 集成库 时，比如：@types/jquery  库，ES6 库的 Map 类型 ，这些库用 JS 开发，不能获取 TS 一样的 类型提示，需要一个声明文件来帮助库的使用者来获取库的类型提示。
+
+**注意：声明文件中只对类型定义，不能进行 赋值 和 实现。**
+
+
+
+**慕课网 TS 高级课程**
+
+**14-8  声明文件实现 【加量赠送】**
+
+1 js 文件 如何感知声明文件的作用    2 学会定义和使用声明文件
+
+```js
+// 关键字 declare 表示声明的意思,我们可以用它来做出各种声明:
+
+declare let/const  // 声明全局变量
+declare function   // 声明全局方法
+declare class      // 声明全局类
+declare enum       // 声明全局枚举类型 
+declare namespace  // 声明（含有子属性的）全局对象
+interface/type     // 声明全局类型
+```
+
+##### **14-9  正确理解 declare 【加量赠送】**
+
+**14-10  命名空间在声明文件中的使用 【加量赠送】**
+
+**14-11 模块声明 【加量赠送】**
+
+**14-12 如何在 TS 中引入 js 文件 【加量赠送】**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

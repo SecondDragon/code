@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>采用事件委托</title>
+</head>
+<body>
+  <ul id="ul">
+    <li>ZCE</li>
+    <li>28</li>
+    <li>我为前端而活</li>
+  </ul>
+  <script>
+    var list = document.querySelectorAll('li')
+    // function showTxt (ev) {
+    //   console.log(ev.target.innerHTML)
+    // }
+    // for(let item of list) {
+    //   item.onclick = showTxt
+    // }
+
+    var oUl = document.getElementById('ul')
+    oUl.addEventListener('click', showTxt, true)
+    function showTxt (ev) {
+      var obj = ev.target
+      if (obj.nodeName.toLowerCase() === 'li') {
+        console.log(obj.innerHTML)
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>减少声明及语句数</title>
+</head>
+<body>
+  <div id="box" style="width: 100px; height: 100px;"></div>
+  <script>
+    // var oBox = document.getElementById('box')
+
+    // var test = (ele) => {
+    //   let w = ele.offsetWidth
+    //   let h = ele.offsetHeight
+    //   return w * h 
+    // }
+
+    // var test = (ele) => {
+    //   return ele.offsetWidth * ele.offsetHeight 
+    // }
+    // console.log(test(oBox))
+
+    var test = () => {
+      var name = 'zce'
+      var age = 38
+      var slogan = '我为前端而活'
+      return name + age + slogan
+    }
+
+    var test = () => {
+      var name = 'zce',
+          age = 38,
+          slogan = '我为前端而活'
+      return name + age + slogan
+    }
+    console.log(test())
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>惰性函数与性能</title>
+</head>
+<body>
+  <button id="btn">点击</button>
+  <script>
+    var oBtn = document.getElementById('btn')
+
+    function foo () {
+      console.log(this)
+    }
+
+    function addEvent (obj, type, fn) {
+      if (obj.addEventListener) {
+        obj.addEventListener(type, fn, false)
+      }else if (obj.attachEvent) {
+        obj.attachEvent('on' + type, fn)
+      }else{
+        obj['on' + type] = fn
+      }
+    }
+
+    function addEvent (obj, type, fn) {
+      if (obj.addEventListener) {
+        addEvent = obj.addEventListener(type, fn, false)
+      }else if (obj.attachEvent) {
+        addEvent = obj.attachEvent('on' + type, fn)
+      }else{
+        addEvent = obj['on' + type] = fn
+      }
+      return addEvent
+    }
+
+    addEvent(oBtn, 'click', foo)
+  </script>
+</body>
+</html>

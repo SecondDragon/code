@@ -1,0 +1,7 @@
+开发一个前后台分离的全栈项目 Realworld , 具体要求：
+
+1.后台技术栈使用 Egg.js，（自己实现所有接口）
+
+2.前端技术栈使用 Vue 3（Composition API） 或者 React（Hooks API）
+
+3.结果要求发布部署到线上能够访问。

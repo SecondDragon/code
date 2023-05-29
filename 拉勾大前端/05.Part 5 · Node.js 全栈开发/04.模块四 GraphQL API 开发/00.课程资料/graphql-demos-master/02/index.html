@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./node_modules/axios/dist/axios.js"></script>
+  <script>
+    axios({
+      method: 'POST', // GraphQL 的请求方法必须是 POST
+      url: 'http://localhost:4000/graphql',
+      data: {
+        query: '{ foo, count }'
+      }
+    }).then(res => {
+      console.log(res)
+    })
+  </script>
+</body>
+</html>

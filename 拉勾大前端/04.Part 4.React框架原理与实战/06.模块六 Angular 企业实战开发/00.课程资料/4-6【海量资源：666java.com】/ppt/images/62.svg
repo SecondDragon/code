@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 573 215" style="enable-background:new 0 0 573 215;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#4A494A;stroke-width:6;stroke-miterlimit:10;}
+	.st1{fill:#4A494A;}
+	.st2{fill:#EC5443;}
+	.st3{fill:#71A4D8;}
+	.st4{fill:#91638C;}
+	.st5{fill:#57B2A4;}
+	.st6{fill:#F7C184;}
+	.st7{font-family:'Futura-Medium';}
+	.st8{font-size:14px;}
+</style>
+<g>
+	<g>
+		<line class="st0" x1="10" y1="182.5" x2="530.2" y2="182.5"/>
+		<g>
+			<polygon class="st1" points="513.3,204.7 522.8,182.5 513.3,160.3 566,182.5 			"/>
+		</g>
+	</g>
+</g>
+<g>
+	<path class="st1" d="M10,103.2V28.5h17.2v5.2H16.4v64.4h10.8v5.2H10z"/>
+</g>
+<circle class="st2" cx="50.7" cy="65.9" r="23.5"/>
+<circle class="st3" cx="272.9" cy="65.9" r="23.5"/>
+<circle class="st4" cx="106.2" cy="65.9" r="23.5"/>
+<circle class="st5" cx="217.4" cy="65.9" r="23.5"/>
+<circle class="st6" cx="161.8" cy="65.9" r="23.5"/>
+<g>
+	<path class="st1" d="M313.6,28.5v74.7h-17.2v-5.2h10.8V33.7h-10.8v-5.2H313.6z"/>
+</g>
+<circle class="st2" cx="74.2" cy="182.5" r="23.5"/>
+<circle class="st3" cx="450.6" cy="182.5" r="23.5"/>
+<circle class="st4" cx="166.1" cy="182.5" r="23.5"/>
+<circle class="st5" cx="363" cy="182.5" r="23.5"/>
+<circle class="st6" cx="231.6" cy="182.5" r="23.5"/>
+<line class="st0" x1="495" y1="200.5" x2="495" y2="164.5"/>
+<text transform="matrix(1 0 0 1 10.0005 20.5)" class="st1 st7 st8">An array of values</text>
+<text transform="matrix(1 0 0 1 10 145.5)" class="st1 st7 st8">A stream of values</text>
+</svg>

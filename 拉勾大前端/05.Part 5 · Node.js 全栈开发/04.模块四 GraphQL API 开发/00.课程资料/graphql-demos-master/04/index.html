@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./node_modules/axios/dist/axios.js"></script>
+  <script>
+    // axios({
+    //   method: 'POST', // GraphQL 的请求方法必须是 POST
+    //   url: 'http://localhost:4000/graphql',
+    //   data: {
+    //     query: `
+    //       mutation deleteArteicle($id: ID!) {
+    //         deleteArticle(id: $id) {
+    //           success
+    //         }
+    //       }
+    //     `,
+    //     variables: {
+    //       id: 2
+    //     }
+    //   }
+    // }).then(res => {
+    //   console.log(res.data)
+    // })
+
+    // 更新文章
+    // axios({
+    //   method: 'POST', // GraphQL 的请求方法必须是 POST
+    //   url: 'http://localhost:4000/graphql',
+    //   data: {
+    //     query: `
+    //       mutation updateArteicle($id: ID!, $article: UpdateArticleInput) {
+    //         updateArticle(id: $id, article: $article) {
+    //           id
+    //           title
+    //           body
+    //         }
+    //       }
+    //     `,
+    //     variables: {
+    //       id: 2,
+    //       article: {
+    //         title: 'aaa',
+    //         body: 'bbb'
+    //       }
+    //     }
+    //   }
+    // }).then(res => {
+    //   console.log(res.data)
+    // })
+
+    // 创建文章
+    // axios({
+    //   method: 'POST', // GraphQL 的请求方法必须是 POST
+    //   url: 'http://localhost:4000/graphql',
+    //   data: {
+    //     query: `
+    //       mutation createArteicle($article: CreateArticleInput) {
+    //         createArticle(article: $article) {
+    //           id
+    //           title
+    //           body
+    //         }
+    //       }
+    //     `,
+    //     variables: {
+    //       article: {
+    //         title: 'aaa',
+    //         body: 'bbb'
+    //       }
+    //     }
+    //   }
+    // }).then(res => {
+    //   console.log(res.data)
+    // })
+
+    // axios({
+    //   method: 'POST', // GraphQL 的请求方法必须是 POST
+    //   url: 'http://localhost:4000/graphql',
+    //   data: {
+    //     query: `
+    //       query getArticles($id: ID!) {
+    //         article(id: $id) {
+    //           id
+    //           title
+    //         }
+    //       }
+    //     `,
+    //     variables: {
+    //       id: 2
+    //     }
+    //   }
+    // }).then(res => {
+    //   console.log(res.data)
+    // })
+
+    // 获取单个文章
+    // const id = 1
+    // axios({
+    //   method: 'POST', // GraphQL 的请求方法必须是 POST
+    //   url: 'http://localhost:4000/graphql',
+    //   data: {
+    //     query: `
+    //       query getArticles {
+    //         article(id: ${id}) {
+    //           id
+    //           title
+    //         }
+    //       }
+    //     `
+    //   }
+    // }).then(res => {
+    //   console.log(res.data)
+    // })
+
+    // 获取文章列表
+    // axios({
+    //   method: 'POST', // GraphQL 的请求方法必须是 POST
+    //   url: 'http://localhost:4000/graphql',
+    //   data: {
+    //     query: `
+    //     query getArticles {
+    //       articles {
+    //         title
+    //       }
+    //     }
+    //     `
+    //   }
+    // }).then(res => {
+    //   console.log(res.data)
+    // })
+  </script>
+</body>
+</html>

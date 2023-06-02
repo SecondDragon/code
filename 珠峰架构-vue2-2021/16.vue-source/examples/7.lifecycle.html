@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/vue.js"></script>
+    <div id="app">{{name}}</div>
+    <script>
+        debugger;
+        const vm = new Vue({
+            data(){
+                return {name:'zf'}
+            },
+            el: '#app',
+            beforeCreate(){
+                debugger; // 数据观测(data observer) 和 event/watcher 事件配置之前被调用。
+                console.log('beforeCreate');
+            },
+            created(){
+                debugger; // 属性和方法的运算， watch/event 事件回调。这里没有$el
+                console.log('created')
+            },
+            beforeMount(){
+                debugger; // 相关的 render 函数首次被调用。
+                console.log('beforeMount')
+            },
+            mounted(){
+                debugger; // 被新创建的 vm.$el 替换
+                console.log('mounted')
+            },
+            beforeUpdate(){
+                debugger; //  数据更新时调用，发生在虚拟 DOM 重新渲染和打补丁之前。
+                console.log('beforeUpdate')
+            },
+            updated(){
+                debugger; //  由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子。
+                console.log('updated')
+            },
+            beforeDestroy(){
+                debugger;// 实例销毁之前调用 实例仍然完全可用
+                console.log('beforeDestroy')
+            },
+            destroyed(){ 
+                debugger; // 所有东西都会解绑定，所有的事件监听器会被移除
+                console.log('destroyed')
+            }
+        });
+        setTimeout(() => {
+            vm.name = 'jw';
+            setTimeout(() => {
+                vm.$destroy()  
+            }, 1000);
+        }, 1000);
+    </script>
+</body>
+
+</html>

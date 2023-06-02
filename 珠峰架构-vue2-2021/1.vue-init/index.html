@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 'hello' + arr + 'world' -->
+    <div id="app" a=1 style="color:red;background:blue">
+        hello {{arr}} world
+
+    </div>
+    
+    <script src="dist/vue.js"></script>
+
+    <script>
+        // viewModel 数据模型
+        // 典型的MVVM  view   vm    model
+
+        let vm = new Vue({
+            data() {
+                //this = vm
+                return {
+                    arr: {name:'zf'}
+                }
+            }
+        });
+        vm.$mount('#app')
+
+        // 数组没有监控 索引的变化 , 但是索引对应的内容是对象类型，需要被监控 Object.freeze
+        // 用户很少通过索引操作数组 arr[82] = 1000 内部就想到不对索引进行拦截，因为消耗严重，内部数组不采用defineProperty
+
+        // push shift pop unshift reverse sort splice   7个方法都是变异方法，就是会更改原数组
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../dist/vue.js"></script>
+    <div id="app">
+        <my :title="title"></my>
+    </div>
+    <script>
+        Vue.component('my', {
+            props: {
+                title: String
+            },
+            template: '<div>{{title}}</div>'
+        })
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return { title: '珠峰' }
+            }
+        });
+        setTimeout(() => {
+            vm.title = '姜文'
+        }, 1000);
+    </script>
+</body>
+
+</html>

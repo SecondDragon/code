@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../dist/vue.js"></script>
+    <div id="app">
+        <my>
+            <h1 slot="title">标题</h1> 
+            <div slot="content">内容</div> 
+        </my>
+    </div>
+    <script>
+        debugger;
+        Vue.component('my',{
+            template:`<div>
+                <slot name="title"></slot> 
+                <slot name="content"></slot> 
+            </div>`
+        })
+        const vm = new Vue({
+            el:'#app'
+        })
+
+    </script>
+</body>
+</html>

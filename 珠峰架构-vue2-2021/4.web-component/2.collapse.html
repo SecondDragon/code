@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <zf-collapse >
+        <zf-collapse-item title="Node" name="1">
+            <div>nodejs welcome</div>
+        </zf-collapse-item>
+        <zf-collapse-item title="react" name="2">
+            <div>react welcome</div>
+        </zf-collapse-item>
+        <zf-collapse-item title="vue" name="3">
+            <div>vue welcome</div>
+        </zf-collapse-item>
+    </zf-collapse>
+    
+    <!-- 没有实际意义， 不会渲染到页面上 -->
+    <template id="collapse_tmpl">
+        <div class="zf-collapse">
+            <slot></slot>
+        </div>
+    </template>
+    <template id="collapse_item_tmpl">
+        <div class="zf-collapse-item">
+            <div class="title"></div>
+            <div class="content">
+                <slot></slot>
+            </div>
+        </div>
+    </template>
+    <!-- vite 实现原理 就依赖于 type="module" -->
+    <script src="./index.js" type="module"></script>
+</body>
+</html>

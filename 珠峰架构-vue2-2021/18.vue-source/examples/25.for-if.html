@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/vue.js"></script>
+    <div id="app">
+        <!-- 考虑计算属性，我们可以在计算属性中计算后 在使用v-for -->
+        <!-- v-for==  _l(arr,function(){ return 'div'}) -->
+        <!-- v-if== flag? xxx:_e() -->
+        <!-- 代码生成的时候就完事了 轮不到运行时，只是运行的时候 会调用_l  会进行三元判断而已 -->
+
+        <template v-if="flag">
+            <div v-for="a in arr" :key="a" >{{a}}</div>
+        </template>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return { arr: [1, 2, 3, 4] ,flag:false }
+            }
+        })
+    </script>
+</body>
+
+</html>

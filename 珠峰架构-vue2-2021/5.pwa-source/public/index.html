@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="manifest" href="/manifest.json">
+
+    <link rel="apple-touch-icon" href="/icon.png" />
+    <!-- 添加到主屏后的标题 和 short_name一致 -->
+    <meta name="apple-mobile-web-app-title" content="标题">
+    <!-- 隐藏safari地址栏 standalone模式下默认隐藏 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- 设置状态栏颜色 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <h1>PWA 网站</h1>
+    <ul></ul>
+    <script src="/main.js"></script>
+    <script>
+        // 给网站注册serviceWorker, 注册时机  等待资源加载完毕后 ，在开线程
+        function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/-/g, '+')
+                .replace(/_/g, '/');
+
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+
+
+        const convertedVapidKey = urlBase64ToUint8Array('BKn9WZWSFKaRlWfxwg32xV5M_IYr_nUFRQnS8tb_fR_1X1Ga_xP2TGfObHtKZzDeVBSJfoNasD_-N5qnYyg5enc');
+
+
+        window.addEventListener('load', async () => {
+            if ('serviceWorker' in navigator) {
+                // web worker
+                let registration = await navigator.serviceWorker.register('/sw.js');
+
+                // 等待serviceWorker 激活成功成 订阅
+                await navigator.serviceWorker.ready;
+                let pushSubscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: convertedVapidKey
+                });
+
+                // 拿到pushSubscription 可以推送消息， 我将他转交给我们的服务器，我们的服务器可以用他来通知pushService -> 浏览器
+                fetch('/add-sub',{
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    method:'post',
+                    body:JSON.stringify(pushSubscription)
+                })
+            }
+        })
+    </script>
+
+</body>
+
+</html>

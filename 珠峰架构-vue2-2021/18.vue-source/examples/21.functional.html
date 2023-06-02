@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/vue.js"></script>
+    <div id="app">
+        <functional a=1 b=2>1231</functional>
+    </div>
+    <script>
+        Vue.component('functional',{ // 构造函数产生虚拟节点的
+            functional:true, // 函数式组件 // data={attrs:{}}
+          
+            render(h){
+                return h('div','zf')
+            }
+        })
+        const vm = new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<!-- 当在页面中直接写fullname时 fullname不会去收集渲染watcher ， 因为fullname没有dep 没有收集的功能 -->
+<!-- firstName 是在计算属性中使用的 ，所以他会收集计算属性watcher。 没有收集渲染watcher -->
+
+<!-- 计算属性中的值应该记录 计算属性watcher 和渲染watcher -->
+
+<!-- Dep.target上赋值一个渲染watcher ， 又将Dep.target设置为计算属性watcher-->
+
+<body>
+    <div id="app">{{fullName}}</div>
+    <!-- <script src="node_modules/vue/dist/vue.js"></script> -->
+    <script src="dist/vue.js"></script>
+    <script>
+        const vm = new Vue({ // watcher 渲染watcher
+            el: '#app',
+            data: {
+                name: 'zf',
+                age: 100,
+                firstName: 'zhu',
+                lastName: 'feng'
+            },
+            computed: { // Object.defineProperty => getter
+                fullName: {
+                    get() {
+                        console.log('oooo')
+                        return this.firstName + this.lastName
+                    },
+                    set(newValue) {
+                        console.log(newValue);
+                    }
+                }
+            },
+            watch: { // 用户watcher
+                // name(newVal, oldVal) {
+                //     console.log(newVal, oldVal)
+                // },
+                // name: [
+                //     function(newVal, oldVal) {
+                //         console.log(newVal, oldVal)
+                //     },
+                //     function(a, b) {
+                //         console.log(a, b)
+                //     }
+                // ],
+                // 'age.n'(newVal, oldVal) {
+                //     console.log(newVal, oldVal)
+                // },
+            }
+        });
+
+
+        console.log(vm.fullName)
+        console.log(vm.fullName)
+        setTimeout(() => {
+            vm.firstName = 'zs'
+
+            console.log(vm.fullName)
+
+        }, 1000);
+
+        // 计算属性默认不执行 =》 Object.defineProperty => getter
+        // 多次取值如果依赖的值不变化 就不会重新执行  vm.fullname vm.fullname
+        // 依赖的值变化 需要重新执行 vm.firstame = 'zhang'  fullname zhangfeng
+
+        // dirty 表示这个值是不是脏的 true （取值后值变为false）， 依赖的值变化了 dirty=>true
+
+
+
+
+        // vm.$watch('name', function(newVal) {
+        //     console.log(newVal)
+        // })
+        // setTimeout(() => {
+        //     vm.name = 'zs'
+        // }, 1000);
+
+
+        // fullname => 计算属性watcher
+        // 计算属性watcher 收集了两个dep (firstName,lastName)
+
+
+        // 根据计算属性watcher找到这两个dep，让dep收集渲染watcher
+        // (firstName,lastName) 收集的渲染watcher
+    </script>
+
+</body>
+
+</html>

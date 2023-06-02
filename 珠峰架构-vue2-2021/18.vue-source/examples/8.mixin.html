@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/vue.js"></script>
+    <div id="app"></div>
+    <script>
+        debugger;
+        Vue.mixin({ // 如果他是对象 每个组件都用mixin里的对象进行合并
+            data(){
+                return {a: 1,b: 2}
+            }
+        });
+        Vue.component('my',{ // 组件必须是函数 Vue.extend  => render(xxx)
+            data(){
+                return {x:1}
+            }
+        })
+        // const vm = this
+         new Vue({
+            el:'#app',
+            data(){ // 根可以不是函数 
+                return {c:3}
+            }
+        })
+    </script>
+</body>
+
+</html>

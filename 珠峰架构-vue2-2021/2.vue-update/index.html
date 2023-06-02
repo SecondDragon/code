@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 'hello' + arr + 'world' -->
+    <div id="app">
+        {{obj}}
+    </div>
+    <script src="dist/vue.js"></script>
+    <script>
+     
+        let vm = new Vue({
+            data() {
+                //this = vm
+                return {
+                    // name: 'zf',
+                    // age: 11,
+                    obj: {a:{a:1}},// 最外层的数组进行了依赖收集  JSON.stringify()
+                    arr:[[]]
+                }
+            }
+        });
+        vm.$mount('#app');
+
+        // 数据变化需要影响视图 , 数据和页面渲染关联起来
+        // setTimeout(() => {
+        //     vm.name = 'hello';
+        //     vm.name = 'zf';
+        //     vm.name = 'hello';
+        //     vm.name = 123;
+
+        //     vm.$nextTick(()=>{
+        //         console.log(vm.$el)
+        //     })
+        //     // vm._update(vm._render()); // 重新调用render方法产生虚拟dom， 目前还没有diff
+        // }, 1000);
+        setTimeout(() => {
+           vm.obj.a.a = 100;
+        }, 1000);
+    </script>
+
+
+
+</body>
+
+</html>
+
+
+<!-- Vue中嵌套层次不能太深 ，否则会有大量递归 -->
+<!-- Vue中对象通过的是defineProprety实现的响应式，拦截了get和set 。 如果不存在的属性不会拦截，也不会响应。 可以使用$set = 让对象自己去notify , 或者赋予一个新对象 -->
+<!-- Vue中的数组改索引和长度 是不会影响更新的. 通过变异方法可以更新视图 7个方法， 数组中如果是对象类型，修改对象也可以更新视图 -->

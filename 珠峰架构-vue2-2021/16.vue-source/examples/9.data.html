@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Vue() {}
+        function Sub() { // 会将data存起来
+            this.data = this.constructor.options.data();
+        }
+        Vue.extend = function(options) {
+            Sub.options = options; // 静态属性
+            return Sub;
+        }
+        let Child = Vue.extend({
+            data:()=>( { name: 'zf' })
+        });
+
+        // 两个组件就是两个实例, 希望数据互不感染
+        let child1 = new Child();
+        let child2 = new Child();
+
+        console.log(child1.data.name);
+        child1.data.name = 'jw';
+        console.log(child2.data.name);
+ 
+        // 根不需要 任何的合并操作   根才有vm属性 所以他可以是函数和对象  但是组件mixin他们都没有vm 所以我就可以判断 当前data是不是个函数
+    </script>
+</body>
+
+</html>

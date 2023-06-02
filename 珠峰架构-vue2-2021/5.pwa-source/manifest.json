@@ -1,0 +1,13 @@
+{
+    "name": "PWA效果展示", 
+    "short_name": "PWA", 
+    "display": "standalone", 
+    "start_url": "/",
+    "icons": [{ 
+        "src": "/icon.png",
+        "sizes": "144x144",
+        "type": "image/png"
+    }],
+    "background_color": "#aaa",
+    "theme_color": "#aaa" 
+}

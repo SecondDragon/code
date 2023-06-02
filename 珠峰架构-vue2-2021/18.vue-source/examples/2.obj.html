@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"> {{arr}}</div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        debugger
+        const vm = new Vue({
+            el:'#app',
+            data(){ // 会收集arr属性 同时会对最外层数组进行收集
+                // 更新视图   会让arr本身收集依赖
+                // 会让arr对应的数组收集依赖
+                return {arr:[[],[]]} // {arr:[[],[]]}   {{arr}}
+            }
+        });
+    </script>
+</body>
+</html>

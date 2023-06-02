@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../dist/vue.js"></script>
+    <div id="app">
+        <input type="text" v-model.lazy="msg"> {{msg}}
+        <input type="text" :value="msg" @input="change"> {{msg}}
+        <my v-model="title"></my>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {msg:'hello',title:'zf'}
+            },
+            methods:{
+                change(e){
+                    this.msg = e.target.value
+                }
+            },
+            components:{
+                my:{ // vant v-model  :value + change
+                    model:{ // 改了名字
+                        prop:'title',
+                        event:'change'
+                    },
+                    props:{
+                        title:String
+                    },
+                    methods:{
+                        change(){
+                            this.$emit('change','jw')
+                        }
+                    },
+                    template:`<button @click="change">{{title}}</button>`
+                }
+            }
+        })
+    </script>
+</body>
+</html>

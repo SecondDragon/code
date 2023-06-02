@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">{{a}}</div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return { a: 1 }
+            }
+        }); // 排序的是watcher
+        vm.$nextTick(() => {// [自己的方法,更新]
+            console.log(vm.$el.innerHTML)
+        })
+        vm.a = 'zf'; // 修改了数据后并不会马上更新视图
+
+        // nextTick中的方法会被放到 更新页面watcher的后面去
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        :root{
+            --background-color: black;
+            --text-color:yellow
+        }
+    </style>
+    <zf-button type="primary">珠峰按钮</zf-button>
+    <zf-button>珠峰按钮</zf-button>
+    <!-- 内容是不会被渲染到视图上，不会影响页面展示，可以使用模板 -->
+    <template id="btn">
+        <button class="zf-button">
+            <slot></slot>
+        </button>
+    </template>
+
+    <script>
+        class ZfButton extends HTMLElement {
+            constructor() {
+                super();
+                let shadow = this.attachShadow({ mode: 'open' });
+                let btnTmpl = document.getElementById('btn');
+                let cloneTemplate = btnTmpl.content.cloneNode(true)
+                const style = document.createElement('style');
+                let type = this.getAttribute('type') || 'default';
+                const btnList = {
+                    'primary': {
+                        background: '#409eff',
+                        color: '#fff'
+                    },
+                    'default': {
+                        background: '#909399',
+                        color: '#fff'
+                    }
+                }
+                style.textContent = `
+                    .zf-button{
+                        outline:none;
+                        border:none;
+                        border-radius:4px;
+                        padding:5px 20px;
+                        display:inline-flex;
+                        background:var(--background-color,${btnList[type].background});
+                        color:var(--text-color,${btnList[type].color});
+                        cursor:pointer
+                    }
+                `
+                // dom操作具备移动型
+                shadow.appendChild(style)
+                shadow.appendChild(cloneTemplate)
+            }
+        }
+        // 定义了一个自定义标签 组件
+        window.customElements.define('zf-button', ZfButton)
+    </script>
+</body>
+
+</html>

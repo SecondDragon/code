@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/vue.js"></script>
+    <div id="app"></div>
+    <script>
+        debugger
+        Vue.component('async-component', () => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve({
+                        render: h => h('h1', {}, 'zf')
+                    })
+                }, 1000);
+            })
+        })
+        const vm = new Vue({
+            el: '#app',
+            render: (h) => h('async-component')
+        })
+    </script>
+</body>
+
+</html>

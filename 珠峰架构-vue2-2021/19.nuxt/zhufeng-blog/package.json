@@ -1,0 +1,26 @@
+{
+  "name": "zhufeng-blog",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.5",
+    "@nuxtjs/proxy": "^2.1.0",
+    "cookie-universal-nuxt": "^2.1.4",
+    "core-js": "^3.8.3",
+    "element-ui": "^2.15.0",
+    "font-awesome": "^4.7.0",
+    "nuxt": "^2.14.12",
+    "vue-simplemde": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/style-resources": "^1.0.0",
+    "sass": "^1.32.5",
+    "sass-loader": "^10.1.1"
+  }
+}

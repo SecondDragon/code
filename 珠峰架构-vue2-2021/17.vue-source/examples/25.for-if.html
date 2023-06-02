@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/vue.js"></script>
+    <div id="app">
+        <div v-for="a in arr" :key="a" v-if="flag">{{a}}</div>
+    </div>
+    <script>
+        debugger;
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return { arr: [1, 2, 3, 4] ,flag:false }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../dist/vue.js"></script>
+    <div id="app"></div>
+    <script>
+        // src/core/observer:45;
+        debugger;
+        // 渲染watcher  /  computed watcher  /  watch
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                firstname:'张',
+                lastname:'三'
+            },
+            computed:{
+                fullName(){ // firstName lastName 会收集fullName计算属性
+                    return this.firstname + this.lastname
+                }
+            },
+            watch:{
+                firstname(newVal,oldVal){
+                    console.log(newVal)
+                }
+            }
+        });
+        setTimeout(() => {
+            debugger;
+            vm.firstname = '赵'
+        }, 1000);
+
+    </script>
+</body>
+
+</html>

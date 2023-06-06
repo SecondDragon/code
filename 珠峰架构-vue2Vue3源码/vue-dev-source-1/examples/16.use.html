@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+
+        // Vue-router 
+        let plugin = function (Vue, options) {
+            console.log(Vue, options)
+        }
+        // vuex 
+        let plugin2 = {
+            install: function (Vue, options) {
+                console.log(Vue, options)
+            }
+        }
+        // 2.6.14  这里的use方法 目的就是将 vue的构造函数传递给插件中，让所有的插件依赖的Vue是同一个版本
+        Vue.use(plugin2, { a: 1, b: 2 }); // 基本上所有的插件实现都差不多 都是一个函数
+        Vue.use(plugin2, { a: 1, b: 2 });
+        // 重复的插件不能除服安装
+
+
+
+    // 对象.xxx()  this指代的就是对象
+    // xxxx()  this指代的就是全局
+    // new XXX()  this指代的是实例或者构造函数的(是对象）返回结果
+    // call bind改this
+
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 底层有JSON.strigify 会访问对象中的所有属性 -->
+        {{age}}
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                age: { a: 1 } // 这里的对象本省也会收集依赖
+            },
+        });
+        // 如果可以这样操作 那就需要重新算这个对象 vm._data 赋值
+        vm.$set(vm,'a',100)
+        // vm.age.b = 2;
+        // vm.age.__ob__.dep.notify(); // set 方法无非就是这样实现的
+
+    </script>
+</body>
+
+</html>

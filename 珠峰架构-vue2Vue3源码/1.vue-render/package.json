@@ -1,0 +1,25 @@
+{
+  "name": "vue2-stage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "rollup -cw"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/jw-speed/jiagouke5-vue.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "rollup": "^2.61.1",
+    "rollup-plugin-babel": "^4.4.0"
+  },
+  "dependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.6"
+  }
+}

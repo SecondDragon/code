@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my></my>
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        const request = () => { }
+        // Vue.mixin({ // 全局的mixin 所有的组件都会有此属性
+        //     beforeCreate() {
+        //         this.$request = request
+        //     }
+        // })
+        let mixin = {
+            beforeCreate() {
+                this.$request = request
+            }
+        }
+        new Vue({
+            el: '#app',
+            components: {
+                my: {
+                    mixins:[mixin],
+                    template: '<button @click="handle"></button>',
+                    methods: {
+                        handle() {
+                            console.log(this.$request)
+                        }
+                    }
+                }
+            }
+        });
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my></my>  
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            components:{ // vm.$options.components['my'] = {my:模板}
+                my:{
+                    template:'<div>my-component</div>'
+                }
+            }
+        });
+        // createComponent 渲染my的时候 需要创建my 对应的虚拟节点 {tag:'my',data:{hook:{init}},componentOptions:{Ctor:Vue.extend( {my:模板})}}
+        // createComponent -> init -> new 组件().$mount()  组件的初始化 
+    </script>
+</body>
+
+</html>

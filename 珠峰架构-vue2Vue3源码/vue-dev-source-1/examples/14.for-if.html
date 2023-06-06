@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 遇到这样的情况我们需要 用计算属性来处理， 处理后再循环 -->
+        <span   v-if="i%2" v-for="(i,index) in 3"></span>
+      </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            // data() {
+            //     return { flag: true }
+            // },
+        });
+    </script>
+   
+
+</body>
+
+</html>
+
+

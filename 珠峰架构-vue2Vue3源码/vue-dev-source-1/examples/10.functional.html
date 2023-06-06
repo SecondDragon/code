@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- patch  更新逻辑都在patch中 -->
+    <!-- <my data="hello"></my>  props hello -->
+    <!--  <my data="world"></my> props world  -->
+
+    <!-- 这个prepatch的作用是复用组件的实例， 并且可以去更新属性， 事件， 插槽 -->
+    <div id="app">
+        <my a=1 b=2></my>
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        Vue.component('my', {
+            functional: true,
+            // Props 是可选的
+            props: {
+                // ...
+            },
+            // 为了弥补缺少的实例
+            // 提供第二个参数作为上下文
+            render: function (createElement, context) {
+               return createElement('h1','hello'); // 适合只有渲染逻辑的情况。 纯渲染用的
+            }
+        })
+
+        // createComponent 创造虚拟节点  Ctor 默认就是一个函数了   不会通过Vue.extend将其变成一个构造函数
+        const vm = new Vue({
+            el: '#app',
+        });
+    </script>
+</body>
+
+</html>

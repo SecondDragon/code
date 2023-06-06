@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- patch  更新逻辑都在patch中 -->
+    <!-- <my data="hello"></my>  props hello -->
+    <!--  <my data="world"></my> props world  -->
+
+    <!-- 这个prepatch的作用是复用组件的实例， 并且可以去更新属性， 事件， 插槽 -->
+
+
+    <div id="app">
+        <!-- props:{data:'bac'} -->
+        <my :data="abc"></my>
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                abc: 123 // 属性是在父组件中定义的传递给了子组件 （父组件的定义的数据 已经是响应式的了）
+            },
+            components: {
+                my: {
+                    props: {
+                        data: {type:Number}
+                    },
+                    template: '<div>my-component {{data}}</div>'
+                }
+            }
+        });
+        // 属性本身就是响应式的 ，我将响应式的数据传递给儿子，儿子在模板中使用， 稍后属性变化会自动更新视图
+        setTimeout(() => {
+            vm.abc = 'world'
+        }, 1000)
+        // 组件的更新有几种情况  1） data 数据更新，那就是依赖收集   2） 属性更新 可以给组件传入属性， 属性变化后触发更新
+        // 3) 插槽变化也要更新
+    </script>
+</body>
+
+</html>

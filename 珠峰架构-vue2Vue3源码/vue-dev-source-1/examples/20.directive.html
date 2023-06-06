@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-my="'abc'" ></div>
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        debugger; // Vue.options = {my: definition}
+        // 渲染dom元素的时候 会调用cbs:{} 
+        Vue.directive('my',{
+            bind(el,bindings,vnode){
+                console.log(el,bindings,vnode)
+                debugger
+            },
+            update(){
+                debugger
+            },
+        })
+
+        new Vue({
+            el:'#app',
+        })
+
+    </script>
+
+
+</body>
+
+</html>

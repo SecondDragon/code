@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- :value  @input  -->
+        <!-- <input type="text" v-model.lazy="msg"> -->
+        <!-- <input type="text" :value="msg" @input="e=>msg=e.target.value"> -->
+        <!-- <my v-model="msg"></my> -->
+        <my :xx.sync="info"></my>
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        Vue.component('my',{
+            props:{
+                value:{},
+                xx:{}
+            },
+            // model:{
+            //     prop:'xx',
+            //     event:'aaa'
+            // },
+            template:`<div>
+                {{value}}<button @click="$emit('input','xxxxxxxx')"></button>  <br/>
+                {{xx}}<button @click="$emit('update:xx','xxxxxxxx')"></button> 
+            </div>`
+        })
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return { msg: 'hello', info:'world' }
+            },
+        });
+    </script>
+
+
+</body>
+
+</html>

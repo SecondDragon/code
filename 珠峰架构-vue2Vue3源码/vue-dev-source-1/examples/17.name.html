@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my1 @handler="handler"></my1>
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+
+        // element中就扩展了这两个方法
+        Vue.prototype.$dispatch = function (componentName, data, fnName) {
+            let vm = this;
+            while (vm) {
+                if (vm.$options.name === componentName) {
+                    // vm[fnName](data);
+                    vm.$emit(fnName, data)
+                    break;
+                }
+                vm = vm.$parent;
+            }
+        }
+        Vue.prototype.$broadcast = function (componentName, data, fnName) {
+            let components = [];
+            let vm = this;
+            function findChildren(children) {
+                children.forEach(child => {
+                    if (child.$options.name === componentName) {
+                        components.push(child);
+                    }
+                    child.$children && findChildren(child.$children)
+                })
+            }
+            findChildren(vm.$children);
+            components.forEach(child => {
+                child.$emit(fnName, data)
+            });
+        }
+        Vue.component('my3', {
+            name: 'my3',
+            template: '<div>my3</div>',
+            mounted() {
+                this.$dispatch('my1', '我是3', 'handler');
+            }
+        })
+        Vue.component('my2', {
+            name: 'my2',
+            template: '<div>my2 <my3 @handler="handler"></my3></div>',
+            methods: {
+                handler(data) {
+                    console.log(data)
+                }
+            }
+        })
+        Vue.component('my1', {
+            name: 'my1',
+            template: '<div>my1 <my2></my2></div>',
+            mounted() {
+                this.$broadcast('my3', '我是1','handler')
+            }
+        })
+        new Vue({
+            el: '#app',
+            methods: {
+                handler(data) {
+                    console.log('my1', data)
+                }
+            }
+        })
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my type="password"  value="123" @cb="handler" ></my>
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return { xxx: 1 }
+            },
+            methods:{
+                handler(){
+                    
+                }
+            },
+            components: {
+                my: {
+                   
+                    inheritAttrs:false,
+                    template: `<div>div <myInput v-bind="$attrs"></myInput></div>`,
+                    mounted() {
+                        console.log(this.$listeners)
+                    },
+                    components: {
+                        myInput:{
+                            inheritAttrs:false,
+                            template:`<span><input v-bind="$attrs" /></span>`
+                        }
+                    }
+                }
+            },
+        });
+        setTimeout(() => {
+            vm.xxx = 100;
+        }, 1000)
+    </script>
+    <!-- props (a,b)   attrs(c) -->
+
+    <!--  组件的虚拟节点上 {componentOptions:{propsData}} -->
+    <!--  初始化的时候要对propsData做处理 -->
+    <!--  将组件的属性挂载到 vm.$options.propsData -->
+    <!--  声明一个vm._props = {a,b}   就类似于vm._data-->
+    <!-- 只有根属性会被进行观测，其他父组件传递给我的不需要进行观测   将所有属性定义到vm._props上-->
+
+    <!-- vm.b => vm._props.b -->
+    <!-- 更新vm._props 可以更新视图 -->
+
+</body>
+
+</html>

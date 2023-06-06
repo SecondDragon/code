@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- patch  更新逻辑都在patch中 -->
+    <!-- <my data="hello"></my>  props hello -->
+    <!--  <my data="world"></my> props world  -->
+
+    <!-- 这个prepatch的作用是复用组件的实例， 并且可以去更新属性， 事件， 插槽 -->
+
+
+    <div id="app">
+        <my ></my>
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+        const AsyncComponent = () => ({
+            // 需要加载的组件 (应该是一个 `Promise` 对象)
+            component: new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve({
+                        template: '<div>async component</div>'
+                    })
+                }, 4000)
+            }),
+            // 异步组件加载时使用的组件
+            loading: {
+                template:'<div>loading</div>'
+            },
+            // 加载失败时使用的组件
+            // 展示加载时组件的延时时间。默认值是 200 (毫秒)
+            delay: 0,
+            // 如果提供了超时时间且组件加载也超时了，
+            // 则使用加载失败时使用的组件。默认值是：`Infinity`
+            timeout: 5000
+        })
+
+        // createComponent 创造虚拟节点  Ctor 默认就是一个函数了   不会通过Vue.extend将其变成一个构造函数
+        const vm = new Vue({
+            el: '#app',
+            components: {
+                my:AsyncComponent // 异步组件是一个函数
+            }
+        });
+    </script>
+</body>
+
+</html>

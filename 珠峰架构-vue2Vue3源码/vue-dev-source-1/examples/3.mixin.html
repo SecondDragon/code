@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my></my>
+    </div>
+    <script src="../dist/vue.js"></script>
+    <script>
+
+        // 内部调用的是Vue.extend方法 会将用户的选项放到子类上
+        // const Vue = {}
+        // Vue.extend = function (options) {
+        //     function Sub() { 
+        //         this.$options = this.constructor.options
+        //         this.data = this.constructor.options.data()
+        //     }
+        //     Sub.options = options;
+        //     return Sub;
+        // }
+
+        // let Child = Vue.extend({
+        //     data(){
+        //         return {a: 1}
+        //     }
+        // })
+        // let c1 = new Child()
+        // c1.data.a = 100;
+        // let c2 = new Child;
+        // console.log(c2.data.a)
+
+      
+        // 2
+        Vue.component('my',{ // 内部没有做其他处理 只是校验是组件 data必须是函数
+            template:"<div>hello</div>",
+            data(){
+                return {component:1}
+            }
+        })
+        // 1
+        const vm = new Vue({
+            el: '#app',
+            data:{
+                root:2
+            }
+        });
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

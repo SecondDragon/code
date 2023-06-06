@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="progress-bar" style="background: lightblue;width:0px;height:20px"></div>
+    <button id="btn">开始</button>
+    <script>
+        let progressBar =document.getElementById('progress-bar')
+        let btn = document.getElementById('btn');
+        let start;
+
+        function startAnimation(time){
+            console.log("开始时间",time);
+            progressBar.style.width=progressBar.offsetWidth + 1+ 'px'
+            progressBar.innerHTML = (progressBar.offsetWidth) + '%';
+            if (progressBar.offsetWidth<100) {
+                let current = Date.now();
+                // 假如说浏览器本身的任务执行是5MS
+                console.log(current - start);//打印的是开始准备执行的时候到真正执行的时间的时间差
+                start = current;
+                requestAnimationFrame(startAnimation)
+            }
+        }
+
+        btn.addEventListener("click",()=>{
+            progressBar.style.width=0
+            let current = Date.now();//先获取到当前的时间 current是毫秒数
+            start = current;
+            requestAnimationFrame(startAnimation);
+        })
+
+        console.log("progressBar",progressBar);
+    </script>
+</body>
+
+</html>

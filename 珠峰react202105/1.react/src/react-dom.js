@@ -12,6 +12,7 @@ let scheduleUpdate;//调度更新方法
 function render(vdom,container){
     mount(vdom,container);
     scheduleUpdate = ()=>{
+        debugger
         hookIndex = 0;//vdom并不指向当前的更新，而是指向根元素
         compareTwoVdom(container,vdom,vdom);
     }

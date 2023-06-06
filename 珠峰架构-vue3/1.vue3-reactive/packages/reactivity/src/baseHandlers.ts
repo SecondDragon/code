@@ -53,6 +53,7 @@ function createGetter(isReadonly = false, shallow = false) { // 拦截获取功�
         if(shallow){
             return res;
         }
+        // 懒代理
         if(isObject(res)){ // vue2 是一上来就递归，vue3 是当取值时会进行代理 。 vue3的代理模式是懒代理
             return isReadonly ? readonly(res) : reactive(res)
         }

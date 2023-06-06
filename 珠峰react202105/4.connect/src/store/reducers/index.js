@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {connectRouter} from 'connected-react-router';
+import {connectRouter} from '../../connected-react-router';
 import history from '../../history';
 import counter from './counter';
 let reducers = {

@@ -1,0 +1,27 @@
+{
+  "name": "7.hand",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babylon": "^6.18.0",
+    "html-webpack-plugin": "^4.4.1",
+    "neo-async": "^2.6.2",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "babel-generator": "^6.26.1",
+    "babel-traverse": "^6.26.0",
+    "babel-types": "^6.26.0",
+    "ejs": "^3.1.5",
+    "isarray": "^2.0.5",
+    "less": "^3.12.2"
+  }
+}

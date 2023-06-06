@@ -1,0 +1,352 @@
+{
+    "errors": [],
+    "warnings": [],
+    "version": "4.44.1",
+    "hash": "a24b5696d954d366f449",
+    "time": 91,
+    "builtAt": 1599377144728,
+    "publicPath": "/static/",
+    "outputPath": "c:\\aproject\\zhufeng202009webpack\\2.flow\\dist",
+    "assetsByChunkName": {
+      "main": "main.a24b5696d954d366f449.js"
+    },
+    "assets": [
+      {
+        "name": "index.html",
+        "size": 274,
+        "chunks": [],
+        "chunkNames": [],
+        "info": {},
+        "emitted": true
+      },
+      {
+        "name": "main.a24b5696d954d366f449.js",
+        "size": 3836,
+        "chunks": [
+          "main"
+        ],
+        "chunkNames": [
+          "main"
+        ],
+        "info": {
+          "immutable": true
+        },
+        "emitted": true
+      }
+    ],
+    "filteredAssets": 0,
+    "entrypoints": {
+      "main": {
+        "chunks": [
+          "main"
+        ],
+        "assets": [
+          "main.a24b5696d954d366f449.js"
+        ],
+        "children": {},
+        "childAssets": {}
+      }
+    },
+    "namedChunkGroups": {
+      "main": {
+        "chunks": [
+          "main"
+        ],
+        "assets": [
+          "main.a24b5696d954d366f449.js"
+        ],
+        "children": {},
+        "childAssets": {}
+      }
+    },
+    "chunks": [
+      {
+        "id": "main",
+        "rendered": true,
+        "initial": true,
+        "entry": true,
+        "size": 21,
+        "names": [
+          "main"
+        ],
+        "files": [
+          "main.a24b5696d954d366f449.js"
+        ],
+        "hash": "a8b9715c3e82eab554c0",
+        "siblings": [],
+        "parents": [],
+        "children": [],
+        "childrenByOrder": {},
+        "modules": [
+          {
+            "id": "./src/index.js",
+            "identifier": "c:\\aproject\\zhufeng202009webpack\\2.flow\\src\\index.js",
+            "name": "./src/index.js",
+            "index": 0,
+            "index2": 0,
+            "size": 21,
+            "cacheable": true,
+            "built": true,
+            "optional": false,
+            "prefetched": false,
+            "chunks": [
+              "main"
+            ],
+            "issuer": null,
+            "issuerId": null,
+            "issuerName": null,
+            "issuerPath": null,
+            "failed": false,
+            "errors": 0,
+            "warnings": 0,
+            "assets": [],
+            "reasons": [
+              {
+                "moduleId": null,
+                "moduleIdentifier": null,
+                "module": null,
+                "moduleName": null,
+                "type": "single entry",
+                "userRequest": "./src/index.js",
+                "loc": "main"
+              }
+            ],
+            "providedExports": null,
+            "optimizationBailout": [],
+            "depth": 0,
+            "source": "console.log('index');"
+          }
+        ],
+        "filteredModules": 0,
+        "origins": [
+          {
+            "module": "",
+            "moduleIdentifier": "",
+            "moduleName": "",
+            "loc": "main",
+            "request": "./src/index.js",
+            "reasons": []
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": "./src/index.js",
+        "identifier": "c:\\aproject\\zhufeng202009webpack\\2.flow\\src\\index.js",
+        "name": "./src/index.js",
+        "index": 0,
+        "index2": 0,
+        "size": 21,
+        "cacheable": true,
+        "built": true,
+        "optional": false,
+        "prefetched": false,
+        "chunks": [
+          "main"
+        ],
+        "issuer": null,
+        "issuerId": null,
+        "issuerName": null,
+        "issuerPath": null,
+        "failed": false,
+        "errors": 0,
+        "warnings": 0,
+        "assets": [],
+        "reasons": [
+          {
+            "moduleId": null,
+            "moduleIdentifier": null,
+            "module": null,
+            "moduleName": null,
+            "type": "single entry",
+            "userRequest": "./src/index.js",
+            "loc": "main"
+          }
+        ],
+        "providedExports": null,
+        "optimizationBailout": [],
+        "depth": 0,
+        "source": "console.log('index');"
+      }
+    ],
+    "filteredModules": 0,
+    "logging": {
+      "webpack.buildChunkGraph.visitModules": {
+        "entries": [],
+        "filteredEntries": 2,
+        "debug": false
+      }
+    },
+    "children": [
+      {
+        "errors": [],
+        "warnings": [],
+        "publicPath": "/static/",
+        "outputPath": "c:\\aproject\\zhufeng202009webpack\\2.flow\\dist",
+        "assetsByChunkName": {
+          "HtmlWebpackPlugin_0": "__child-HtmlWebpackPlugin_0"
+        },
+        "assets": [
+          {
+            "name": "__child-HtmlWebpackPlugin_0",
+            "size": 4837,
+            "chunks": [
+              "HtmlWebpackPlugin_0"
+            ],
+            "chunkNames": [
+              "HtmlWebpackPlugin_0"
+            ],
+            "info": {},
+            "emitted": false
+          }
+        ],
+        "filteredAssets": 0,
+        "entrypoints": {
+          "HtmlWebpackPlugin_0": {
+            "chunks": [
+              "HtmlWebpackPlugin_0"
+            ],
+            "assets": [
+              "__child-HtmlWebpackPlugin_0"
+            ],
+            "children": {},
+            "childAssets": {}
+          }
+        },
+        "namedChunkGroups": {
+          "HtmlWebpackPlugin_0": {
+            "chunks": [
+              "HtmlWebpackPlugin_0"
+            ],
+            "assets": [
+              "__child-HtmlWebpackPlugin_0"
+            ],
+            "children": {},
+            "childAssets": {}
+          }
+        },
+        "chunks": [
+          {
+            "id": "HtmlWebpackPlugin_0",
+            "rendered": true,
+            "initial": true,
+            "entry": true,
+            "size": 501,
+            "names": [
+              "HtmlWebpackPlugin_0"
+            ],
+            "files": [
+              "__child-HtmlWebpackPlugin_0"
+            ],
+            "hash": "90e41fb285d0b5ab299e",
+            "siblings": [],
+            "parents": [],
+            "children": [],
+            "childrenByOrder": {},
+            "modules": [
+              {
+                "id": "./node_modules/_html-webpack-plugin@4.4.1@html-webpack-plugin/lib/loader.js!./src/index.html",
+                "identifier": "C:\\aproject\\zhufeng202009webpack\\2.flow\\node_modules\\_html-webpack-plugin@4.4.1@html-webpack-plugin\\lib\\loader.js!c:\\aproject\\zhufeng202009webpack\\2.flow\\src\\index.html",
+                "name": "C:/aproject/zhufeng202009webpack/2.flow/node_modules/_html-webpack-plugin@4.4.1@html-webpack-plugin/lib/loader.js!./src/index.html",
+                "index": 0,
+                "index2": 0,
+                "size": 501,
+                "cacheable": true,
+                "built": true,
+                "optional": false,
+                "prefetched": false,
+                "chunks": [
+                  "HtmlWebpackPlugin_0"
+                ],
+                "issuer": null,
+                "issuerId": null,
+                "issuerName": null,
+                "issuerPath": null,
+                "failed": false,
+                "errors": 0,
+                "warnings": 0,
+                "assets": [],
+                "reasons": [
+                  {
+                    "moduleId": null,
+                    "moduleIdentifier": null,
+                    "module": null,
+                    "moduleName": null,
+                    "type": "single entry",
+                    "userRequest": "C:\\aproject\\zhufeng202009webpack\\2.flow\\node_modules\\_html-webpack-plugin@4.4.1@html-webpack-plugin\\lib\\loader.js!c:\\aproject\\zhufeng202009webpack\\2.flow\\src\\index.html",
+                    "loc": "HtmlWebpackPlugin_0"
+                  }
+                ],
+                "providedExports": null,
+                "optimizationBailout": [],
+                "depth": 0,
+                "source": "var _ = __non_webpack_require__(\"C:\\\\aproject\\\\zhufeng202009webpack\\\\2.flow\\\\node_modules\\\\_lodash@4.17.20@lodash\\\\lodash.js\");module.exports = function (templateParams) { with(templateParams) {return (function(data) {\nvar __t, __p = '';\n__p += '<!DOCTYPE html>\\r\\n<html lang=\"en\">\\r\\n<head>\\r\\n    <meta charset=\"UTF-8\">\\r\\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\\r\\n    <title>webpack</title>\\r\\n</head>\\r\\n<body>\\r\\n    \\r\\n</body>\\r\\n</html>';\nreturn __p\n})();}}"
+              }
+            ],
+            "filteredModules": 0,
+            "origins": [
+              {
+                "module": "",
+                "moduleIdentifier": "",
+                "moduleName": "",
+                "loc": "HtmlWebpackPlugin_0",
+                "request": "C:\\aproject\\zhufeng202009webpack\\2.flow\\node_modules\\_html-webpack-plugin@4.4.1@html-webpack-plugin\\lib\\loader.js!c:\\aproject\\zhufeng202009webpack\\2.flow\\src\\index.html",
+                "reasons": []
+              }
+            ]
+          }
+        ],
+        "modules": [
+          {
+            "id": "./node_modules/_html-webpack-plugin@4.4.1@html-webpack-plugin/lib/loader.js!./src/index.html",
+            "identifier": "C:\\aproject\\zhufeng202009webpack\\2.flow\\node_modules\\_html-webpack-plugin@4.4.1@html-webpack-plugin\\lib\\loader.js!c:\\aproject\\zhufeng202009webpack\\2.flow\\src\\index.html",
+            "name": "C:/aproject/zhufeng202009webpack/2.flow/node_modules/_html-webpack-plugin@4.4.1@html-webpack-plugin/lib/loader.js!./src/index.html",
+            "index": 0,
+            "index2": 0,
+            "size": 501,
+            "cacheable": true,
+            "built": true,
+            "optional": false,
+            "prefetched": false,
+            "chunks": [
+              "HtmlWebpackPlugin_0"
+            ],
+            "issuer": null,
+            "issuerId": null,
+            "issuerName": null,
+            "issuerPath": null,
+            "failed": false,
+            "errors": 0,
+            "warnings": 0,
+            "assets": [],
+            "reasons": [
+              {
+                "moduleId": null,
+                "moduleIdentifier": null,
+                "module": null,
+                "moduleName": null,
+                "type": "single entry",
+                "userRequest": "C:\\aproject\\zhufeng202009webpack\\2.flow\\node_modules\\_html-webpack-plugin@4.4.1@html-webpack-plugin\\lib\\loader.js!c:\\aproject\\zhufeng202009webpack\\2.flow\\src\\index.html",
+                "loc": "HtmlWebpackPlugin_0"
+              }
+            ],
+            "providedExports": null,
+            "optimizationBailout": [],
+            "depth": 0,
+            "source": "var _ = __non_webpack_require__(\"C:\\\\aproject\\\\zhufeng202009webpack\\\\2.flow\\\\node_modules\\\\_lodash@4.17.20@lodash\\\\lodash.js\");module.exports = function (templateParams) { with(templateParams) {return (function(data) {\nvar __t, __p = '';\n__p += '<!DOCTYPE html>\\r\\n<html lang=\"en\">\\r\\n<head>\\r\\n    <meta charset=\"UTF-8\">\\r\\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\\r\\n    <title>webpack</title>\\r\\n</head>\\r\\n<body>\\r\\n    \\r\\n</body>\\r\\n</html>';\nreturn __p\n})();}}"
+          }
+        ],
+        "filteredModules": 0,
+        "logging": {
+          "webpack.buildChunkGraph.visitModules": {
+            "entries": [],
+            "filteredEntries": 2,
+            "debug": false
+          }
+        },
+        "children": [],
+        "name": "HtmlWebpackCompiler"
+      }
+    ]
+  }

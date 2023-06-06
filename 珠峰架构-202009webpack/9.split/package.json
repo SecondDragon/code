@@ -1,0 +1,22 @@
+{
+  "name": "9.split",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^4.5.0",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "isarray": "^2.0.5",
+    "jquery": "^3.5.1",
+    "lodash": "^4.17.20"
+  }
+}

@@ -37,6 +37,7 @@ const Login = () => {
       nav('/');
       return;
     }
+    nav('/');
     const data = res.data.studentLogin;
     showFail(data);
   };

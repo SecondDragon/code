@@ -1,0 +1,121 @@
+@import "../iconfont/iconfont.css";
+.editor {
+    width: 100%;
+    height: 100%;
+
+    &-left,
+    &-right {
+        position: absolute;
+        width: 270px;
+        top: 0;
+        bottom: 0
+    }
+    &-left{
+        left:0;
+        &-item{
+            width: 250px ;
+            margin:20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            padding:20px;
+            box-sizing: border-box;
+            cursor:move;
+            user-select: none;
+            min-height: 100px;
+            position: relative;
+            > span{
+                position: absolute;
+                top:0;
+                left:0;
+                background: rgb(96, 205, 224);
+                color:#fff;
+                padding:4px;
+            }
+            &::after{
+                content:'';
+                position: absolute;
+                top:0;
+                left:0;
+                right:0;
+                bottom:0;
+                background: #ccc;
+                opacity: 0.2;
+            }
+        }
+    }
+    &-right{
+        right:0
+    }
+    &-top{
+        position: absolute;
+        right:280px;
+        left:280px;
+        height:80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+         &-button{
+             width:60px;
+             height:60px;
+             display: flex;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;;
+             background: rgba(0,0,0,.3);
+             user-select: none;
+             cursor: pointer;
+             color:#fff;
+             &+&{
+                 margin-left:3px
+             }
+        }
+    }
+    &-container{
+        padding:80px 270px 0;
+        height: 100%;
+        box-sizing: border-box;
+        &-canvas{
+            overflow: scroll;
+            height:100%;
+            &__content{
+                margin:20px auto;
+                background:yellow;
+                position: relative;
+            }
+        }
+    }
+}
+.editor-block{
+    position: absolute;
+    &::after{
+        content:'';
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+    }
+}
+
+.editor-block-focus{
+    &::after{
+        border: 3px dashed red
+    }
+}
+
+// 移动left值
+.line-x {
+    position: absolute;
+    top:0;
+    bottom:0;
+    border-left: 1px dashed red;
+}
+// 移动的是top 值
+.line-y {
+    position: absolute;
+    left:0;
+    right:0;
+    border-top: 1px dashed red;
+}

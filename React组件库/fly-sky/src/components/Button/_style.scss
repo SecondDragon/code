@@ -1,0 +1,128 @@
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $btn-font-weight;
+  line-height: $btn-line-height;
+  color: $body-color;
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  background-image: none;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: $btn-border-width solid transparent;
+  @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $border-radius);
+  box-shadow: $btn-box-shadow;
+  cursor: pointer;
+  transition: $btn-transition;
+
+  &.disabled,
+  // button的属性 disabled
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: $btn-disabled-opacity;
+    box-shadow: none;
+
+    >* {
+      pointer-events: none;
+    }
+  }
+}
+
+.btn-lg {
+  @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
+}
+
+.btn-sm {
+  @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
+}
+
+.btn-primary {
+  @include button-style($primary, $primary, $white)
+}
+
+.btn-danger {
+  @include button-style($danger, $danger, $white)
+}
+
+.btn-default {
+  @include button-style($white, $gray-400, $body-color, $white, $primary, $primary)
+}
+
+// .btn-link {
+//   font-weight: $font-weight-normal;
+//   color: $btn-link-color;
+//   text-decoration: $link-decoration;
+//   box-shadow: none;
+//   &:hover {
+//     color: $btn-link-hover-color;
+//     text-decoration: $link-hover-decoration; 
+//   }
+//   &:focus,
+//   &.focus {
+//     text-decoration: $link-hover-decoration;
+//     box-shadow: none;
+//   }
+//   &:disabled,
+//   &.disabled {
+//     color: $btn-link-disabled-color;
+//     pointer-events: none;
+//   }
+// }
+
+.yk-buton-name {
+  width: auto;
+  transition: color $animatf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+.yk-buton-name {
+  // padding: 0 8px;
+  min-width: 24px;
+  font-size: 12px;
+
+  svg {
+    animation: rotate4 2s linear infinite;
+  }
+
+  @keyframes rotate4 {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  circle {
+    stroke: $primary;
+    fill: none;
+    //  stroke: @bg-color-l;
+    stroke-width: 3;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: dash4 1.5s ease-in-out infinite;
+
+    @keyframes dash4 {
+      0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+      }
+
+      50% {
+        stroke-dasharray: 90, 200;
+        stroke-dashoffset: -35px;
+      }
+
+      100% {
+        stroke-dashoffset: -125px;
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+// config 不需要加空格 因为scss 默认 _xxxx.scss 不能被编译为css文件(编译出来是空文件) 只能被用来导入，所以干脆就不加_也能导入了
+@import "variables";
+
+//layout
+@import "reboot";
+
+// //mixin
+@import "mixin";
+
+// // animation
+// @import "animation";
+// // button
+
+@import "../components/Button/style";
+
+// //alert
+// @import "../components/Alert/style";
+
+// // menu
+// @import "../components/Menu/style";
+
+// //navs
+// @import "../components/Tabs/style";
+
+// // icon
+// @import "../components/Icon/style";
+
+// //input
+// @import "../components/Input/style";
+
+// //auto-complete
+// @import "../components/AutoComplete/style";
+
+// //select
+// @import "../components/Select/style";
+
+// //upload
+// @import "../components/Upload/style";
+
+// //progress
+// @import "../components/Progress/style";
+
+// // form
+// @import "../components/Form/style";
+
+// // icon
+@import "../components/Icon/style";

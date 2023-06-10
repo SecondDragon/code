@@ -1,18 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     ddddddddddd
     <a href="/img/01.jpg">/img/01.jpg</a>
     <a href="/img/02.jpg">/img/02.jpg</a>
     <div>
-    <a href="/img/03.jpg">/img/03.jpg</a>
+        <a href="/img/03.jpg">/img/03.jpg</a>
 
     </div>
+
+    <div class="box" style="width: 200px; height: 100px; background-color: aquamarine;">
+
+
+    </div>
+
+    <script>
+        function Person() {
+            this.age = 18
+        }
+        let p = new Person()
+        console.log(p.__proto__.constructor === p.constructor);
+        let b = { age: 11 }
+        p.__proto__ = b
+
+        console.log(Person.prototype.constructor === p.constructor);
+        console.log(p.constructor);//会一直向上找到Object
+        console.log(p.constructor===person.prototype.constructor);//false
+
+    </script>
 </body>
+
 </html>

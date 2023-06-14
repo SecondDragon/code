@@ -58,3 +58,9 @@ console.log(stu2.friends)
 
 // 3.第三个弊端: 在前面实现类的过程中都没有传递参数，意味着不能定制化对象
 var stu3 = new Student("lilei", 112)
+
+
+
+
+
+

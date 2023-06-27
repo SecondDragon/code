@@ -6,8 +6,6 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -16,30 +14,14 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "es2015",
     "module": "es2020",
     "lib": [
-      "es2020",
+      "es2018",
       "dom"
-    ],
-    "paths": {
-      "@app/*": ["src/app/*"],
-      "@app": ["src/app"],
-      "@store/*": ["src/app/core/services/store/*"],
-      "@config/*": ["src/app/config/*"],
-      "@core/*": ["src/app/core/*"],
-      "@services/*": ["src/app/core/services/http/*"],
-      "@utils/*": ["src/app/utils/*"],
-      "@widget/*": ["src/app/widget/*"],
-      "@env/*": ["src/environments/*"],
-      "@shared/*": ["src/app/shared/*"],
-      "@assets/*": ["src/assets/*"]
-    },
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    ]
   },
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true

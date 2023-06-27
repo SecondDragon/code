@@ -41,7 +41,7 @@ function createGetter(isReadonly = false, shallow = false) { // 拦截获取功�
         // 后续Object上的方法 会被迁移到Reflect Reflect.getProptypeof()
         // 以前target[key] = value 方式设置值可能会失败 ， 并不会报异常 ，也没有返回值标识
         // Reflect 方法具备返回值
-        // reflect 使用可以不使用 proxy es6语法
+        // reflect 使用可以 不使用 proxy es6语法
 
         const res = Reflect.get(target, key, receiver); // target[key];
         if(!isReadonly){

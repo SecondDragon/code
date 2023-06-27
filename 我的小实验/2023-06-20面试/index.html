@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="tel" id="phone-input">
+
+    <script>
+        const phoneInput = document.getElementById('phone-input');
+
+        phoneInput.addEventListener('input', () => {
+            // 
+            // let phoneNumber = phoneInput.value.replace(/\D/g, ''); // 去除非数字字符
+            // // phoneNumber = phoneNumber.slice(0, 11); // 裁剪前11个数字
+            // let numberLength = phoneNumber.length
+            // if (numberLength <= 3) {
+            //     phoneInput.value = phoneNumber;
+            // } else if (numberLength <= 7) {
+            //     phoneInput.value = phoneNumber.replace(/(\d{3})(\d+)/, '$1 $2');;
+            // } else  {
+            //     phoneInput.value = phoneNumber.replace(/(\d{3})(\d{4})(\d+)/, '$1 $2 $3');
+            // }
+
+            let phoneNumber = phoneInput.value.replace(/\D/g, ''); // 去除非数字字符
+
+            let groups = phoneNumber.match(/.{1,2}/g)
+            let result = groups.join('_')
+
+            phoneInput.value = result
+
+
+
+
+        });
+    </script>
+</body>
+
+</html>
